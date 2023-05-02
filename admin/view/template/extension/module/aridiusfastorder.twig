@@ -1,0 +1,430 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form-fastorder" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;{{ button_save }}</button> 
+            <a onclick="apply();" class="btn btn-primary" data-toggle="tooltip" title="{{ button_apply }}" ><i class="fa fa-check"></i>&nbsp;&nbsp;{{ button_apply }}</a>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> 
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %} 
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %} 
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %} 
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fastorder"
+               class="form-horizontal">
+               <div class="form-group">
+                  <div class="col-sm-12">
+                     <ul id="myTab2" class="nav nav-tabs">
+                        <li><a data-toggle="tab" href="#panely1">{{ tab_main }}</a></li>
+                        <li><a data-toggle="tab" href="#panely2">{{ tab_text }}</a></li>
+                     </ul>
+                     <div class="tab-content">
+                        <div id="panely1" class="tab-pane fade in active">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_adddescription }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_adddescriptionshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_adddescriptionshow" value="1" checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_adddescriptionshow" value="1" />
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_adddescriptionshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_adddescriptionshow"  value="0" checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_adddescriptionshow" value="0" />
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_description }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_descriptionshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_descriptionshow" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_descriptionshow" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_descriptionshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_descriptionshow" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_descriptionshow" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_img }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_img) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_img" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_img" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_img) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_img" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_img" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input_imgw">{{ text_imgw }}</label>
+                              <div class="col-sm-10 them">
+                                 <input type="text" name="module_aridiusfastorder_imgw" value="{{ module_aridiusfastorder_imgw }}" id="input-imgw" class="form-control" />
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-input_imgh">{{ text_imgh }}</label>
+                              <div class="col-sm-10 them">
+                                 <input type="text" name="module_aridiusfastorder_imgh" value="{{ module_aridiusfastorder_imgh }}" id="input-imgh" class="form-control" />
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-input_descchar">{{ text_descchar }}</label>
+                              <div class="col-sm-10 them">
+                                 <input type="text" name="module_aridiusfastorder_descchar" value="{{ module_aridiusfastorder_descchar }}" id="input-descchar" class="form-control" />
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_firstnameshow }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_firstnameshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnameshow" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnameshow" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_firstnameshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnameshow" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnameshow" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_firstnamevalid }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_firstnamevalid) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnamevalid" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnamevalid" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_firstnamevalid) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnamevalid" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_firstnamevalid" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_placeholderfirstname }}</label>
+                              <div class="col-sm-10 them">
+                                 {% for language in languages %} 
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                                    </span>
+                                    <input name="module_aridiusfastorder_placeholderfirstname[{{ language['language_id'] }}]"
+                                       value="{{ module_aridiusfastorder_placeholderfirstname[language['language_id']] }}"
+                                       class="form-control"/>
+                                 </div>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+                           <hr>
+                           <hr>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_mask }}</label>
+                              <div class="col-sm-10 them">
+                                 {% for language in languages %} 
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                                    </span>
+                                    <input name="module_aridiusfastorder_mask[{{ language['language_id'] }}]"
+                                       value="{{ module_aridiusfastorder_mask[language['language_id']] }}"
+                                       class="form-control"/>
+                                 </div>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_placeholdertell }}</label>
+                              <div class="col-sm-10 them">
+                                 {% for language in languages %} 
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                                    </span>
+                                    <input name="module_aridiusfastorder_placeholdertell[{{ language['language_id'] }}]"
+                                       value="{{ module_aridiusfastorder_placeholdertell[language['language_id']] }}"
+                                       class="form-control"/>
+                                 </div>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+                           <hr>
+                           <hr>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_emailshow }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_emailshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailshow" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailshow" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_emailshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailshow" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailshow" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_emailvalid }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_emailvalid) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailvalid" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailvalid" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_emailvalid) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailvalid" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_emailvalid" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_placeholderemail }}</label>
+                              <div class="col-sm-10 them">
+                                 {% for language in languages %} 
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                                    </span>
+                                    <input name="module_aridiusfastorder_placeholderemail[{{ language['language_id'] }}]"
+                                       value="{{ module_aridiusfastorder_placeholderemail[language['language_id']] }}"
+                                       class="form-control"/>
+                                 </div>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+                           <hr>
+                           <hr>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_commentshow }}</label>
+                              <div class="col-sm-10 them">
+                                 <label class="radio-inline">
+                                 {% if (module_aridiusfastorder_commentshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_commentshow" value="0"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_commentshow" value="0"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_yes }}</span>
+                                 {% endif %} 
+                                 </label>
+                                 <label class="radio-inline">
+                                 {% if (not module_aridiusfastorder_commentshow) %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_commentshow" value="1"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% else %} 
+                                 <input class="options_none" type="radio" name="module_aridiusfastorder_commentshow" value="1"
+                                    checked="checked"/>
+                                 <span class="im_option">{{ text_no }}</span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">{{ text_placeholdercomment }}</label>
+                              <div class="col-sm-10 them">
+                                 {% for language in languages %} 
+                                 <div class="input-group">
+                                    <span class="input-group-addon">
+                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                                    </span>
+                                    <input name="module_aridiusfastorder_placeholdercomment[{{ language['language_id'] }}]"
+                                       value="{{ module_aridiusfastorder_placeholdercomment[language['language_id']] }}"
+                                       class="form-control"/>
+                                 </div>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+						  <div class="form-group">
+							<label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+							<div class="col-sm-10">
+							  <select name="module_aridiusfastorder_order_status_id" id="input-order-status" class="form-control">
+								{% for order_status in order_statuses %}
+								{% if order_status.order_status_id == module_aridiusfastorder_order_status_id %}
+								<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+								{% else %}
+								<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+								{% endif %}
+								{% endfor %}
+							  </select>
+							</div>
+						  </div>						   
+                           <hr>
+                           <hr>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label"
+                                 for="input-limit">{{ entry_status }}</label>
+                              <div class="col-sm-10 them">
+                                 <select name="module_aridiusfastorder_status" class="form-control">
+                                    {% if (module_aridiusfastorder_status) %} 
+                                    <option value="1"
+                                       selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                    {% else %} 
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0"
+                                       selected="selected">{{ text_disabled }}</option>
+                                    {% endif %} 
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+                        <div id="panely2" class="tab-pane fade">
+                           <ul class="nav nav-tabs" id="language">
+                              {% for language in languages %} 
+                              <li><a href="#language{{ language['language_id'] }}" data-toggle="tab"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /> {{ language['name'] }}</a></li>
+                              {% endfor %} 
+                           </ul>
+                           <div class="tab-content">
+                              {% for language in languages %} 
+                              <div class="tab-pane" id="language{{ language['language_id'] }}">
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                       for="input-description{{ language['language_id'] }}">{{ entry_description }}</label>
+                                    <div class="col-sm-10 them">
+                                       <textarea name="module_aridiusfastorder_description[{{ language['language_id'] }}]" id="input-description{{ language['language_id'] }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control summernote">{{ module_aridiusfastorder_description[language['language_id']] is defined ? module_aridiusfastorder_description[language['language_id']] : '' }}</textarea>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                       for="input-description2{{ language['language_id'] }}">{{ entry_description2 }}</label>
+                                    <div class="col-sm-10 them">
+                                       <textarea name="module_aridiusfastorder_description2[{{ language['language_id'] }}]" id="input-description2{{ language['language_id'] }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control summernote">{{ module_aridiusfastorder_description2[language['language_id']] is defined ? module_aridiusfastorder_description2[language['language_id']] : '' }}</textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                              {% endfor %} 
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script><!--
+   $('#language a:first').tab('show');
+   $('#option a:first').tab('show');
+   //-->
+</script>
+<script><!--
+   $(document).ready(function(){
+   	$("#myTab2 li:eq(0) a").tab('show');
+   });
+   //-->
+</script>
+
+<script src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script src="view/javascript/summernote/opencart.js"></script>
+
+
+<script><!--
+   function apply() {
+   	$('#form-fastorder').append('<input type="hidden" id="apply" name="apply" value="1" />');
+   	$('#form-fastorder').submit();
+   }
+   //-->
+</script>
+{{ footer }} 

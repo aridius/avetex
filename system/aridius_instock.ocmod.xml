@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>instock</name>
+  <code>instock</code>
+  <version>v_1</version>
+  <author>mrz</author>
+    <file path="admin/model/catalog/product.php">
+		<operation>
+			<search><![CDATA[
+			public function editProduct($product_id, $data) {
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            $this->load->model('catalog/aridiusinstocksend');
+            $this->model_catalog_aridiusinstocksend->notifyProduct($product_id, $data);
+			]]></add>
+		</operation>
+  </file>
+  <file path="admin/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$qry = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "aridiusinstock'");
+		    if ($qry->num_rows) {
+			$data['instock_status'] = $this->url->link('catalog/aridiusinstock', 'user_token=' . $this->session->data['user_token'], true);
+            $this->load->model('catalog/aridiusinstock');		
+	        $instock_total = $this->model_catalog_aridiusinstock->getTotalOrder();
+			$data['instock_total'] = $instock_total;
+            } else {
+			$data['instock_status'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			}
+			if (empty($data['instock_total'])) {
+            $data['instock_total'] = 0;
+            }  
+			]]></add>
+		</operation>
+  </file>
+  <file path="admin/view/template/common/header.twig">
+		<operation>
+			<search><![CDATA[
+			<ul class="nav navbar-nav navbar-right">
+			]]></search>
+			<add position="after"><![CDATA[
+            <li><a href="{{ instock_status }}" data-toggle="tooltip" data-placement="bottom" title="{{ instock_name }}"><span class="label label-danger pull-left">{{ instock_total }}</span> <i class="fa fa-bullhorn fa-lg"></i></a></li>
+			]]></add>
+		</operation>
+  </file>
+  <file path="catalog/controller/product/{product,aridius_quickview}.php">
+		<operation>
+			<search><![CDATA[
+			if ($product_info) {
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            $data['aridiusinstock'] = $this->load->controller('module/aridiusinstock');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$this->load->model('catalog/review');
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$this->load->language('extension/module/aridiusinstock');
+		    $data['aridiusinstock_status'] = $this->config->get('module_aridiusinstock_status');
+			]]></add>
+		</operation>		
+  </file>
+  
+</modification>

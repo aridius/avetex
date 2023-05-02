@@ -1,0 +1,26 @@
+﻿<div id ="fastorder-popup" class="undersell">
+   <div class="undersellf">
+      <div class="name-popup">{{ heading_title_fastorder }}</div>
+   </div>
+   <div class="aridiusundersell-success">
+      <div class="undersell2">
+         <div class="row">
+            <div class="col-xs-12">
+               {{ aridiusfastorder_description2 }}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   setTimeout(function() {
+   $.magnificPopup.close();
+   }, 3500);
+   $.magnificPopup.open({
+   items: {
+   src: '#fastorder-popup',
+   type: 'inline'
+   },
+   closeBtnInside: true
+   });
+</script>

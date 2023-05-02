@@ -1,0 +1,50 @@
+{% if products %}
+<form action="{{ action }}" method="post" enctype="multipart/form-data">
+  {% for product in products %}
+  <div class="card_composition">
+   <div class="image_cart">
+     {% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img_thumb" /></a>{% endif %}
+   </div>
+   <div class="cart_actions">
+     <div class="product_title">
+      <a href="{{ product.href }}">{{ product.name }}</a>
+      {% if not product.stock %}
+      <span class="text-danger_cart">***</span>
+      {% endif %}
+      {% if product.option %}
+      {% for option in product['option'] %}
+      <br />
+      <small>{{ option.name }}: {{ option.value }}</small>
+      {% endfor %}
+      {% endif %}
+      {% if product.reward %}
+      <br />
+      <small>{{ product.reward }}</small>
+      {% endif %}
+      {% if product.recurring %}
+      <br />
+      <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small>
+      {% endif %}
+     </div>
+     <div class="top_cart2">
+<div class="edit_quantity">
+<div class="input-group" style="max-width: 200px;">
+<span class="input-group-btn">
+<button class="items-countcart11" type="button" onclick="custom_cart.update({{ product.cart_id }}, {{ product.quantity - 1 }})" {% if product.quantity == 1 %} disabled {% endif %}><i class="fa fa-minus"></i></button>
+</span>
+<input id="input-quantitycart2" type="text" oninput="custom_cart.change({{ product.cart_id }}, event)" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control" />
+<span class="input-group-btn">
+<button class="items-countcart22" type="button" onclick="custom_cart.update({{ product.cart_id }}, {{ product.quantity + 1 }})"><i class="fa fa-plus"></i></button>
+</span>
+</div>
+</div>
+      <div id="cart_price">
+        {{ product.price }}
+      </div> 
+     </div>  
+   </div>
+ <button type="button" onclick="custom_cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}" class="cart_trash"><i class="fa fa-trash-o"></i></button>  
+  </div>
+  {% endfor %}
+</form>
+{% endif %}

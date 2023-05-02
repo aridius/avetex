@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>Custom Checkout</name>
+	<code>custom</code>
+	<version>2</version>
+	<author>matroskin92</author>
+	<link>https://matro.site/</link>
+
+
+	<file path="catalog/controller/checkout/checkout.php">
+		<operation>
+			<search>
+				<![CDATA[
+					public function index() {
+				]]>
+			</search>
+			<add position="after">
+				<![CDATA[		
+					$this->response->redirect($this->url->link('extension/module/custom'));
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file path="catalog/controller/checkout/cart.php">
+		<operation>
+			<search>
+				<![CDATA[
+					public function index() {
+				]]>
+			</search>
+			<add position="after">
+				<![CDATA[		
+					$this->response->redirect($this->url->link('extension/module/custom'));
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file path="catalog/model/account/address.php">
+		<operation>
+			<search>
+				<![CDATA[
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+				]]>
+			</search>
+			<add position="replace">
+				<![CDATA[
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "' AND customer_id != 0");
+				]]>
+			</add>
+		</operation>
+	</file>
+
+</modification>
+

@@ -1,0 +1,13 @@
+<div class="totals_info">
+{% for total in totals %}
+<div class="information-row">
+<div class="key">
+{{ total.title }}
+</div>
+<div class="value">
+{{ total.text }}
+</div>
+<br /><br />
+</div>
+{% endfor %}
+</div>

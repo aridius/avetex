@@ -1,0 +1,30 @@
+<div class="effectb">
+<div class="effect-banner">
+<div id="banner{{ module }}" class="banner-margin">
+{% for banner in banners %} 
+	<div class="item">
+	{% if (banner['link']) %} 
+		<a href="{{ banner['link'] }}"><img class="swiper-lazy img-responsive aridius_news-hover swiper-lazy-loaded scaleslide" src="{{ banner['image'] }}" alt="{{ banner['title'] }}" /></a>
+		<div class="hover-textbanner">
+		<a href="{{ banner['link'] }}"></a>
+		{% if (banner['description']) %} 
+		<div class="efhover visible-sm visible-md visible-lg">{{ banner['description'] }}</div>
+		{% endif %} 
+		</div>	
+		{% else %} 
+		{% if (deluxe_lazy) %} 
+		<img class="swiper-lazy img-responsive aridius_news-hover swiper-lazy-loaded scaleslide" src="{{ banner['image'] }}" alt="{{ banner['title'] }}" />
+	    {% else %} 
+	    <a href="{{ banner['link'] }}"><img data-src="{{ banner['image'] }}" alt="{{ banner['title'] }}" class="lazyload img-responsive scaleslide" /></a>
+		{% endif %} 
+	{% if (banner['description']) %}	
+		<div class="hover-textbanner">
+		<div class="efhover visible-sm visible-md visible-lg">{{ banner['description'] }}</div>
+		</div>	
+	{% endif %}	
+		{% endif %} 
+	</div>
+	{% endfor %} 
+</div>		
+</div>
+</div>

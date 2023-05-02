@@ -1,0 +1,39 @@
+<div class="row">
+   <div class="col-xs-12 block_desc_all2">
+   {% if (description|length > aridius_text_home_limit ) %}
+      <div class="block_desc_all">
+   {% endif %}  
+         {% if (description|length > aridius_text_home_limit ) %}
+         <div class="block_desc2">
+            {{ description }}
+         </div>
+         <a class="button_sh2">{{ text_show_desc }} <i class="btn_readmore2 fa fa-long-arrow-right"></i></a>
+         {% else %}
+         <div class="col-sm-12 block_desctop">
+            <div class="row">
+			<div class="block_desc_all">
+               {{ description }}
+            </div>
+			</div>
+         </div>
+         {% endif %}
+   {% if (description|length > aridius_text_home_limit ) %}		 
+      </div>
+   {% endif %}	  
+   </div>
+</div>
+{% if (description|length > aridius_text_home_limit ) %}
+<script>
+   $(document).ready(function(){
+   $('.button_sh2').click(function(){
+   $(this).toggleClass('active');
+   $('.block_desc2').toggleClass('opener2');
+   if (!$(this).data('status')) {
+   $(this).data('status', true).html('{{ text_hide_desc }} <i class="btn_readmore2 fa fa-long-arrow-right"></i>');
+   } else {
+   $(this).data('status', false).html('{{ text_show_desc }} <i class="btn_readmore2 fa fa-long-arrow-right"></i>');
+   }
+   });
+   });
+</script>
+{% endif %}

@@ -1,0 +1,128 @@
+{% if (reviews) %}
+{% for review in reviews %}
+                <div class="review_table" itemprop = "review" itemscope itemtype = "http://schema.org/Review">
+                                 <div class="review_main">
+                                    <div class="review_avatar">{{ review['author']|slice(0, 1) }}</div>
+                                    <div class="review_author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                                       <strong itemprop="name">{{ review['author'] }}</strong>
+                                    </div>
+                                    <div class="review_date"><time itemprop = "datePublished" datetime = "{{ review['date_added'] }}" >{{ review['date_added'] }}</time></div>
+                                    <div class="review_stack">
+                                       {% set i = 1 %}{% for i in i..5 %}
+                                       {% if (review['rating'] < i) %}
+                                       <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                       {% else %}
+                                       <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                       {% endif %}
+                                       {% endfor %}
+                                    </div>
+                                    <div class="rating" itemprop = "reviewRating" itemscope itemtype = "http://schema.org/Rating">
+                                       <meta itemprop = "worstRating" content = "1" >
+                                       <meta itemprop = "ratingValue" content="{{ review['rating'] }}">
+                                       <meta itemprop = "bestRating" content="5">
+                                    </div>
+                                    <div class="review_text">
+                                       <p itemprop = "reviewBody">{{ review['text'] }}</p>
+                                    </div>
+                                    {% if (review['dignity']) %}
+                                    <p><b>{{ text_dignity }}</b> {{ review['dignity'] }}</p>
+                                    {% endif %}
+                                    {% if (review['limitations']) %}
+                                    <p><b>{{ text_limitations }}</b> {{ review['limitations'] }}</p>
+                                    {% endif %}
+                                    <div class="likes-dislikesmain">
+                                       <span data-id="{{ review['review_id'] }}" class="dislikes {% if (review['check_dislikes'] != 0) %} {{ "dislikes_active" }} {% endif %}" data-name="dislikes"> <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>{% if (review['sum_dislikes'] != 0) %} {{ review['sum_dislikes'] }} {% endif %} </span>
+                                       <span data-id="{{ review['review_id'] }}" class="likes {% if (review['check_likes'] != 0) %} {{ "likes_active" }} {% endif %}" data-name="likes"> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{% if (review['sum_likes'] != 0) %} {{ review['sum_likes'] }} {% endif %} </span>
+                                       <span class="is_review_text">{{ text_is_review }}</span>
+                                    </div>
+                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                    <a data-parent="{{ review['review_id'] }}" class="comment-reply_qa" href="javascript:void(0);">{{ text_write_qa }}</a>
+                                 </div>
+                                 {% if (review['parent']) %}
+                                 {% for parent in review['parent'] %}
+                                 <div class="review_table qa-parent">
+                                    <div class="review_avatar">{{ parent['author']|slice(0, 1) }}</div>
+                                    <div class="review_author"><strong>{{ parent['author'] }}</strong></div>
+                                    <div class="review_date">{{ parent['date_added'] }}</div>
+                                    <div class="qa-parent-text">
+                                       <div class="review_text">
+                                          <p>{{ parent['text'] }}</p>
+                                       </div>
+                                    </div>
+                                    <div class="likes-dislikes">
+                                       <span data-id="{{ parent['review_id2'] }}" class="dislikes {% if (parent['check_dislikes2'] != 0) %} {{ "dislikes_active" }} {% endif %}" data-name="dislikes"> <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>{% if (parent['sum_dislikes2'] != 0) %} {{ parent['sum_dislikes2'] }} {% endif %} </span>
+                                       <span data-id="{{ parent['review_id2'] }}" class="likes {% if (parent['check_likes2'] != 0) %} {{ "likes_active" }} {% endif %}" data-name="likes"> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{% if (parent['sum_likes2'] != 0) %} {{ parent['sum_likes2'] }} {% endif %} </span>
+                                       <span class="is_review_text">{{ text_is_review }}</span>
+                                    </div>
+                                 </div>
+                                 {% endfor %}
+                                 {% endif %}
+                              </div>
+{% endfor %}
+<div class="text-right">{{ pagination }}</div>
+{% else %}
+<p>{{ text_no_reviews }}</p>
+{% endif %}
+<!-- likes -->
+<script><!--
+   $(".likes").click(async function () {
+   let review_id = $(this).attr('data-id');
+   let class_btn = $(this).attr('data-name');
+   let date = {
+   review_id: review_id,
+   name_btn: class_btn,
+   }
+   let response = await fetch('index.php?route=extension/module/aridius_likes/likes', {
+   method: 'POST',
+   headers: {
+   'Content-Type': 'application/json;charset=utf-8'
+   },
+   body: JSON.stringify(date)
+   })
+   let result = await response.json();
+   if (response.ok) {
+   $(this).contents().filter(function () {
+   return this.nodeType === 3;
+   }).remove();
+   if (result.sum != 0) {
+   $(this).append(result.sum);
+   }
+   if (result.status == 1) {
+   $(this).addClass("likes_active");
+   } else {
+   $(this).removeClass("likes_active");
+   }
+   }
+   });
+   $(".dislikes").click(async function () {
+   let review_id = $(this).attr('data-id');
+   let class_btn = $(this).attr('data-name');
+   let date = {
+   review_id: review_id,
+   name_btn: class_btn,
+   }
+   let response = await fetch('index.php?route=extension/module/aridius_likes/likes', {
+   method: 'POST',
+   headers: {
+   'Content-Type': 'application/json;charset=utf-8'
+   },
+   body: JSON.stringify(date)
+   });
+   let result = await response.json();
+   if (response.ok) {
+   $(this).contents().filter(function () {
+   return this.nodeType === 3;
+   }).remove();
+   if (result.sum != 0) {
+   $(this).append(result.sum);
+   }
+   if (result.status == 1) {
+   $(this).addClass("dislikes_active");
+   } else {
+   $(this).removeClass("dislikes_active");
+   }
+   }
+   });
+   //-->
+</script>
+<!-- end likes -->

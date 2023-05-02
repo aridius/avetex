@@ -1,0 +1,127 @@
+<script>
+   // livesearch
+   (function($) {
+   	$.fn.livesearch = function(option) {
+   		return this.each(function() {
+   			this.timer = null;
+   			this.items = new Array();
+               this.minLength = {{ aridius_livesearch_symbol }};
+   			$.extend(this, option);
+   			$(this).attr('livesearch', 'off');
+   
+   // Blur
+   			$(this).on('blur', function() {
+   				setTimeout(function(object) {
+   					object.hide();
+   				}, 200, this);
+   			});
+   
+   // Keydown
+               $(this).on('input', function(event) {
+                   if (event.keyCode == 27) {
+                       this.hide();
+                   } else if (this.value.length <= this.minLength) {
+                       this.hide();
+                   } else {
+                       this.request();
+                   }
+               });
+   
+   // Show
+   			this.show = function() {
+   				var pos = $(this).position();
+   
+   				$(this).siblings('ul.dropdown-menu').css({
+   					top: pos.top + $(this).outerHeight(),
+   					left: pos.left
+   				});
+   
+   				$(this).siblings('ul.dropdown-menu').show();
+   			}
+   
+   // Hide
+   			this.hide = function() {
+   				$(this).siblings('ul.dropdown-menu').hide();
+   			}
+   
+   // Request
+   			this.request = function() {
+   				clearTimeout(this.timer);
+   
+   				this.timer = setTimeout(function(object) {
+   					object.source($(object).val(), $.proxy(object.response, object));
+   				}, 200, this);
+   			}
+   // Response
+   			this.response = function(json) {
+   				html = '';
+   
+   				if (json.length) {
+   					for (i = 0; i < json.length; i++) {
+   						this.items[json[i]['value']] = json[i];
+   					}
+   
+   					for (i = 0; i < json.length; i++) {
+   						if (!json[i]['category']) {
+   							html += '<a href="javascript:void(0)" onclick="location = &quot; '+ json[i]['href'] + '&quot;" >';
+   						    html += '<li class="search-container2" data-value="' + json[i]['value'] + '">';
+                               if(json[i]['image']){              
+   						    html += '<div class="search-thumb"><img src="' + json[i]['image'] + '"/></div>';
+                               } 
+   				            html += '<div class="search-container">';			
+   						    html += '<div ><div class="search-name">' + json[i]['label'] + '</div><br/>';
+   							html += '<div class="price-new">' + json[i]['special'] + '</div></div>';
+   							if(json[i]['special']){ 
+   							html += '<div class="price-old">' + json[i]['price'] + '</div></div>';
+   							} else {
+   							html += '<div class="price">' + json[i]['price'] + '</div></div>';
+   							}
+   							html += '</div>';		
+                               html += '<div style="clear:both;"></div></li></a>';
+   						}
+   					}
+   					
+   		   html += '<a onclick="$(\'#search .btn-ser\').trigger(\'click\');" class="search-all">{{ aridius_livesearch_viewmore }}</a>';
+   					
+   				}
+   
+   				if (html) {
+   					this.show();
+   				} else {
+   					this.hide();
+   				}
+   
+   				$(this).siblings('ul.dropdown-menu').html(html);
+   			}
+   
+   			$(this).after('<ul class="dropdown-menu"></ul>');
+   			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
+   
+   		});
+   	}
+   })(window.jQuery);
+   
+   $('input[name=\'search\']').livesearch({
+   	'source': function(request, response) {
+   		$.ajax({
+   			url: 'index.php?route=extension/module/aridius_livesearch/livesearch&search=' +  encodeURIComponent(request),
+   			dataType: 'json',
+   			success: function(json) {
+   				response($.map(json, function(item) {
+   					return {
+                        label: item['name'],
+                        price: item['price'],
+                        special: item['special'],
+                        image: item['image'],
+                        href: item['href'],
+                        value: item['product_id']
+   					}
+   				}));
+   			}
+   		});
+   	},
+   	'select': function(item) {
+   		$('input[name=\'search\']').val(item['label']);
+   	}
+   });
+</script>

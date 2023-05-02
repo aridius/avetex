@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <code>wishlist_without_login</code>
+  <name>wishlist_without_login</name>
+  <version>v_1</version>
+  <author>wishlist_without_login</author>
+<file path="catalog/controller/account/wishlist.php">
+<operation error="skip">                           
+        <search><![CDATA[if (!$this->customer->isLogged()) {]]></search>
+        <add position="replace" offset="4"><![CDATA[
+              ]]></add>
+</operation>        
+<operation>
+        <search><![CDATA[
+            if (isset($this->request->get['remove'])) {]]></search>
+        <add position="after" offset="7"><![CDATA[
+            if (isset($this->request->get['remove_session'])) {
+            unset($this->session->data['wishlist'][array_search($this->request->get['remove_session'],$this->session->data['wishlist'])]);
+            if (empty($this->session->data['wishlist'])) {
+               $this->response->redirect($this->url->link('common/home'));
+            }
+          }
+            ]]></add>
+</operation>
+<operation>
+        <search><![CDATA[$data['products'] = array();]]></search>
+        <add position="after"><![CDATA[
+			if ($this->customer->isLogged()) {
+			]]></add>
+</operation>
+<operation>
+        <search><![CDATA[$this->model_account_wishlist->deleteWishlist($result['product_id']);]]></search>
+        <add position="after" offset="2"><![CDATA[
+			} else {
+                $results =  isset($this->session->data['wishlist']) ? $this->session->data['wishlist'] : [];
+            foreach ($results as $key => $result) {
+                $product_info = $this->model_catalog_product->getProduct($result);
+
+                if ($product_info) {
+                    if ($product_info['image']) {
+                        $image = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_height'));
+					} else {
+                        $image = false;
+                    }
+                    if ($product_info['quantity'] <= 0) {
+                        $stock = $product_info['stock_status'];
+                    } elseif ($this->config->get('config_stock_display')) {
+                        $stock = $product_info['quantity'];
+                    } else {
+                        $stock = $this->language->get('text_instock');
+                    }
+
+                    if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+                        $price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                    } else {
+                        $price = false;
+                    }
+
+                    if ((float)$product_info['special']) {
+                        $special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                    } else {
+                        $special = false;
+                    }
+
+                    $data['products'][] = array(
+                        'product_id' => $product_info['product_id'],
+                        'thumb' => $image,
+                        'name' => $product_info['name'],
+                        'model' => $product_info['model'],
+                        'stock' => $stock,
+                        'price' => $price,
+                        'special' => $special,
+                        'href' => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+                        'remove' => $this->url->link('account/wishlist', 'remove_session=' . $product_info['product_id'])
+                    );
+                } else {
+                   unset($this->session->data['wishlist'][$key]);
+                }
+            }
+		}
+        ]]></add>
+</operation>   
+<operation>                           
+        <search><![CDATA[$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));]]></search>
+        <add position="replace"><![CDATA[
+                $json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+      ]]></add>
+</operation>   
+</file> 
+</modification>

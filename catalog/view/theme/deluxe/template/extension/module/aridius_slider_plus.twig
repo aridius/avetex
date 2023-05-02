@@ -1,0 +1,71 @@
+{% if (aridius_slider_plus_top_links ) %}
+<div id="slideshow_plus{{ module }}" class="swiper-container">
+   <div class="swiper-wrapper">
+      {% for key,aridius_slider_plus_top_link in aridius_slider_plus_top_links %}
+      <div class="item swiper-slide">
+         <div class="container">
+            <a class="sliderp_link" href="{{ aridius_slider_plus_top_link['link'] }}" >
+               <div class="sliderp_caption" style="{{ aridius_slider_plus_top_link['background'] }}">
+                  <div class="sliderp_box order_sliderp_box">
+                     <div class="sliderp_name text-slider_plus2 ef-slider2" style="color:{{ aridius_slider_plus_top_link['color_name'] }}">
+                        {{ aridius_slider_plus_top_link['name'] }}
+                     </div>
+                     <div class="sliderp_text text-slider_plus3 ef-slider3">
+                        {{ aridius_slider_plus_top_link['description'] }}
+                     </div>
+                     {% if (aridius_slider_plus_top_link['price'] ) %}
+                     <div class="sliderp_price text-slider_plus3 ef-slider3" style="color:{{ aridius_slider_plus_top_link['color_price'] }}">
+                        {{ aridius_slider_plus_top_link['price'] }}
+                     </div>
+                     {% endif %}
+                     {% if (aridius_slider_plus_top_link['btn'] ) %}
+                     <div class="btn-sliderp text-slider_plus3 ef-slider3" style="background:{{ aridius_slider_plus_top_link['color_btn_b'] }}; color:{{ aridius_slider_plus_top_link['color_btn_c'] }}" onMouseOver="this.style.background='{{ aridius_slider_plus_top_link['color_btn_bh'] }}';this.style.color='{{ aridius_slider_plus_top_link['color_btn_ch'] }}'" onMouseOut="this.style.background='{{ aridius_slider_plus_top_link['color_btn_b'] }}';this.style.color='{{ aridius_slider_plus_top_link['color_btn_c'] }}'">{{ aridius_slider_plus_top_link['btn'] }}</div>
+                     {% endif %}
+                  </div>
+                  <div class="sliderp_image order_sliderp_image">
+                     <img src="{{ aridius_slider_plus_top_link['image_href'] }}" title="{{ aridius_slider_plus_top_link['name'] }}" alt="{{ aridius_slider_plus_top_link['name'] }}" class="img-responsive img_effect" width="{{ width }}" height="{{ height }}">
+                  </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+   <div class="swiper-pager">
+      <div class="#slideshow_plus{{ module }} swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+      <div class="#slideshow_plus{{ module }} swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+   </div>
+   <div class="#slideshow_plus{{ module }} swiper-pagination"></div>
+</div>
+{% endif %}
+<script>
+   $(document).ready(function () {
+   var SlideSwiper = new Swiper ('#slideshow_plus{{ module }}.swiper-container', {
+   slidesPerView: 1,
+   mode: 'horizontal',
+   {% if (transitionStyle != '0') %} effect: {% if (transitionStyle == '1') %}"fade",{% endif %}{% if (transitionStyle == '2') %}"coverflow",{% endif %}{% if (transitionStyle == '3') %}"cube",{% endif %} {% endif %}
+   loop: true,
+   autoplay: { delay: 5000, },
+   navigation: {
+   nextEl: '#slideshow_plus{{ module }} .swiper-button-next',
+   prevEl: '#slideshow_plus{{ module }} .swiper-button-prev',
+   },
+   paginationClickable: true,
+   pagination: {
+   el: '#slideshow_plus{{ module }} .swiper-pagination',
+   clickable: true,
+   },
+   });
+   SlideSwiper.on('transitionStart', function () {
+   for(let i = 1; i <= 4; i++) {
+   $('.swiper-slide').find('.text-slider_plus' + + i).removeClass('ef-slider' + i);
+   $('.swiper-slide.swiper-slide-active').find('.text-slider_plus' + i).addClass('ef-slider' + i);
+   }
+   });
+   $("#slideshow_plus{{ module }}.swiper-container").hover(function() {
+   SlideSwiper.autoplay.stop();
+   }, function() {
+   SlideSwiper.autoplay.start();
+   });
+   });
+</script>

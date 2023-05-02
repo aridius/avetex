@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]>
+<html dir="{{ direction }}" lang="{{ lang }}" class="ie8">
+<![endif]-->
+<!--[if IE 9 ]>
+<html dir="{{ direction }}" lang="{{ lang }}" class="ie9">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if (description) %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if (keywords) %}
+<meta name="keywords" content= "{{ keywords }}" />
+{% endif %}
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ og_url }}" />
+{% if (og_image) %}
+<meta property="og:image" content="{{ og_image }}" />
+{% else %}
+<meta property="og:image" content="{{ og_logo }}" />
+{% endif %}
+<meta property="og:site_name" content="{{ name }}" />
+{% if (deluxe_minify != 0) %}
+<script src="catalog/view/theme/deluxe/js/jquery/jquery-2.1.1.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/bootstrap/js/bootstrap.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/aridius/lazysizes.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/swiper/js/swiper.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/common.js"></script>
+<script src="catalog/view/theme/deluxe/js/bootstrap_rating/bootstrap-rating.js"></script>
+<script src="catalog/view/theme/deluxe/js/aridius/aridiusquickview.js"></script>
+<script src="catalog/view/theme/deluxe/js/aridius/slideout.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/magnific/jquery.magnific-popup.min.js"></script>
+<script src="catalog/view/theme/deluxe/js/aridius/module.js"></script>
+<link href="catalog/view/theme/deluxe/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="catalog/view/theme/deluxe/js/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/deluxe/stylesheet/stylesheet.css" rel="stylesheet">
+<link href="catalog/view/theme/deluxe/stylesheet/deluxe.css" rel="stylesheet">
+
+
+
+
+
+
+{% if (deluxe_cssct is not empty) %}
+<link href="catalog/view/theme/deluxe/stylesheet/{{ deluxe_cssct }}.css" rel="stylesheet">
+{% endif %}
+<link href="catalog/view/theme/deluxe/js/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/deluxe/js/magnific/magnific-popup.css" rel="stylesheet">
+<link href="catalog/view/theme/deluxe/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
+{% else %}
+<link rel="preload" as="style" href="/min/f=catalog/view/theme/deluxe/js/bootstrap/css/bootstrap.min.css,catalog/view/theme/deluxe/js/font-awesome/css/font-awesome.min.css,catalog/view/theme/deluxe/stylesheet/stylesheet.css,catalog/view/theme/deluxe/stylesheet/deluxe.css,{% if (deluxe_cssct is not empty) %}catalog/view/theme/deluxe/stylesheet/{{ deluxe_cssct }}.css,{% endif %}catalog/view/theme/deluxe/js/swiper/css/swiper.min.css,catalog/view/theme/deluxe/js/magnific/magnific-popup.css,catalog/view/theme/deluxe/stylesheet/animate.min.css"/>
+<link rel="stylesheet" href="/min/f=catalog/view/theme/deluxe/js/bootstrap/css/bootstrap.min.css,catalog/view/theme/deluxe/js/font-awesome/css/font-awesome.min.css,catalog/view/theme/deluxe/stylesheet/stylesheet.css,catalog/view/theme/deluxe/stylesheet/deluxe.css,{% if (deluxe_cssct is not empty) %}catalog/view/theme/deluxe/stylesheet/{{ deluxe_cssct }}.css,{% endif %}catalog/view/theme/deluxe/js/swiper/css/swiper.min.css,catalog/view/theme/deluxe/js/magnific/magnific-popup.css,catalog/view/theme/deluxe/stylesheet/animate.min.css"/>
+<link rel="preload" as="script" href="/min/f=catalog/view/theme/deluxe/js/jquery/jquery-2.1.1.min.js,catalog/view/theme/deluxe/js/bootstrap/js/bootstrap.min.js,catalog/view/theme/deluxe/js/aridius/lazysizes.min.js,catalog/view/theme/deluxe/js/swiper/js/swiper.min.js,catalog/view/theme/deluxe/js/common.js,catalog/view/theme/deluxe/js/aridius/aridiusquickview.js,catalog/view/theme/deluxe/js/aridius/slideout.min.js,catalog/view/theme/deluxe/js/magnific/jquery.magnific-popup.min.js,catalog/view/theme/deluxe/js/aridius/module.js,catalog/view/theme/deluxe/js/bootstrap_rating/bootstrap-rating.js"/>
+<script src="/min/f=catalog/view/theme/deluxe/js/jquery/jquery-2.1.1.min.js,catalog/view/theme/deluxe/js/bootstrap/js/bootstrap.min.js,catalog/view/theme/deluxe/js/aridius/lazysizes.min.js,catalog/view/theme/deluxe/js/swiper/js/swiper.min.js,catalog/view/theme/deluxe/js/common.js,catalog/view/theme/deluxe/js/aridius/aridiusquickview.js,catalog/view/theme/deluxe/js/aridius/slideout.min.js,catalog/view/theme/deluxe/js/magnific/jquery.magnific-popup.min.js,catalog/view/theme/deluxe/js/aridius/module.js,catalog/view/theme/deluxe/js/bootstrap_rating/bootstrap-rating.js"></script>
+{% endif %}
+{% for style in styles %}
+<link href="{{ style['href'] }}" type="text/css" rel="{{ style['rel'] }}" media="{{ style['media'] }}" />
+{% endfor %}
+{% for link in links %}
+<link href="{{ link['href'] }}" rel="{{ link['rel'] }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}"></script>
+{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+{% if (deluxe_font != "") %}
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600,700,800' rel='stylesheet' type='text/css'>
+{% endif %}
+{% if (deluxe_js is not empty) %}
+<script>
+{{ deluxe_js }}
+</script>
+{% endif %}
+<style>
+{% if (deluxe_show_fimg == 1) %}
+.cn .svg_tell, .cn .fa   {
+opacity:0!important;
+}
+.lcc {
+margin-left: 25px;
+}
+{% endif %}
+{% if (deluxe_show_topmenu_ico == 1) %}
+#top img, #top .fa {
+display:none;
+}
+{% endif %}
+{% if (deluxe_font != "") %}
+body {
+font-family:Source+Sans+Pro,sans-serif;
+}
+{% endif %}
+{{ deluxe_css }}
+#menu .seevmenu_clmm {
+border-radius: {{ deluxe_seevmenurad }}px;
+}
+#menu_clone_h .seevmenu_clmm {
+border-radius: {{ deluxe_seevmenurad }}px;
+}
+.product-thumb .product-name, .product-thumb_cart .product-name {
+height: {{ deluxe_height_symbolst2 }}px;
+}
+.product-name {
+display: -webkit-box;
+-webkit-line-clamp: {{ deluxe_height_symbolst }};
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+{% if (deluxe_seevmenuwlv != 1) %}
+.dropdown-submenu > .dropdown-menu2 {
+min-height: calc(100%)!important;
+}
+{% endif %}
+{% if (deluxe_cat_quantity == 1) %}
+.cat_quantity {
+display: none;
+}
+{% endif %}
+{% if (deluxe_compact_list == 0) %}
+@media screen and (min-width: 768px) {
+.news_list .product-list .image {
+width: 270px;
+}
+}
+{% endif %}
+{% if (deluxe_options_circle_cat == 0) %}
+.imgpopcat, .imgpopcatqv {
+border-radius: 50%;
+}
+{% endif %}
+{% if (deluxe_seevmenu_menu_open_cl == 0) %}
+#menu .dropdown:hover .dropdown-menu.open_click {
+margin-top: 0px;
+opacity: 0;
+visibility: hidden;
+height: auto;
+transition: all 320ms, opacity 0ms;
+-webkit-transition:  all 320ms, opacity 0ms;
+-o-transition:  all 320ms, opacity 0ms;
+z-index: 1007;
+}
+#menu .open .dropdown-menu.open_click {
+display:block;
+position: absolute;
+opacity: 1!important;
+visibility: visible!important;
+}
+{% endif %}
+{% if (deluxe_options_prise == 0) %}
+.hide_optprise {
+display: none;
+}
+{% endif %}
+{% if (deluxe_options_prise_cat == 0) %}
+.hide_optprise_cat {
+display: none;
+}
+{% endif %}
+{% if (deluxe_options_prisefor == 1) %}
+.hide_optprise {
+display: none;
+}
+{% endif %}
+{% if (deluxe_options_prisefor_cat == 1) %}
+.hide_optprise_cat {
+display: none;
+}
+{% endif %}
+.block_desc {
+height: {{ deluxe_categories_limit_height }}px;
+}
+.block_desc2 {
+{% if (aridius_text_home_height is not empty) %}
+height: {{ aridius_text_home_height }}px;
+{% else %}
+height: auto;
+{% endif %}
+}
+{% if (aridius_cookie_status == '1') %}
+#section_cookies, .section_indents a {
+color: {{ aridius_cookie_col }};
+background: {{ aridius_cookie_back }};
+}
+.section_indents a:hover {
+color: inherit;
+}
+{% endif %}
+.btn-cart, .btn-slider, .btn-instock, .load_more, .cart .snav, .gtile-i-wrap:hover .snav.en li a span, .btn-danger, .btn-primary, .btn-default  {
+border-radius: {{ deluxe_border_cart }}px;
+}
+.stickers-all, .stickers-top, .stickers-special, .stickers-new {
+border-radius: {{ deluxe_border_stickers }}px;
+}
+.dropdown.hidev > a, .dropdown.hidev .vmenu, .posted-aridius_news {
+color: {{ deluxe_color81 }}!important;
+fill: {{ deluxe_color81 }};
+}
+.dropdown.hidev > a:hover, .dropdown.hidev:hover .vmenu {
+color: {{ deluxe_color82 }}!important;
+fill: {{ deluxe_color82 }}!important;
+}
+.dropdown.hidev, .posted-aridius_news  {
+background: {{ deluxe_color131 }};
+}
+.dropdown.hidev:hover  {
+background: {{ deluxe_color132 }};
+}
+#top {
+background: {{ deluxe_color1 }};
+border-bottom: 1px solid {{ deluxe_color7 }};
+}
+#top .btn-link, #top-links li, #top-links a, #top .lc a {
+color: {{ deluxe_color2 }};
+}
+#top .btn-link:hover, #top-links li:hover, #top-links a:hover, #top .lc a:hover, .h_car:hover .caret  {
+color: {{ deluxe_color3 }};
+}
+.top-header{
+background: {{ deluxe_color4 }};
+}
+.tell_nav, .phone .caret, .call_v1.call-order, .cart-price {
+color: {{ deluxe_color5 }};
+}
+.mob_phone .listunstyled, .mob_search2.serv2 .sub_sear, .mob_settings .listunstyled, .header_v1 .sub_sear:before, #frame2, .mob_compare .fr2 , .mob_wish .fr2  {
+color: {{ deluxe_color6 }}!important;
+fill: {{ deluxe_color6 }};
+}
+.cart-item, .cart-item_h {
+background: {{ deluxe_color8 }};
+}
+.cart-item-after, .cart-item-after_h {
+color: {{ deluxe_color9 }};
+}
+.mob_phone,.mob_compare, .mob_wish, .btn_cur_lang.active, .btn_cur_lang:hover, .btn_cur_lang:focus, .btn_cur_lang   {
+border-right: 1px solid {{ deluxe_color10 }};
+}
+#search .btn-ser{
+background: {{ deluxe_color128 }};
+color: {{ deluxe_color11 }};
+}
+#search .btn-ser:hover{
+background: {{ deluxe_color129 }};
+color: {{ deluxe_color12 }};
+}
+.inp_sear.form-control {
+background: {{ deluxe_color130 }};;
+border-color: {{ deluxe_color130 }};;
+}
+#top-menu, #menu_scroll.top-header2, .top-menu_p {
+background: {{ deluxe_color13 }} none repeat scroll 0 0;
+}
+#top-menu, #menu_scroll.top-header2, .top-menu_p {
+background: {{ deluxe_color13 }} none repeat scroll 0 0;
+}
+#top-menu {
+border-bottom: 1px solid {{ deluxe_color110 }};
+border-top: 1px solid {{ deluxe_color110 }};
+}
+.block_mheader {
+background: {{ deluxe_color120 }};
+}
+.block_mheader a, body .block_mheader, .block_mheader .currency-select, .block_mheader .language-select {
+color: {{ deluxe_color121 }}!important;
+}
+.block_mheader a:hover, .block_mheader .currency-select:hover, .block_mheader .language-select:hover, #menu_m .active {
+color: {{ deluxe_color122 }}!important;
+}
+.block_mheader i {
+background: {{ deluxe_color123 }}!important;
+}
+.slideout-menu, .slideout-menu .dropdown-menu  {
+background: {{ deluxe_color124 }}!important;
+}
+.slideout-menu i {
+background: {{ deluxe_color125 }};
+}
+.slideout-menu i {
+color: {{ deluxe_color126 }};
+}
+.day, .hour, .min, .sec {
+background:  {{ deluxe_color112 }};
+}
+.countdown .day .num, .countdown .hour .num, .countdown .min .num, .countdown .sec .num, .countdown .day .word, .countdown .hour .word, .countdown .min .word, .countdown .sec .word {
+color:  {{ deluxe_color113 }};
+}
+.gridcount {
+background:  {{ deluxe_color114 }};
+color:  {{ deluxe_color116 }};
+border: 2px solid {{ deluxe_color116 }};
+}
+.gridcount:hover {
+background:  {{ deluxe_color115 }};
+color:  {{ deluxe_color117 }};
+}
+ul.line_cat li {
+background: {{ deluxe_color119 }};
+}
+
+.footer_line {
+background-color: {{ deluxe_color119 }};
+}
+#menu .nav > li > a {
+color: {{ deluxe_color14 }};
+}
+.menu_icon_svg {
+fill: {{ deluxe_color14 }};
+}
+#menu .nav > li > a:hover,  #menu .nav > li.activetopmenu > a {
+color:  {{ deluxe_color15 }};
+}
+#menu .nav > li > a:hover .menu_icon_svg,  #menu .nav > li.activetopmenu > a .menu_icon_svg {
+fill: {{ deluxe_color15 }};
+}
+.swiper-slide-selected img {
+border: 1px solid {{ deluxe_color38 }}!important;
+}
+.menuv-all, .menuv-allv{
+color: {{ deluxe_color17 }}!important;
+}
+.menuv-all:hover, .menuv-allv:hover {
+color: {{ deluxe_color18 }}!important;
+}
+.stickersmenu1, .stickersmenu1:after, .stickersmenu1v {
+background: {{ deluxe_color19 }};
+color: {{ deluxe_color20 }};
+}
+.stickersmenu2, .stickersmenu2:after, .stickersmenu2v {
+background: {{ deluxe_color21 }};
+color: {{ deluxe_color22 }};
+}
+.stickersmenu3, .stickersmenu3:after, .stickersmenu3v {
+background: {{ deluxe_color23 }};
+color: {{ deluxe_color24 }};
+}
+.btn-cart, .btn-slider, .btn-primary, .load_more, .load_more:focus, .noUi-connect, .btn-default, .cart .snav, .a.section_accept span:hover, .gtile-i-wrap .cart .snav span{
+background: {{ deluxe_color25 }};
+border: 1px solid {{ deluxe_color25 }};
+color: {{ deluxe_color26 }};
+fill: {{ deluxe_color26 }};
+}
+.load_more:focus {
+color: {{ deluxe_color26 }}!important;
+}
+.ocf-noUi-connect::before, .ocf-noUi-handle, .ocf-theme-light .ocf-search-btn-static, .ocf-theme-light .ocf-search-btn-popover, .ocf-theme-light .ocf-search-btn-static.ocf-disabled, .ocf-theme-light .ocf-search-btn-popover.ocf-disabled, .ocf-btn-mobile-fixed .ocf-btn {
+background-color: {{ deluxe_color25 }}!important;
+}
+.ocf-btn:hover, .ocf-btn:focus {
+background-color: {{ deluxe_color30 }}!important;
+}
+.ocf-btn-link:hover, .ocf-btn-link:focus {
+background-color: transparent!important;
+}
+.w_clock_pr2 {
+fill: {{ deluxe_color26 }};
+}
+.arcart_popup .w_clock_pr {
+fill: {{ deluxe_color26 }}!important;
+}
+.list-group a:hover::after {
+background: {{ deluxe_color25 }};
+}
+.mail_envelope .fa, .footer_mail i, .address i, .work_time_all i  {
+color: {{ deluxe_color25 }};
+opacity: 0.7;
+}
+a.section_accept span:hover {
+color: {{ deluxe_color25 }};
+}
+.btn-instock, .btn-instock2, .instockf.cart .snav{
+background: {{ deluxe_color27 }};
+color: {{ deluxe_color28 }};
+fill: {{ deluxe_color28 }};
+border: 1px solid {{ deluxe_color29 }}!important;
+}
+.btn-cart:hover, .btn-slider:hover, .gtile-i-wrap .cart .snav span:hover,.cart:hover .snav span, .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled], .load_more:hover, .btn-default:hover, .product-layout:hover .btn-cart, .product-layout_carusel:hover .btn-cart, .cart .snav:hover, .cart .snav:hover, .percent_line  {
+background: {{ deluxe_color30 }}!important;
+border: 1px solid {{ deluxe_color30 }}!important;
+color: {{ deluxe_color31 }}!important;
+fill: {{ deluxe_color31 }}!important;
+}
+.arcart_popup .w_clock_pr {
+fill: {{ deluxe_color31 }}!important;
+}
+.btn-cart:hover .w_clock_pr2 {
+fill: {{ deluxe_color31 }}!important;
+}
+.btn-instock:hover, .btn-instock2:hover, .instockf.cart .snav:hover, .instockf.cart .snav:hover span {
+background: {{ deluxe_color32 }};
+color: {{ deluxe_color33 }};
+border: 1px solid {{ deluxe_color34 }}!important;
+}
+.btn-cart__fastorder {
+background: {{ deluxe_color86 }};
+color: {{ deluxe_color87 }};
+border: 1px solid {{ deluxe_color88 }};
+}
+.w_clock_pr {
+fill:{{ deluxe_color87 }};
+}
+.btn-cart__fastorder:hover .w_clock_pr {
+fill:{{ deluxe_color90 }};
+}
+.btn-cart__fastorder:hover{
+background: {{ deluxe_color89 }};
+color: {{ deluxe_color90 }};
+border: 1px solid {{ deluxe_color91 }};
+}
+.price-new, .prise_spec_clone, .sp_salep {
+color: {{ deluxe_color35 }};
+}
+.price-old, .prise_clone {
+color: {{ deluxe_color36 }};
+}
+.price, .price_bot {
+color: {{ deluxe_color102 }};
+}
+.nav-tabs.mod > li.active > a, .nav-tabs.mod > li.active > a:focus, .nav-tabs.mod > li.active > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+border-bottom: 2px solid {{ deluxe_color37 }};
+}
+
+.section_child li:last-child{
+color: {{ deluxe_color38 }};
+border-bottom: 1px solid {{ deluxe_color38 }};
+}
+.tmb-wrap-table div.active {
+border-color: {{ deluxe_color38 }};
+}
+.currency-select:hover, .language-select:hover, .product-layoutwa_v2:hover .namelink_v2, .buttonsaridius_news a, .review_profile:hover, .menu_slow:hover  {
+color: #333!important;
+}
+a:focus, a:hover, .contact_usp .title_tell:hover, .search-all:hover, .breadcrumb > li > a:hover, .buttonsaridius_news a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover, .list-unstyled li span a:hover, .list-unstyled li a:hover, .namelink a:hover, .product-layout:hover .product-name a, .product-layout_cat:hover .product-name a, .rating a:hover, .swiper-button-prev:hover, .swiper-button-next:hover, .swiper-pagination-bullet-active, .news_link a:hover {
+color: #333!important;
+}
+.swiper-pagination-bullet-active {
+background: {{ deluxe_color39 }}!important;
+}
+.ico_msvg {
+fill: {{ deluxe_color111 }};
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+background: {{ deluxe_color39 }};
+}
+.stickers-new{
+background: {{ deluxe_color40 }};
+color: {{ deluxe_color41 }};
+}
+.stickers-special{
+background: {{ deluxe_color42 }};
+color: {{ deluxe_color43 }};
+}
+.stickers-top{
+background: {{ deluxe_color44 }};
+color: {{ deluxe_color45 }};
+}
+.btn-default2.active, .btn:hover {
+color: {{ deluxe_color46 }};
+}
+footer {
+background-color: {{ deluxe_color48 }};
+}
+.footer-name {
+color: {{ deluxe_color49 }};
+}
+footer .list-unstyled li ,footer .list-unstyled li a, .aboutus_footer, .copyrightf, footer a, .cat_footer {
+color: {{ deluxe_color50 }};
+}
+footer .list-unstyled li a:hover, footer a:hover, .cat_footer:hover  {
+color: {{ deluxe_color51 }};
+}
+.afterf.footer-name::after {
+border-color: {{ deluxe_color51 }};
+}
+.footercon_mail{
+background-color: #d5d5d5;
+padding: 1.5rem 0 1.5rem;
+}
+.footer_mailtext_back {
+color: {{ deluxe_color56 }};
+}
+.btn-send {
+background: {{ deluxe_color57 }};
+color: {{ deluxe_color58 }};
+}
+.btn-send:hover {
+background: {{ deluxe_color59 }};
+color: {{ deluxe_color60 }};
+}
+.textdanger, .textsuccess{
+color: {{ deluxe_color61 }};
+}
+.scup {
+background: {{ deluxe_color62 }};
+}
+a.scup i {
+color: {{ deluxe_color63 }};
+}
+a.scup i:hover {
+color: {{ deluxe_color64 }};
+}
+.circle {
+box-shadow: 0 0 8px 20px {{ deluxe_color65 }};
+}
+.circle_mess {
+box-shadow: 0 0 8px 14px {{ deluxe_color65 }};
+}
+.circleout, .messenger-btn {
+background-color: {{ deluxe_color65 }};
+color: {{ deluxe_color66 }};
+fill: {{ deluxe_color66 }};
+}
+.cart_fixed {
+background: {{ deluxe_color67 }};
+}
+#cart_clone .cart-item {
+background: {{ deluxe_color68 }};
+}
+#cart_clone .fr4 {
+fill: {{ deluxe_color69 }};
+}
+#cart_clone .cart-item-after {
+color: {{ deluxe_color70 }};
+}
+.wishlist_fixed, .compare_fixed {
+background: {{ deluxe_color71 }};
+}
+.item_blright {
+background: {{ deluxe_color72 }};
+color: {{ deluxe_color74 }};
+}
+#compare_clone #compare-total2, #wishlist_clone #wishlist-total2{
+color: {{ deluxe_color74 }}!important;
+}
+#wishlist_clone .fr3, #compare_clone .fr3 {
+fill: {{ deluxe_color73 }};
+}
+.bar1, .bar2, .bar3 {
+color: {{ deluxe_color92 }};
+}
+.btn-mobmenu_clone_h {
+background: {{ deluxe_color127 }}!important;
+}
+#menu_scroll {
+opacity: {{ deluxe_color80 }};
+}
+#menu .dropdown-inner a, .box-category > ul > li a, .dropdown-menu.multi-level > li > a, #menu li .dropdown-submenu a, #menu .dropdown-inner1 a, .dropdown-menu.multi-level > .scroll_menu ul > li > a, .dropdown-menu2 a {
+color: {{ deluxe_color75 }};
+}
+.menu_icon_svg2lv, .menuv_icon_svg {
+fill: {{ deluxe_color75 }};
+}
+#menu li a:hover, .box-category > ul > li a:hover, #menu li .dropdown-submenu a:hover, .v3hover a:hover, .dropdown-inner1 ul li a:hover, .panel-default > .panel-heading a:hover, .dropdown-menu2 a:hover {
+color: {{ deluxe_color76 }};
+}
+.dropdown-submenu:hover > a, .v3hover:hover > a {
+color: {{ deluxe_color76 }}!important;
+}
+#menu li a:hover .menu_icon_svg2lv, #menu li a:hover .menuv_icon_svg, .dropdown-submenu:hover .menuv_icon_svg, .v3hover:hover .menuv_icon_svg {
+fill: {{ deluxe_color76 }};
+}
+.price-old, .prise_clone {
+text-decoration-color: {{ deluxe_color84 }};
+}
+.menu_mob_plus .nav > li > a, .cart_open_mmenu, .tell_mmenu a, .mail_mmenu a, .address_mmenu, .work_time_mmenu, .cat_mob, .home_mob a, .menu_mob_plus .dropdown-inner a, .block_mheader i  {
+color:{{ deluxe_color93 }}!important;
+}
+.menu_mob_plus .menumob_icon_svg   {
+fill:{{ deluxe_color93 }}!important;
+}
+.menu_mob_plus .nav > li > a:hover, .cart_open_mmenu:hover, .tell_mmenu a:hover, .mail_mmenu a:hover, .home_mob a:hover, .menu_mob_plus .dropdown-inner a:hover {
+color:{{ deluxe_color94 }}!important;
+}
+.menu_mob_plus .nav > li > a:hover .menumob_icon_svg {
+fill:{{ deluxe_color94 }}!important;
+}
+.btn-more {
+background: {{ deluxe_color95 }};
+color: {{ deluxe_color96}}!important;
+}
+.btn-more:hover {
+background: {{ deluxe_color97 }};
+color: {{ deluxe_color98}}!important;
+}
+@media (max-width: 991px) {
+#top-menu {
+background: {{ deluxe_color4 }};
+}
+}
+@media (min-width: 992px) {
+{% if (deluxe_vmenuheight is not empty and class == 'common-home' ) %}
+#menu_colheight {
+min-height: {{ deluxe_vmenuheight }}px;
+}
+{% endif %}
+#menu .dropdown-menu{
+border-top: 2px solid {{ deluxe_color16 }};
+}
+}
+{% if (deluxe_description_cat == 1) %}
+.product-grid .description_cat{
+display: none;
+}
+{% endif %}
+{% if (deluxe_seevmenu_menu != 1) %}
+@media (min-width: 992px) {
+.hidem{
+display: none!important;
+}
+}
+{% endif %}
+{% if (deluxe_callleftr != 1) %}
+.container-circle {
+right: 30px;
+}
+{% else %}
+.container-circle {
+left: 5px;
+}
+{% endif %}
+{% if (deluxe_show_cart == 1) %}
+.cart, .btn-cart, .mob_cart, .hide_forder {
+display:none;
+}
+{% endif %}
+{% if (deluxe_show_price == 1) %}
+.price, .line-product, .pull-left1, .compare_none {
+display:none;
+}
+{% endif %}
+.block_desc:after, .block_desc2:after {
+background: -moz-linear-gradient(top,  rgba({{ deluxe_color103 }},0) 0%, rgba({{ deluxe_color103 }},1) 100%);
+background: -webkit-linear-gradient(top,  rgba({{ deluxe_color103 }},0) 0%,rgba({{ deluxe_color103 }},1) 100%);
+background: linear-gradient(to bottom,  rgba({{ deluxe_color103 }},0) 0%,rgba({{ deluxe_color103 }},1) 100%);
+}
+.navbar-fixed .nav_pr.nav-tabs:after {
+background: -moz-linear-gradient(linear,left top,right top,from(rgba({{ deluxe_color103 }},.2)),to(rgba({{ deluxe_color103 }})));
+background: -webkit-gradient(linear,left top,right top,from(rgba({{ deluxe_color103 }},.2)),to(rgba({{ deluxe_color103 }})));
+background: linear-gradient(to right,rgba({{ deluxe_color103 }},.2),rgba({{ deluxe_color103 }}));
+}
+body, #content, .nav_pr_sc, .st_cart, .atr span  {
+background-color: rgba({{ deluxe_color103 }});
+}
+body, .title_bot, .attribute_cat, .dropdown-menu > li > a, #content,.description-aridius_news p, .rating a, .rating span, .accountv a, .contact_usp .title_tell, .contact_usp .footer_mail a {
+color: {{ deluxe_color104 }}!important;
+}
+.dropdown-menu, .dropdown-menu2, .boxadd, .product-layout .gtile-i:hover .gtile-i-box, .product-layout_cat.product-grid .gtile-i:hover .gtile-i-box, .product-layout_carusel .gtile-i:hover .gtile-i-box, .box-category, #column-left .product-layoutnews, .panel-default > .panel-heading, .table-striped > tbody > tr:nth-of-type(2n+1), .product-layout_left, .list-group-item, .well, .callback, .name-popup, .instock {
+background-color: {{ deluxe_color105 }}!important;
+}
+.gtile-i-wrap, .cat_add, .product-layoutwa_v2, .review-thumb, .avr_all, .block_desc_all, .block_ico, .combo-set2 {
+background: {{ deluxe_color105 }};
+}
+.mailletters.colleft, .contact_usp, .form-control, .image-additional img, .product-layoutwa_v2, .product-layout_left, .product-layoutnews, .panel-default > .panel-heading, .box-category, .dropdown-menu, .review_table, .accountv {
+border: 1px solid {{ deluxe_color106 }};
+}
+.list-group-item {
+border: 1px solid {{ deluxe_color106 }};
+}
+.rating_main {
+border-bottom: 1px solid {{ deluxe_color106 }};
+}
+.gtile-i-wrap, .catfl .input-group-addon, .cat_add, .block_ico, #list-view, #grid-view, .bannerp_caption, .product-layout_rew.avr_all.cl1, .product-layout_rew.review-thumb.transition, .combo-set2, .well {
+border: 1px solid {{ deluxe_color106 }}!important;
+}
+#product-tab .tabshadow a:after {
+color: {{ deluxe_color106 }};
+}
+@media (min-width: 768px) {
+.product-list .product_stp, .product-list .boxadd {
+border-left: 1px solid {{ deluxe_color106 }};
+}
+}
+.nav_pr.nav-tabs {
+border-bottom: 1px solid {{ deluxe_color106 }};
+}
+.attribute_name, .autocalc-saving-text, .autocalc-saving-price, .dropdown-header, .caption a, .title-module, .atr_name, .nav-tabs > li > a, .buttonsaridius_news a, .namelink_v2 a, .namelink_v2, .box-category > ul > li a, h1, .panel-default > .panel-heading a,legend, .list-group a, .catpr2, .callback .name-popup, .callback .mfp-close,.instock .name-popup, .instock .mfp-close, .instock_fl .mfp-close, .instock .name-product, .item-title a, .nav-tabs.mod > li.active > a, .nav-tabs.mod > li.active > a:focus  {
+color: {{ deluxe_color107 }};
+}
+.nav-tabs > li > a:hover, .nav-tabs.mod > li.active > a:hover, .product-name a:hover, #news_carusel .product-layout:hover .product-namenews a , .fastorder:hover, .fastorder:hover .w_clock, .fastorder2:hover, .fastorder2:hover .w_clock, .linksm_hiver:hover .text-links, .call-order:hover .text-links, .accountv a:hover {
+color: {{ deluxe_color109 }}!important;
+}
+.fastorder:hover .w_clock, .fastorder2:hover .w_clock  {
+fill: {{ deluxe_color109 }};
+}
+.form-control, .input-group-addon {
+background-color: {{ deluxe_color108 }};
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+.scroll_menu ul li:nth-child(n+{{ deluxe_countcat_md }}) {
+display: none;
+}
+}
+@media (min-width: 1200px) and (max-width: 1599px) {
+.scroll_menu ul li:nth-child(n+{{ deluxe_countcat_lg }}) {
+display: none;
+}
+}
+@media (min-width: 1600px) {
+.scroll_menu ul li:nth-child(n+{{ deluxe_countcat_xl }}) {
+display: none;
+}
+}
+</style>
+</head>
+<body class="{{ class }}">
+   <div id="scroll"></div>
+   <div class="overlay" style="display: none;"></div>
+   <div class="overlay_cart"></div>
+   {% if (deluxe_preloader != 1) %}
+   <!--preloader-->
+   <div id="preloader">
+      <i class="fa fa-spinner fa-spin"></i>
+   </div>
+   {% endif %}
+   {% if (deluxe_arrowup != 1) %}
+   <span class="{% if (deluxe_arrowup_mobile != 1) %} visible-xs visible-sm {% endif %} visible-md visible-lg"><a href="#" class="scup">
+   <i class="fa fa-angle-up active"></i>
+   </a></span>
+   {% endif %}
+   <!--col_cart-->
+   <div class="right_fixed">
+      {% if (deluxe_cart_right != 1) %}
+      <div class="cart_fixed cart_openp" {% if (deluxe_right_tittle != 1) %} data-toggle="tooltip" data-placement="left" title="{{ text_cartp }}"{% endif %}>
+      <div id="cart_clone">
+         {{ cart2 }}
+      </div>
+   </div>
+   {% endif %}
+   {% if (deluxe_wish_right != 1) %}
+   <a class="wishlist_fixed" href="{{ wishlist }}" {% if (deluxe_right_tittle != 1) %} data-toggle="tooltip" data-placement="left" title="{{ text_wishlistp }}{% endif %}">
+   <div id="wishlist_clone">
+      <b class="fr3 cartphotos"> {{ deluxe_wl_img }}</b>
+      <span class="item_blright"><span class="item-after_blright"><span id="wishlist-total2"> {{ text_wishlist }}</span></span></span>
+   </div>
+   </a>
+   {% endif %}
+   {% if (deluxe_comp_right != 1) %}
+   <a class="compare_fixed" href="{{ compare }}" {% if (deluxe_right_tittle != 1) %} data-toggle="tooltip" data-placement="left" title="{{ text_comparep }}{% endif %}">
+   <div id="compare_clone">
+      <b class="fr3 cartphotos"> {{ deluxe_cm_img }}</b>
+      <span class="item_blright item_blright2"><span class="item-after_blright"><span id="compare-total2"> {{ text_compare }}</span></span></span>
+   </div>
+   </a>
+   {% endif %}
+   </div>
+   <!--col_cart end-->
+   <div id="wishlist" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+               <p></p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div id="compare" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+               <p></p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="bantop hidden-xs hidden-sm scaleslide">
+      {{ content_topfl }}
+   </div>
+   {% if (deluxe_show_topmenu != 1) %}
+   <nav id="top">
+      <div class="container nobackground">
+	  <div class="pull-left">
+	  <a href="/company/financing?sitecode=lsacll1d1" style="text-decoration: none; display: flex; align-items: center;">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="14" height="14" fill="#ffffff" data-userway-s19-styled="true" data-text-align-feature-value="3" style="text-align: center !important; transition: all 0s ease 0s;"><path d="M368 0C394.5 0 416 21.49 416 48V96H466.7C483.7 96 499.1 102.7 512 114.7L589.3 192C601.3 204 608 220.3 608 237.3V352C625.7 352 640 366.3 640 384C640 401.7 625.7 416 608 416H576C576 469 533 512 480 512C426.1 512 384 469 384 416H256C256 469 213 512 160 512C106.1 512 64 469 64 416H48C21.49 416 0 394.5 0 368V48C0 21.49 21.49 0 48 0H368zM416 160V256H544V237.3L466.7 160H416zM160 368C133.5 368 112 389.5 112 416C112 442.5 133.5 464 160 464C186.5 464 208 442.5 208 416C208 389.5 186.5 368 160 368zM480 464C506.5 464 528 442.5 528 416C528 389.5 506.5 368 480 368C453.5 368 432 389.5 432 416C432 442.5 453.5 464 480 464z" data-userway-s19-styled="true" data-text-align-feature-value="3" style="text-align: center !important; transition: all 0s ease 0s;" wz_dt_ref="true"></path></svg>&nbsp;&nbsp;FREE DEVLIVERY SF and BAY AREA
+                            </a>
+	  </div>
+
+         {% if (deluxe_show_topmenu_set != 1) %}
+         {{ currency }}
+         {{ language }}
+         {% endif %}
+         <div id="top-links" class="nav pull-right">
+            <nav class="topnav">
+               <ul class="nav-list list-inline text-center">
+                  {% if (deluxe_top_links6 ) %}
+                  {% for deluxe_top_link6 in deluxe_top_links6 %}
+                  <li>
+                     <a {% if (deluxe_top_link6['link_top'][language_id]) %} href="{{ deluxe_top_link6['link_top'][language_id] }}"{% endif %} title="{{ deluxe_top_link6['title'][language_id] }}">{% if (deluxe_top_link6['faicons_top']) %} <i class="{{ deluxe_top_link6['faicons_top'] }}"></i>{% endif %}{% if (deluxe_top_link6['title']) %} {{ deluxe_top_link6['title'][language_id] }}{% endif %}</a>
+                  </li>
+                  {% endfor %}
+                  {% endif %}
+               </ul>
+            </nav>
+         </div>
+      </div>
+   </nav>
+   {% endif %}
+   <div class="fix-header">
+      <div class="top-header">
+         <header>
+            <div class="container">
+               <div class="row vertical-align">
+                  <div class="col-xs-3 col-sm-1 hidden-md hidden-lg order_menu_m">
+                     <nav id="menu_m" class="menu_mobile"></nav>
+                     <span id="main_m" class="panel"></span>
+                     <div id="mobmenu_clone_h">
+                        <button onclick="mobmenu_clone_h();" class="toggle_m toggle js-slideout-toggle">
+                        <span class="bar1"></span>
+                        <span class="bar2"></span>
+                        <span class="bar3"></span>
+                        </button>
+                     </div>
+                  </div>
+                  {% if (deluxe_seevmenu_menulogo != 1) %}
+                  <div class="hidden-xs hidden-sm col-md-1 col-lg-1">
+                     {{ menu }}
+                  </div>
+                  {% endif %}
+                  <div class="col-xs-6 col-sm-7 col-md-3 col-lg-2 hidden_mob order_logo">
+                     <div id="logo">
+                        {% if (logo) %}
+                        {% if (home == og_url) %}
+                        <img src="{{ logo }}" width="{{ deluxe_image_location_width }}" height="{{ deluxe_image_location_height }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                        {% else %}
+                        <a href="{{ home }}"><img src="{{ logo }}" width="{{ deluxe_image_location_width }}" height="{{ deluxe_image_location_height }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+                        {% endif %}
+                        {% else %}
+                        <h1><a href="{{ home }}">{{ name }}</a></h1>
+                        {% endif %}
+                     </div>
+                  </div>
+				      {% if (deluxe_seevmenu_menulogo != 1) %}
+					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 order_sear">
+					  {% else %}
+					 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 order_sear">
+					  {% endif %}
+                  <div id="search_clone_h">
+                        {{ search }}
+                     </div>
+                  </div>
+  
+                  <div class="fix_mxs2 col-xs-3 col-sm-4 col-md-3 col-lg-4 order_setclone hidden_mob">
+                     <div id="setclone">
+					  <div class="{% if (deluxe_seevmenu_menulogo != 1) %}plz{% endif %} hidden-xs hidden-sm order_tell">
+                     <div id="tell_clone_h">
+					 
+					         			<div class="header--call">
+									<div class="header--call--img">
+											<!--?xml version="1.0" encoding="utf-8"?--><svg fill="#000000" xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve">
+											  <path d="M48.5,37.9L42.4,33c-1.4-1.1-3.4-1.2-4.8-0.1l-5.2,3.8c-0.6,0.5-1.5,0.4-2.1-0.2l-7.8-7l-7-7.8
+							c-0.6-0.6-0.6-1.4-0.2-2.1l3.8-5.2c1.1-1.4,1-3.4-0.1-4.8l-4.9-6.1c-1.5-1.8-4.2-2-5.9-0.3L3,8.4c-0.8,0.8-1.2,1.9-1.2,3
+							c0.5,10.2,5.1,19.9,11.9,26.7S30.2,49.5,40.4,50c1.1,0.1,2.2-0.4,3-1.2l5.2-5.2C50.5,42.1,50.4,39.3,48.5,37.9z"></path>
+											</svg>
+										  </div>
+							  <div class="header--call--txt">
+								<p>Call us Toll Free</p> <a href="tel:{{ deluxe_telephone_mainheader[language_id] }}">{{ deluxe_telephone_mainheader[language_id] }}</a>
+							  </div>
+									</div>
+                        <!-- {% if (deluxe_tell != 1) %} -->
+                        <!-- <div class="dropdown phone"> -->
+                           <!-- <div class="tell_allh"> -->
+                              <!-- <div class="listunstyled"> -->
+                                 <!-- <a class="tell_nav" href="tel:{{ deluxe_telephone_mainheader2[language_id] }}"><span class="title_tell">{{ deluxe_telephone_mainheader[language_id] }}</span></a> -->
+                                 <!-- <a class="tell_nav" href="tel:{{ deluxe_telephone_mainheader2n2[language_id] }}"><span class="title_tell">{{ deluxe_telephone_mainheadern2[language_id] }}</span></a> -->
+                              <!-- </div> -->
+                           <!-- </div> -->
+                           <!-- <div class="h_car listunstyled btn-lg  dropdown-toggle" data-toggle="dropdown"> -->
+                              <!-- <b class="caret"></b> -->
+                           <!-- </div> -->
+                           <!-- <ul class="dropdown-menu fixxsmenu"> -->
+                              <!-- <li class="dropdown-header"><i class="fa fa-phone"></i> {{ dropdown_tell }}</li> -->
+                              <!-- {% if (theme_tells ) %} -->
+									<!-- <a  href="tel:{{ deluxe_telephone_mainheader2[language_id] }}" ><span class="title_tell">{{ deluxe_telephone_mainheader[language_id] }}</span></a> -->
+									<!-- <a  href="tel:{{ deluxe_telephone_mainheader2n2[language_id] }}" ><span class="title_tell">{{ deluxe_telephone_mainheadern2[language_id] }}</span></a> -->
+                              <!-- {% for theme_tell in theme_tells %} -->
+                              <!-- <li> -->
+                                 <!-- <a {% if (theme_tell['title']) %} href="tel:{{ theme_tell['title2'] }}"{% endif %} >{% if (theme_tell['image']) %}<span class="svg_tell"><img src="{{ theme_tell['image'] }}" alt="phone"></span>{% endif %}<span class="title_tell">{{ theme_tell['title'] }}</span></a> -->
+                              <!-- </li> -->
+                              <!-- {% endfor %} -->
+                              <!-- {% endif %} -->
+                              <!-- {% if ((deluxe_work_time is not empty or (deluxe_work_time1 is not empty) or deluxe_work_time2 is not empty)) %} -->
+                              <!-- <li class="drop_head"></li> -->
+                              <!-- <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ dropdown_work_time }}</li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (deluxe_work_time is not empty) %} -->
+                              <!-- <li class = "work_time"> -->
+                                 <!-- {{ deluxe_work_time }} -->
+                              <!-- </li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (deluxe_work_time1 is not empty) %} -->
+                              <!-- <li class = "work_time"> -->
+                                 <!-- {{ deluxe_work_time1 }} -->
+                              <!-- </li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (deluxe_work_time2 is not empty) %} -->
+                              <!-- <li class = "work_time"> -->
+                                 <!-- {{ deluxe_work_time2 }} -->
+                              <!-- </li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (deluxe_address[language_id]) %} -->
+                              <!-- <li class="drop_head"></li> -->
+                              <!-- <li class="dropdown-header"><i class="fa fa-map-marker"></i> {{ dropdown_address }}</li> -->
+                              <!-- {% if (deluxe_show_fluid_map_footer == '0') %} -->
+                              <!-- <li class = "address_yak address"><a href="#map_yak">{{ deluxe_address }}</a></li> -->
+                              <!-- {% else %} -->
+                              <!-- <li class = "address"> -->
+                                 <!-- {{ deluxe_address }} -->
+                              <!-- </li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (deluxe_mail_header[language_id]) %} -->
+                              <!-- <li class="drop_head"></li> -->
+                              <!-- <li class="dropdown-header"><i class="fa fa-envelope"></i> {{ dropdown_mail }}</li> -->
+                              <!-- {% if (deluxe_mail_header[language_id] ) %} -->
+                              <!-- <li><a onClick="javascript:window.open('mailto:{{ deluxe_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ deluxe_mail_header[language_id] }}</a></li> -->
+                              <!-- {% endif %} -->
+                              <!-- {% endif %} -->
+                              <!-- {% if (aridiuscallback_status and deluxe_calltop != 1) %} -->
+                              <!-- <li class="drop_head"></li> -->
+                              <!-- <li class="dropdown-header"><i class="fa fa-volume-control-phone"></i> {{ dropdown_callorder }}</li> -->
+                              <!-- <li> -->
+                                 <!-- <a class = "call-order">{{ button_title }}</a> -->
+                              <!-- </li> -->
+                              <!-- {% endif %} -->
+                           <!-- </ul> -->
+                        <!-- </div> -->
+                        <!-- {% endif %} -->
+                        <!-- {% if (deluxe_tell == 1) %} -->
+                        <!-- {{ deluxe_tell_text }} -->
+                        <!-- {% endif %} -->
+                     </div>
+                  </div>
+                        <div class="mob_cart order_cart">
+                           {{ cart }}
+                        </div>
+                        <div class="mob_compare order_compare">
+                      
+						     <a href="{{ wishlist }}" data-toggle="tooltip" title="{{ text_wishlist_name }}">
+                               <b class="fr2 cartphotos"> {{ deluxe_wl_img }}</b>
+                              <!-- <div class="mob_cart"> -->
+                                 <!-- <span class="cart-item_h"><span class ="cart-item-after_h"><span id="wishlist-total"> {{ text_wishlist }}</span></span></span> -->
+                              <!-- </div> -->
+							  <div class="">
+                               {{ text_wish_head }}
+                              </div>
+                           </a>
+                        </div>
+                   
+                        {% if (deluxe_wishlist_top != 1) %}
+                        <div class="mob_wish order_wish">
+                                      <ul class="visible-md visible-lg">
+            {% if (deluxe_account_top != 1) %}
+            <li class="dropdown dropdown-toggle btnp2">
+               <a href="{{ account }}" title="{{ text_account }}" data-toggle="dropdown"><b class="fr2 cartphotos"><svg aria-hidden="true" width="1.8rem" height="2.2rem" viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg"><path d="M17.8571 18.0887C17.8571 19.1025 17.5642 19.9721 16.9782 20.6975C16.4016 21.423 15.7041 21.7857 14.8856 21.7857H2.97154C2.15309 21.7857 1.45089 21.423 0.864955 20.6975C0.288318 19.9721 0 19.1025 0 18.0887C0 17.2982 0.0372024 16.5541 0.111607 15.8566C0.195313 15.1497 0.344122 14.4429 0.558036 13.736C0.771949 13.0199 1.04167 12.4107 1.36719 11.9085C1.70201 11.3969 2.13914 10.9831 2.67857 10.6669C3.22731 10.3413 3.8551 10.1786 4.56194 10.1786C5.78032 11.369 7.23586 11.9643 8.92857 11.9643C10.6213 11.9643 12.0768 11.369 13.2952 10.1786C14.002 10.1786 14.6252 10.3413 15.1646 10.6669C15.7134 10.9831 16.1505 11.3969 16.476 11.9085C16.8108 12.4107 17.0852 13.0199 17.2991 13.736C17.513 14.4429 17.6572 15.1497 17.7316 15.8566C17.8153 16.5541 17.8571 17.2982 17.8571 18.0887ZM12.7093 1.93359C13.7602 2.97526 14.2857 4.23549 14.2857 5.71429C14.2857 7.19308 13.7602 8.45796 12.7093 9.50893C11.6676 10.5506 10.4074 11.0714 8.92857 11.0714C7.44978 11.0714 6.1849 10.5506 5.13393 9.50893C4.09226 8.45796 3.57143 7.19308 3.57143 5.71429C3.57143 4.23549 4.09226 2.97526 5.13393 1.93359C6.1849 0.882625 7.44978 0.357142 8.92857 0.357142C10.4074 0.357142 11.6676 0.882625 12.7093 1.93359Z"></path></svg></b><div> {{ text_account }}</div> </a>
+               <ul class="dropdown-menu dropdown-menu-left">
+                  {% if (logged) %}
+                  <li><a href="{{ account }}">{{ text_account }}</a></li>
+                  {% if (deluxe_order_top != 1) %}
+                  <li><a href="{{ order }}">{{ text_order }}</a></li>
+                  {% endif %}
+                  {% if (deluxe_transaction_top != 1) %}
+                  <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                  {% endif %}
+                  {% if (deluxe_download_top != 1) %}
+                  <li><a href="{{ download }}">{{ text_download }}</a></li>
+                  {% endif %}
+                  <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                  {% else %}
+                  <li><a href="{{ register }}">{{ text_register }}</a></li>
+                  <li><a href="{{ login }}">{{ text_login }}</a></li>
+                  {% endif %}
+               </ul>
+            </li>
+            {% endif %}
+         </ul>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </header>
+      </div>
+      {% if (deluxe_sticky_menu == 0) %}
+   </div>
+   {% endif %}
+   {% if (deluxe_seehmenu_menu != 1) %}
+   {{ menu }}
+   {% endif %}
+   <div class="clearfix"></div>
+   <script>
+      //vertical menu menu load more
+      $(document).ready(function () {
+      var indexli = $(".cat_count").length;
+      if (({{ deluxe_countcat_xl }}-1) < indexli) {
+      $('#all_catvmenu').click(function () {
+      $('.scroll_menu ul li').css({display: 'block'});
+      $('.scroll_menu').css({"overflow-y": 'auto'});
+      $('.menu_slow').addClass('dell_catvmenu');
+      });
+      $('.navbar-nav').on('click', '#all_catvmenu', function(e) {
+      e.stopPropagation();
+      });
+      } else {
+      $('.scroll_menu').css({"overflow-y": 'auto'});
+      $('.menu_slow').addClass('dell_catvmenu');
+      }
+      });
+   </script>
+   <script>
+      // mobile menu slideout.min.js
+      var slideout = new Slideout({
+      'panel': document.getElementById('main_m'),
+      'menu': document.getElementById('menu_m'),
+      'padding': 320,
+      'tolerance': 70,
+      });
+      function close(eve) {
+      eve.preventDefault();
+      slideout.close();
+      }
+      slideout
+      .on('beforeopen', function() {
+      this.panel.classList.add('panel-open');
+      $(".overlay").css({display:""});
+      $('.slideout-menu-left').addClass('slideout_ml');
+      })
+      .on('open', function() {
+      $('.slideout-menu-left').removeClass('slideout_ml');
+      })
+      .on('close', function() {
+      $("#menu_m").html("");
+      })
+      .on('beforeclose', function() {
+      this.panel.classList.remove('panel-open');
+      $(".overlay").css({display:"none"});
+      $('.slideout-menu-left').addClass('slideout_ml');
+      });
+      $('.overlay').on('click', function() {
+      slideout.close();
+      });
+   </script>
+   <!--height vertical menu for col left-->
+   <script><!--
+      $(function () {
+      var width_ch = window.innerWidth;
+      if (width_ch > 991) {
+      onResize();
+      }
+      function onResize(){
+      var width_ch = window.innerWidth;
+      if (width_ch > 991) {
+      <!--height Vmenu for col left-->
+      {% if (class == 'common-home' and deluxe_seevmenu_menu_open != 1 and not content_fluid and (deluxe_vmenuheight is empty) ) %}
+      $('#menu_colheight').css({'min-height': $('#menu_height').outerHeight() });
+      {% endif %}
+      var heighttopmenu = $("#top-menu").height();
+      $('.top-menu').css({position: 'relative',height: heighttopmenu});
+      } else {
+      <!--height Vmenu for col left-->
+      {% if (class == 'common-home' and deluxe_seevmenu_menu_open != 1 and not content_fluid and (deluxe_vmenuheight is empty) ) %}
+      $('#menu_colheight').css({'min-height': 0 });
+      {% endif %}
+      $('.top-menu').css({position: 'relative',height: 'auto'});
+      }
+      }
+      window.addEventListener('resize', onResize);
+      document.body.addEventListener('resize', onResize);
+      })
+      //-->
+   </script>
+   <!--scrollUp-->
+   {% if (deluxe_arrowup != 1) %}
+   <script><!--
+      $(document).ready(function() {
+      $(window).scroll(function(){
+      if ($(this).scrollTop() > 100) {
+      $('.scup').fadeIn();
+      } else {
+      $('.scup').fadeOut();
+      }
+      });
+      $('.scup').click(function(){
+      $("html, body").animate({ scrollTop: 0 }, 900);
+      return false;
+      });
+      });
+      //-->
+   </script>
+   {% endif %}
+   <!--preloader-->
+   {% if (deluxe_preloader != 1) %}
+   <script>
+      $(window).load(function() {
+      $('#preloader').find('i').fadeOut().end().delay(400).fadeOut('slow');
+      });
+   </script>
+   {% endif %}
+   <!-- anchors for footer map -->
+   {% if (deluxe_show_fluid_map_footer == '0') %}
+   <script>
+      $(document).ready(function(){
+      $(".address").on("click","a", function (event) {
+      event.preventDefault();
+      var id  = $("#map_yak"),
+      top = $(id).offset().top;
+      $('body,html').animate({scrollTop: top}, 1500);
+      {% if (deluxe_show_map_open == '1') %}
+      $('#hfooter').animate({
+      height:270,
+      opacity: 0.9
+      }, 1200 );
+      $('.link_footer').remove();
+      {% endif %}
+      });
+      });
+   </script>
+   {% endif %}
+

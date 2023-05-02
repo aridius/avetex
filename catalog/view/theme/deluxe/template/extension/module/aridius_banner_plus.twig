@@ -1,0 +1,35 @@
+{% if (aridius_banner_plus_top_links ) %}
+<div class="swipe_col1 flex_height_row1 row">
+   {% for key,aridius_banner_plus_top_link in aridius_banner_plus_top_links %}
+   <div class="product-layout_ban col-xs-12 col-md-6">
+      <a class="bannerp_link" href="{{ aridius_banner_plus_top_link['link'] }}" >
+         <div class="bannerp_caption" style="{{ aridius_banner_plus_top_link['background'] }}">
+            <div class="bannerp_box">
+               <div class="bannerp_name" style="color:{{ aridius_banner_plus_top_link['color_name'] }}">
+                  {{ aridius_banner_plus_top_link['name'] }}
+               </div>
+               <div class="bannerp_text">
+                  {{ aridius_banner_plus_top_link['description'] }}
+               </div>
+               {% if (aridius_banner_plus_top_link['price'] ) %}
+               <div class="bannerp_price" style="color:{{ aridius_banner_plus_top_link['color_price'] }}">
+                  {{ aridius_banner_plus_top_link['price'] }}
+               </div>
+               {% endif %}
+               {% if (aridius_banner_plus_top_link['btn'] ) %}
+               <div class="btn-bannerp" style="background:{{ aridius_banner_plus_top_link['color_btn_b'] }}; color:{{ aridius_banner_plus_top_link['color_btn_c'] }}" onMouseOver="this.style.background='{{ aridius_banner_plus_top_link['color_btn_bh'] }}';this.style.color='{{ aridius_banner_plus_top_link['color_btn_ch'] }}'" onMouseOut="this.style.background='{{ aridius_banner_plus_top_link['color_btn_b'] }}';this.style.color='{{ aridius_banner_plus_top_link['color_btn_c'] }}'">{{ aridius_banner_plus_top_link['btn'] }}</div>
+               {% endif %}
+            </div>
+            <div class="bannerp_image">
+               {% if (deluxe_lazy) %}
+               <img src="{{ aridius_banner_plus_top_link['image_href'] }}" title="{{ aridius_banner_plus_top_link['name'] }}" alt="{{ aridius_banner_plus_top_link['name'] }}" class="img-responsive img_effect" width="{{ width }}" height="{{ height }}">
+               {% else %}
+               <img data-src ="{{ aridius_banner_plus_top_link['image_href'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" title="{{ aridius_banner_plus_top_link['name'] }}" alt="{{ aridius_banner_plus_top_link['name'] }}" class="lazyload img-responsive img_effect" width="{{ width }}" height="{{ height }}">
+               {% endif %}
+            </div>
+         </div>
+      </a>
+   </div>
+   {% endfor %}
+</div>
+{% endif %}

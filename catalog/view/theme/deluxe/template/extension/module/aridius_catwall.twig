@@ -1,0 +1,43 @@
+<div class="title-module">{{ heading_title }}</div>
+
+<div class="row catwall">
+   {% for category in categories %}
+   <div class="fix_rowm col-lg-2 col-md-3 col-sm-4 col-xs-6">
+      <div class="product-layoutwa_v2 {% if (category['children']) %}no_children{% endif %}">
+         {% if (not category['children']) %}
+         <a href="{{ category['href'] }}">
+            {% endif %}
+            {% if (add_img == '1') %}
+            <div class="product-thumb_v2">
+               {% if (category['children']) %}
+               {% if (deluxe_lazy) %}
+               <div class="image_v2">
+         <a href="{{ category['href'] }}"><img src="{{ category['image'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+         {% else %}
+         <div class="image_v2"><a href="{{ category['href'] }}"><img data-src="{{ category['image'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+         {% endif %}
+         {% else %}
+         {% if (deluxe_lazy) %}
+         <div class="image_v2"><img src="{{ category['image'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></div>
+         {% else %}
+         <div class="image_v2"><img data-src="{{ category['image'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></div>
+         {% endif %}
+         {% endif %}
+         </div>
+         {% endif %}
+
+         <div class="namelink_v2">
+            {% if (not category['children']) %}
+            {{ category['name'] }}
+            {% else %}
+            <a href="{{ category['href'] }}">{{ category['name'] }}</a>
+            {% endif %}
+         </div>
+         {% if (not category['children']) %}
+         </a>
+         {% endif %}
+      </div>
+   </div>
+   {% endfor %}
+</div>
+

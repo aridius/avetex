@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>callback</name>
+  <code>callback</code>
+  <version>v_1</version>
+  <author>mrz</author>
+  <file path="admin/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$qry = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "aridiuscallback'");
+		    if ($qry->num_rows) {
+			$data['calback_status'] = $this->url->link('catalog/aridiuscallback', 'user_token=' . $this->session->data['user_token'], true);
+			$this->load->model('catalog/aridiuscallback');		
+	        $calback_total = $this->model_catalog_aridiuscallback->getTotalOrder();
+			$data['calback_total'] = $calback_total;
+		    } else {
+			$data['calback_status'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			}
+			if (empty($data['calback_total'])) {
+            $data['calback_total'] = 0;
+            }   
+			]]></add>
+		</operation>
+  </file>
+  <file path="admin/view/template/common/header.twig">
+		<operation>
+			<search><![CDATA[
+			<ul class="nav navbar-nav navbar-right">
+			]]></search>
+			<add position="after"><![CDATA[
+			 <li><a href="{{ calback_status }}" data-toggle="tooltip" data-placement="bottom" title="{{ calback_name }}"><span class="label label-danger pull-left">{{ calback_total }}</span> <i class="fa fa-phone fa-lg"></i></a></li> 
+			]]></add>
+		</operation>
+  </file>
+  <file path="catalog/controller/common/header.php">
+  		<operation>
+			<search><![CDATA[
+			$this->load->model('setting/extension');
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            $data['aridiusfastorder'] = $this->load->controller('module/aridiuscallback');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				$data['contact'] = $this->url->link('information/contact');
+			]]></search>
+			<add position="after">
+			<![CDATA[
+		   $data['aridiuscallback_status'] = $this->config->get('module_aridiuscallback_status');
+			]]></add>
+		</operation>		
+  </file>
+</modification>

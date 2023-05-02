@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <code>manufacturer_fix</code>
+  <name>manufacturer_fix</name>
+  <version>v_1</version>
+  <author>manufacturer_fix</author>
+ 
+<file path="catalog/controller/product/manufacturer.php">
+<operation>                           
+      <search><![CDATA[
+		$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_manufacturer_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_manufacturer_height'));
+      ]]></search>
+      <add position="replace"><![CDATA[
+$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'],80, 80);
+      ]]></add>
+</operation>        
+</file>
+</modification>

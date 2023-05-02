@@ -1,0 +1,32 @@
+<!-- parent form -->
+<form class="form-horizontal qa-form">
+    <div class="qa_shop"></div>
+    <div class="form-group required">
+        <div class="col-sm-12">
+            <label class="control-label" for="input-name-{{ parent }}">{{ entry_name }}</label>
+            <input type="text" name="name" value="" id="input-qa_name-{{ parent }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group required">
+        <div class="col-sm-12">
+            <label class="control-label" for="input-qa_shop-{{ parent }}">{{ entry_review }}</label>
+            <textarea name="text" rows="5" id="input-qa_shop-{{ parent }}" class="form-control"></textarea>
+        </div>
+    </div>
+    {{ captcha }} 
+    <div class="buttons clearfix">
+        <div class="pull-left"><a href="javascript:void(0);" class="btn btn-primary cancel-qa">{{ button_cancel }}</a></div>
+        <div class="pull-right">
+            <button type="submit" data-loading-text="{{ text_loading }}"  class="btn btn-primary add-qa">{{ text_write_review }}</button>
+        </div>
+    </div>
+    <input type="hidden" name="parent" value="{{ parent }}">
+    <input type="hidden" name="rating" value="5">
+	<input type="hidden" name="dignity" value="">
+	<input type="hidden" name="limitations" value="">
+</form>
+<script>
+   $(document).on('click', '.cancel-qa', function () {
+   $('.qa-form').remove();
+   });
+</script>

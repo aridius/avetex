@@ -1,0 +1,117 @@
+<div class="custom_login">
+  <h3 class="checkout_step">{{ heading_login }}</h3>
+  <div class="inf"></div>
+  <div class="cek_line">
+   {% if checkout_guest %}
+   <div class="radio">
+     <label>
+     {% if account == 'guest' %}
+     <input type="radio" name="account" value="guest" checked="checked" />
+{% else %} 
+     <input type="radio" name="account" value="guest" />
+     {% endif %}
+     {{ text_guest }}</label>
+   </div>
+   {% endif %}
+  {% if custom_loginr == 1 %}	 
+   <div class="radio">
+     <label>
+     {% if account == 'register' %}
+     <input type="radio" name="account" value="register" checked="checked" />
+{% else %} 
+     <input type="radio" name="account" value="register" />
+     {% endif %}
+     {{ text_register }}</label>
+   </div>
+ {% endif %}	 
+   <div class="radio">
+     <label>
+     {% if account == 'auth' %}
+     <input type="radio" name="account" value="auth" checked="checked" />
+{% else %} 
+     <input type="radio" name="account" value="auth" />
+     {% endif %}
+     {{ text_auth }}</label>
+   </div>
+  </div>
+  <div class="login_h"></div>
+  <form id="auth-form" account != 'auth' ? 'style="display: none;"' : '' >
+   <div class="form-group col-sm-6">
+     <label class="control-label" for="input-email">{{ entry_email }}</label>
+     <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+   </div>
+   <div class="form-group col-sm-6">
+     <label class="control-label" for="input-password">{{ entry_password }}</label>
+     <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+     <a href="{{ forgotten }}">{{ text_forgotten }}</a>
+   </div>
+   <input type="submit" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </form>
+</div>
+<script>
+  $('[name=account]').on('change', function(event){
+  $('#custom-login .inf').find('.alert').remove();
+  let account = event.target.value;
+  $.ajax({
+  url: 'index.php?route=extension/module/custom/login/save',
+  data: {'account': account},
+  dataType: 'json',
+  type: 'post',
+  success: function(){
+  custom_block.render('customer');
+  },
+  error: function(xhr, ajaxOptions, thrownError) {
+  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+  }
+  });
+  if (account === 'auth') {
+  $('#auth-form').show();
+  $('#custom-customer').hide();
+  $('#custom-shipping').hide();
+  $('#custom-payment').hide();
+  $('#custom-comment').hide();
+  $('#custom-module').hide();
+  $('#custom-total').hide();
+  $('#custom-confirm').hide();
+  $('#button-custom-order').hide();
+  $('.agree_cart').hide();
+  $('.custom_login').addClass('custom_login_hide');
+  } else {
+  $('#auth-form').hide();
+  $('#custom-customer').show();
+  $('#custom-shipping').show();
+  $('#custom-payment').show();
+  $('#custom-comment').show();
+  $('#custom-module').show();
+  $('#custom-total').show();
+  $('#custom-confirm').show();
+  $('#button-custom-order').show();
+  $('.agree_cart').show();
+  $('.custom_login').removeClass('custom_login_hide');
+  }
+  });
+  $(document).ready(function($) {
+  $('[name=account]:checked').trigger('change');
+  });
+  $('#auth-form').on('submit', function(event){
+  event.preventDefault();
+  $.ajax({
+  url: 'index.php?route=checkout/login/save',
+  data: $(this).serialize(),
+  dataType: 'json',
+  type: 'post',
+  success: function(json){
+  if (json['redirect']) {
+  location = json['redirect'];
+  } else if (json['error']) {
+  if (json['error']['warning']) {
+  $('#custom-login .inf').prepend('<div class="alert alert-danger">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+  }
+  }
+  },
+  error: function(xhr, ajaxOptions, thrownError) {
+  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+  }
+  });
+  });
+</script>

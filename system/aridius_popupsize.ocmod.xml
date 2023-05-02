@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>aridius_popupsize</name>
+  <code>aridius_popupsize</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="admin/controller/common/column_left.php">
+<operation>
+			<search ><![CDATA[
+			if ($design) {
+			]]></search>
+			<add position="before"><![CDATA[
+			$this->load->language('extension/module/deluxe');
+			if ($this->user->hasPermission('access', 'catalog/aridius_size')) {
+				$design[] = array(
+					'name'	   => $this->language->get('text_size'),
+					'href'     => $this->url->link('catalog/aridius_size', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+				}
+			]]></add>
+</operation>
+</file>	
+<file path="catalog/controller/product/product.php">
+<operation>
+			<search><![CDATA[
+		if ($product_info) {
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$this->load->model('catalog/aridiussize');
+			$size_info = $this->model_catalog_aridiussize->getSizeProduct($product_id);
+			if(!$size_info) {
+				$size_info = $this->model_catalog_aridiussize->getSizeCategory($product_id);
+			}
+		    if($size_info) {
+			$data['aridius_size'] = $this->load->controller('product/aridius_size/index');
+			}else{	
+				$data['aridius_size'] = '';
+			}
+			]]></add>
+</operation>
+</file>
+</modification>

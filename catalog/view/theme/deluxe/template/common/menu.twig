@@ -1,0 +1,271 @@
+{% if (deluxe_seevmenu_menulogo != 0) %}
+<div class="top-menu">
+   <div id="top-menu">
+      <div class="container nobackground">
+         {% endif %}
+         <nav id="menu" class="menulogo">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+               {% if (deluxe_seevmenu_menu != 1) %}
+               <div id="menu_clone_h">
+                  <ul class="nav navbar-nav">
+                     <li class="dropdown hidev seevmenu_clmm {% if (class == 'common-home' and deluxe_seevmenu_menu_open != 1) %} open {% endif %} ">
+                        <a class="with-child dropdown-toggle" {% if (deluxe_link_menucatalog is not empty) %} href="{{ deluxe_link_menucatalog }}" {% endif %} {% if (deluxe_seevmenu_menu_open_cl == 0) %} data-toggle="dropdown" {% endif %} data-delay="1" data-close-others="false">
+                        <svg class ="vmenu">
+                           <use xlink:href="catalog/view/theme/deluxe/image/vmenu.svg#vmenu" x="0" y="0"/>
+                        </svg>
+                        <span class ="vmenu_name">
+                        {{ deluxe_vmenu_menu[language_id] }}
+                        </span>
+                        </a>
+                        <div id="menu_height" class="{% if (class != 'common-home' and deluxe_ico_home != 1) %} home {% else %}home1{% endif %} dropdown-menu  open_click {% if (deluxe_seevmenu_menu_open != 1) %} fix_scrollmenu {% endif %} multi-level" role="menu">
+                           <div class="scroll_menu">
+                              <ul>
+                                 {% for category in categories %}
+                                 {% if (category['children']) %}
+                                 <li class="dropdown-submenu cat_count">
+                                    <a class="arrowvertmenu" tabindex="-1" href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menuv_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}
+                                    {% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a>
+                                    {% if (category['image_main'] and deluxe_main_photos_menu != 1 and category['column'] > 1) %}
+                                    {% if (category['column'] < 2) %}
+                                    {% set column_class = 'col-sm-12' %}
+                                    {% set column_width = 'column_width1_noimg' %}
+                                    {% set column_clear = 1 %}
+                                    {% elseif (category['column'] == 2) %}
+                                    {% set column_class = 'col-sm-6' %}
+                                    {% set column_width = 'column_width2' %}
+                                    {% set column_clear = 2 %}
+                                    {% elseif (category['column'] > 2) %}
+                                    {% set column_class = 'col-sm-4' %}
+                                    {% set column_width = 'column_width3' %}
+                                    {% set column_clear = 3 %}
+                                    {% endif %}
+                                    {% else %}
+                                    {% if (category['column'] < 2) %}
+                                    {% set column_class = 'col-sm-12' %}
+                                    {% set column_width = 'column_width1_noimg' %}
+                                    {% set column_clear = 1 %}
+                                    {% elseif (category['column'] == 2) %}
+                                    {% set column_class = 'col-sm-6' %}
+                                    {% set column_width = 'column_width2_noimg' %}
+                                    {% set column_clear = 2 %}
+                                    {% elseif (category['column'] == 3) %}
+                                    {% set column_class = 'col-sm-4' %}
+                                    {% set column_width = 'column_width3_noimg' %}
+                                    {% set column_clear = 3 %}
+                                    {% elseif (category['column'] > 3) %}
+                                    {% set column_class = 'col-sm-3' %}
+                                    {% set column_width = 'column_width3_noimg' %}
+                                    {% set column_clear = 4 %}
+                                    {% endif %}
+                                    {% endif %}
+                                    <ul class="dropdown-menu2 {{ column_width }}">
+                                       {% set i = 0 %}
+                                       {% if (category['image_main'] and deluxe_main_photos_menu != 1 and category['column'] > 1) %}
+                                       <li class="col-md-10 col-lg-10">
+                                          {% else %}
+                                       <li class="col-md-12">
+                                          {% endif %}
+                                          {% for child in category['children'] %}
+                                          <div class="{{ column_class }} mcol">
+                                             {% if (not child['image_menu_ico2']) %}
+                                             <span class = "hidden-xs hidden-sm">{% if (deluxe_photos_menu != 1 and (child['image2'] is not empty)) %}<a href="{{ child['href'] }}"><img class="vopmen img-responsive" src="{{ child['image2'] }}" width="{{ deluxe_photos_menu_width }}" height="{{ deluxe_photos_menu_height }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a>{% endif %}</span>
+                                             {% endif %}
+                                             <div class="clearfix"></div>
+                                             <a class="submenu_main" href="{{ child['href'] }}">{% if (child['image_menu_ico2']) %}<span class="menuv_icon_ico"><img src="{{ child['image_menu_ico2'] }}" width="24" height="24" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %} {{ child['name'] }}</a>
+                                             {% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}
+                                             {% if (child['children_lv3'] is defined and child['children_lv3'] and deluxe_3lv_menu != 1) %}
+                                             {% set v = 0 %}
+                                             {% for child_lv3 in child['children_lv3'] if not break %}
+                                             <a class = "menuv_3lv " href="{{ child_lv3['href'] }}">&nbsp;&nbsp;- {{ child_lv3['name'] }}</a>
+                                             {% set v = v + 1 %}
+                                             {% if (v >deluxe_countvmenulv - 1) %}
+                                             <a class="menuv-allv" href="{{ child['href'] }}">{{ deluxe_seeall_menu[language_id] }}</a>
+                                             {% set break = true %}
+                                             {% endif %}
+                                             {% endfor %}
+                                             {% endif %}
+                                          </div>
+                                          {% set i = i + 1 %}
+                                          {% if ((i == column_clear) and (i != 1)) %}
+                                          <div class="clearfix  visible-md visible-lg"></div>
+                                          {% set i = 0 %}
+                                          {% endif %}
+                                          {% endfor %}
+                                       </li>
+                                       {% if (category['image_main'] and deluxe_main_photos_menu != 1 and category['column'] > 1) %}
+                                       <li class="col-md-2 col-lg-2 hidden-xs hidden-sm">
+                                          <a href="{{ category['href'] }}"><img class="image_main img-responsive" alt="{{ category['name'] }}" title="{{ category['name'] }}" src="{{ category['image_main'] }}" width="{{ deluxe_photos_width_image_main }}" height="{{ deluxe_photos_height_image_main }}"></a>
+                                       </li>
+                                       {% endif %}
+                                    </ul>
+                                 </li>
+                                 {% else %}
+                                 <li class="v3hover cat_count">
+                                    <a class="arrowvertmenu_no_cl" href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menuv_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}
+                                    {% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a>
+                                 </li>
+                                 {% endif %}
+                                 {% endfor %}
+                              </ul>
+                              <div id="all_catvmenu">
+                                 <p class="menu_slow">{{ text_all_cat }}</p>
+                              </div>
+                           </div>
+                        </div>
+                        {% if (deluxe_hover_menu != 1) %}
+                        <div class="backdrop"></div>
+                        {% endif %}
+                     </li>
+                  </ul>
+               </div>
+               {% endif %}
+               {% if (deluxe_seehmenu_menu != 1) %}
+               {% if (deluxe_ico_home != 1 and home != og_url) %}
+               <ul class="nav navbar-nav">
+                  <li><a href="{{ base }}"><i class="fa fa-home" style="font-size: 16px;"></i></a></li>
+               </ul>
+               {% endif %}
+               <div class="menu_mob_plus1">
+                  <ul class="nav navbar-nav">
+                     {% for category in categories %}
+                     {% if (category['top']) %}
+                     {% if (category['children']) %}
+                     <li class="{% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}dropdown menu-large" {% if (category['column'] == 1 and deluxe_col1_menu != 1) %}{% else %}style='position:static;'{% endif %}>
+                     <a class="with-child dropdown-toggle" href="{{ category['href'] }}" data-hover="dropdown" data-delay="1" data-close-others="false"> {% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}<span class="fa fa-angle-down menu"></span></a>
+                     <div class="{% if (category['column'] == 1 and deluxe_col1_menu != 1) %}colm1{% endif %} bgm dropdown-menu megamenu row backgnone {% if (category['column'] == 1 and deluxe_col1_menu != 1) %}dropdown_top{% endif %}">
+                        {% if ((category['column'] == 1 and deluxe_col1_menu != 1) or (category['column'] == 2 and deluxe_col1_menu != 2)) %}
+                        <div class="container">
+                           {% else %}
+                           <div class="container fixmmenu">
+                              {% endif %}
+                              <div class="dropdown-inner children-category">
+                                 {% if (category['image_main'] and deluxe_main_photos_menu != 1) %}
+                                 <div class="menu_main_photos {% if (category['column'] == 1) %} hidden-md hidden-lg{% endif %}">
+                                    <a href="{{ category['href'] }}"><img class="image_main img-responsive" width="{{ deluxe_photos_width_image_main }}" height="{{ deluxe_photos_height_image_main }}" alt="{{ category['name'] }}" title="{{ category['name'] }}" src="{{ category['image_main'] }}">
+                                    </a>
+                                    <span class="main-foto-back"></span>
+                                 </div>
+                                 {% endif %}
+                                 {% for child in category['children'] %}
+                                 <ul class="list-unstyled" style="width: {% if (category['image_main'] and deluxe_main_photos_menu != 1) %}{{ 82/category['column']-1 }}{% else %} {{ 100/category['column']-1 }}{% endif %}%">
+                                    {% if (child['children_lv3'] is defined and child['children_lv3']) %}
+                                    <li class="with-child">
+                                       {% if (not child['image_menu_ico2']) %}
+                                       <span>{% if (deluxe_photos_menu != 1 and (child['image2'] is not empty)) %}<a href="{{ child['href'] }}"><img class="opacityhv img-responsive" src="{{ child['image2'] }}" width="{{ deluxe_photos_menu_width }}" height="{{ deluxe_photos_menu_height }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a>{% endif %}</span>
+                                       {% endif %}
+                                       <a href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" width="24" height="24" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %} {{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
+                                    </li>
+                                    {% if (deluxe_3lv_menu != 1) %}
+                                    {% set m = 0 %}
+                                    {% for child_lv3 in child['children_lv3'] if not break %}
+                                    <li class="children_lv3"><a href="{{ child_lv3['href'] }}">&nbsp;&nbsp;- {{ child_lv3['name'] }}</a>
+                                       {% set m = m + 1 %}
+                                       {% if (m >deluxe_countvmenulv - 1) %}
+                                       <a class="menuv-all" href="{{ child['href'] }}">{{ deluxe_seeall_menu[language_id] }}</a>
+                                       {% set break = true %}
+                                       {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% else %}
+                                    <li>
+                                       {% if (not child['image_menu_ico2']) %}
+                                       {% if (deluxe_photos_menu != 1 and (child['image2'] is not empty)) %}<span><a href="{{ child['href'] }}"><img class="opacityhv img-responsive" src="{{ child['image2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a></span>{% endif %}
+                                       {% endif %}
+                                       <a href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" width="24" height="24" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %} {{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
+                                    </li>
+                                    {% endif %}
+                                 </ul>
+                                 {% endfor %}
+                              </div>
+                           </div>
+                        </div>
+                        {% if (deluxe_hover_menu != 1) %}
+                        <div class="backdrop"></div>
+                        {% endif %}
+                        <div class="clearfix"></div>
+                        </li>
+                        {% else %}
+                        <li class="no-child {% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}"><a href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a></li>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                  </ul>
+                  </div>
+                  <ul class="nav navbar-nav">
+                     <!--add menu link-->
+                     {% if (deluxe_top_links8 ) %}
+                     {% for deluxe_top_link8 in deluxe_top_links8 %}
+                     <li>
+                        <a {% if (deluxe_top_link8['link_top'][language_id]) %} href="{{ deluxe_top_link8['link_top'][language_id] }}"{% endif %}>{% if (deluxe_top_link8['faicons_top']) %}<i class="fa {{ deluxe_top_link8['faicons_top'] }}"></i>  {% endif %}{% if (deluxe_top_link8['title']) %}{{ deluxe_top_link8['title'][language_id] }}{% endif %}</a>
+                     </li>
+                     {% endfor %}
+                     {% endif %}
+                     <!--add menu link-->
+                     <!--other link-->
+                     {% if (deluxe_main_link_menu[language_id]) %}
+                     <li class="dropdown">
+                        <a class="with-child dropdown-toggle" href="{{ deluxe_main_link_href_menu[language_id] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{{ deluxe_main_link_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
+                        <div class="dropdown-menu">
+                           <div class="dropdown-inner1 children-category">
+                              <ul class="list-unstyled">
+                                 {% if (deluxe_top_links4 ) %}
+                                 {% for deluxe_top_link4 in deluxe_top_links4 %}
+                                 <li>
+                                    <a {% if (deluxe_top_link4['link_top'][language_id]) %} href="{{ deluxe_top_link4['link_top'][language_id] }}"{% endif %} title="{{ deluxe_top_link4['title'][language_id] }}">{% if (deluxe_top_link4['faicons_top']) %} <i class="{{ deluxe_top_link4['faicons_top'] }}"></i>{% endif %}{% if (deluxe_top_link4['title']) %} {{ deluxe_top_link4['title'][language_id] }}{% endif %}</a>
+                                 </li>
+                                 {% endfor %}
+                                 {% endif %}
+                              </ul>
+                           </div>
+                        </div>
+                     </li>
+                     {% endif %}
+                     <!--other link END-->
+                     <!--informations-->
+                     {% if (deluxe_info_menu != 1) %}
+                     {% if (informations) %}
+                     <li class="dropdown">
+                        <a class="with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false">{{ text_information }}<span class="fa fa-angle-down menu"></span></a>
+                        <div class="dropdown-menu">
+                           <div class="dropdown-inner1 children-category">
+                              <ul class="list-unstyled">
+                                 {% for information in informations %}
+                                 <li><a href="{{ information['href'] }}">{{ information['title'] }}</a></li>
+                                 {% endfor %}
+                              </ul>
+                           </div>
+                        </div>
+                     </li>
+                     {% endif %}
+                     {% endif %}
+                     <!--informations END-->
+                  </ul>
+               </div>
+         </nav>
+         {% endif %}
+         {% if (deluxe_seevmenu_menulogo != 1) %}
+         </div>
+         </nav>
+         {% endif %}
+         {% if (deluxe_seevmenu_menulogo != 0) %}
+      </div>
+   </div>
+</div>
+{% endif %}
+<script>
+   //mobile_menu
+   function mobmenu_clone_h() {
+   slideout.open();
+   $.ajax({
+   type: 'POST',
+   url: 'index.php?route=common/header',
+   data:"aridius_mob_menu=1&location={{ class }}",
+   success: function(mobm){
+   $('#menu_m').html(mobm);
+   $('#preloader').remove();
+   }
+   });
+   }
+</script>
+<!--sticky-->

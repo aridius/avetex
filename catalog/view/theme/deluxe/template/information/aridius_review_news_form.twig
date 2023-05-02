@@ -1,0 +1,32 @@
+<!-- Reply form -->
+<form class="form-horizontal review_news-form">
+{% if (review_guest) %} 
+    <div class="review_shop"></div>
+    <div class="form-group required">
+        <div class="col-sm-12">
+            <label class="control-label" for="input-name-{{ parent }}">{{ entry_name }}</label>
+            <input type="text" name="name" value="{{ customer_name }}" id="input-name-{{ parent }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group required">
+        <div class="col-sm-12">
+            <label class="control-label" for="input-review_shop-{{ parent }}">{{ entry_review }}</label>
+            <textarea name="text" rows="5" id="input-review_shop-{{ parent }}" class="form-control"></textarea>
+        </div>
+    </div>
+{{ captcha }} 
+    <div class="buttons clearfix">
+        <div class="pull-left"><a href="javascript:void(0);" class="btn-cart cancel-review">{{ button_cancel }}</a></div>
+        <div class="pull-right">
+            <button type="submit" data-loading-text="{{ text_loading }}"  class="btn-cart">{{ button_continue }}</button>
+        </div>
+    </div>
+    <input type="hidden" name="parent" value="{{ parent }}">
+	{% else %} 
+	<br />
+{{ text_login }} 
+	<br /><br />
+{% endif %} 
+</form>
+
+

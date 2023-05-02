@@ -1,0 +1,51 @@
+<div id="mailModal" class="modal fade">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         </div>
+         <div class="modal-body">
+            {{ aridius_popupmail_img }} 
+            <form action="#" method="post">
+               <div class="mailletters input-group">
+                  <input type="email" name="mail_letters_popup" id="mail_letters_popup" value="" placeholder="{{ aridius_popupmail_placeholder[language_id] }}" class="form-control input-lg" />
+                  <span class="input-group-btn">
+                  <button type="submit" class="btn btn-send btn-lg" onclick="return subscribe_popup();" ><span class="visible-xs"><i class="fa fa-envelope"></i></span> <span class="hidden-xs">{{ aridius_popupmail_pl[language_id] }}</span></button>
+                  </span>
+                  <div class="message_email_popup"></div>
+                  <div class="message_compare_popup"></div>
+                  <div class="message_success_popup"></div>
+                  {% if (aridius_popupmaildes_status == '1') %}	
+                   <div class="message_description">{{ aridius_popupmail_description }}	</div>
+                  {% endif %} 
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   // 1 min = 1000ms*60s*60min = 60000ms
+   $(function() {
+     var dateModalShow = localStorage.getItem("dateModalShow");
+     var currentDate = new Date().toString();
+     var currentDate2 = new Date();
+     var currentDay = currentDate2.getDay();
+     var period = (((new Date(currentDate)).getTime())- ((new Date(dateModalShow)).getTime()))/60000;
+     if ( ((dateModalShow==null) || (period>{{ aridius_popupmail_time }}))
+     {% if (aridius_popupmail_day == '0') %} 
+   	 && ((currentDay==0) || (currentDay==1) || (currentDay==2) || (currentDay==3) || (currentDay==4) || (currentDay==5) || (currentDay==6))
+   	{% elseif (aridius_popupmail_day == '2') %} 
+   	 && ((currentDay==1) || (currentDay==2) || (currentDay==3) || (currentDay==4) || (currentDay==5))
+   	{% elseif (aridius_popupmail_day == '3') %} 
+        && ((currentDay==0) || (currentDay==6))
+     {% endif %} 
+     ) {
+   setTimeout(function(){	
+       $("#mailModal").modal('show');
+   // save date open popup modal in LocalStorage
+       localStorage.setItem("dateModalShow", currentDate);
+   },{{ aridius_popupmail_delay }}*1000);	
+     }
+   });
+</script>

@@ -1,0 +1,520 @@
+{% if (combo_sets) %}
+{% for combo_set in combo_sets %}
+<div id="combo-set-product-{{ combo_set['aridiuscombo_id'] }}" class="combo-set combo-set-one-product">
+   <div class="title-module">{{ combo_set['name'] }}</div>
+   <div class="combo-set2">
+      <div class="combo-table combo-options">
+         <div class="combo-table-row">
+            <div class="col-xs-5 col-sm-3 combo-product">
+               <div>
+                  <div class="combo-product-thumb transition">
+                     <div class="combo-image"><img src="{{ combo_set['product']['thumb'] }}" alt="{{ combo_set['product']['name'] }}" title="{{ combo_set['product']['name'] }}" class="img-responsive" /></div>
+                     <div class="caption product-thumb">
+                        <div class="product-name"> {{ combo_set['product']['name'] }}</div>
+                        {% if (combo_set['product']['price']) %}
+                        <p class="price">
+                           {% if (not combo_set['product']['special']) %}
+                           {{ combo_set['product']['price'] }}
+                           {% else %}
+                           <span class="price-old">{{ combo_set['product']['price'] }}</span> <span class="price-new">{{ combo_set['product']['special'] }}</span>
+                           {% endif %}
+                        </p>
+                        <input type="hidden" name="option[{{ combo_set['product']['product_id'] }}][set]" value="{{ combo_set['aridiuscombo_id'] }}">
+                        <!-- options -->
+                        {% if (combo_set['product']['options']) %}
+                        <i class="fa fa-check-square-o" aria-hidden="true"></i> <a href="#combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }}-{{ combo_set['product']['product_id'] }}" class="combo-modal-link combo-modal-link-{{ combo_set['product']['product_id'] }}">{{ text_choose_options }}</a>
+                        <div id="combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }}-{{ combo_set['product']['product_id'] }}" class="combo-set-modal combo-one-set-product-modal combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }} white-popup mfp-hide" data-tgsetmodal="#combo-set-product-{{ combo_set['aridiuscombo_id'] }}">
+                           <div class="title-module_combo">{{ text_option }}{{ combo_set['product']['name'] }}</div>
+                           <div id="combo">
+                              {% for option in combo_set['product']['options'] %}
+                              {% if (option['type'] == 'select') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <select name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" id="combo-input-option{{ option['product_option_id'] }}" class="form-control">
+                                    {% for option_value in option['product_option_value'] %}
+                                    <option value="{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }}
+                                       {% if (option_value['price']) %}
+                                       ({{ option_value['price_prefix'] }}{{ option_value['price'] }})
+                                       {% endif %}
+                                    </option>
+                                    {% endfor %}
+                                 </select>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'radio') %}
+                              <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label">{{ option['name'] }}</label>
+                                 <div id="input-option{{ option['product_option_id'] }}">
+                                    {% for option_value in option['product_option_value'] %}
+                                    <div class="radio">
+                                       <label>
+                                       {% if (option_value['image']) %}
+                                       <span class="opthe">
+                                       <input class="optstyle js-input-option" type="radio" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                       <span class="select_check"></span>
+									   <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top" title="{{ option_value['name'] }}  {% if (option_value['price'] and theme_deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}" class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                       {% if (option_value['price']) %}
+                                       <br />
+                                       <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                       {% endif %}
+                                       </span>
+                                       {% else %}
+                                       <input type="radio"  class="options_none" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                       <span class="im_option" {% if (option_value['price'] and theme_deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                       {% if (option_value['price']) %}
+                                       <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                       {% endif %}<span class = "options-prheight"></span>
+                                       {% endif %}
+                                       </label>
+                                    </div>
+                                    {% endfor %}
+                                 </div>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'checkbox') %}
+                              <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label">{{ option['name'] }}</label>
+                                 <div id="input-option{{ option['product_option_id'] }}">
+                                    {% for option_value in option['product_option_value'] %}
+                                    <div class="checkbox">
+                                       <label>
+                                       {% if (option_value['image']) %}
+                                       <span class="opthe">
+                                       <input class="optstyle js-input-option" type="checkbox" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                       <span class="select_check"></span>
+									   <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top" title="{{ option_value['name'] }}  {% if (option_value['price'] and theme_deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}" class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                       {% if (option_value['price']) %}
+                                       <br />
+                                       <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                       {% endif %}
+                                       </span>
+                                       {% else %}
+                                       <input type="checkbox" class="options_none" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                       <span class="im_option" {% if (option_value['price'] and theme_deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                       {% if (option_value['price']) %}
+                                       <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                       {% endif %}<span class = "options-prheight"></span>
+                                       {% endif %}
+                                       </label>
+                                    </div>
+                                    {% endfor %}
+                                 </div>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'text') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <input type="text" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" placeholder="{{ option['name'] }}" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'textarea') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <textarea name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" rows="5" placeholder="{{ option['name'] }}" id="combo-input-option{{ option['product_option_id'] }}" class="form-control">{{ option['value'] }}</textarea>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'file') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label">{{ option['name'] }}</label>
+                                 <button type="button" id="button-upload{{ option['product_option_id'] }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                                 <input type="hidden" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="" id="combo-input-option{{ option['product_option_id'] }}" />
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'date') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <div class="input-group date">
+                                    <input type="text" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                 </div>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'datetime') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <div class="input-group datetime">
+                                    <input type="text" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD HH:mm" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                 </div>
+                              </div>
+                              {% endif %}
+                              {% if (option['type'] == 'time') %}
+                              <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                 <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                 <div class="input-group time">
+                                    <input type="text" name="option[{{ combo_set['product']['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="HH:mm" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                 </div>
+                              </div>
+                              {% endif %}
+                              {% endfor %}
+                           </div>
+                           <div class="form-group">
+                              <div class="input-group">
+                                 <button title="{{ button_complete }}" type="button" class="btn btn-primary combo-close-modal">{{ button_complete }}</button>
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                        <!-- options end //-->
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xs-1 combo-plus">
+               <span>+</span>
+            </div>
+            <div class="col-xs-5 col-sm-3 combo-products">
+               <div class="combo-one-set-product swiper-container">
+                  <div class="swiper-wrapper">
+                     {% for product in combo_set['products'] %}
+                     <div class="swiper-slide">
+                        <div class="combo-product-thumb transition combo-pr">
+                           {% if (product['discount_price']) %}
+                           <div class="combo-discount-label">
+                              -<span class="combo-price-sym-2">
+                              <span class="sum">{{ product['discount'] }}</span>
+                              </span>
+                           </div>
+                           {% endif %}
+                           <div class="combo-image poss"><a href="{{ product['href'] }}" target="_blank"><img  src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                           <div class="caption product-thumb">
+                              <div class="product-name">
+                                 <a href="{{ product['href'] }}">
+                                 {% if (product['name'])|length < deluxe_limit_symbolst %}
+                                 {{ product['name'] }}
+                                 {% else %}
+                                 {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                                 {% endif %}
+                                 </a>
+                              </div>
+                              {% if (product['price']) %}
+                              <p class="price">
+                                 {% if (not product['special']) %}
+                                 <span class="price-old">{{ product['price'] }}</span> <span class="price-new">{{ product['discount_price'] }}</span>
+                                 {% else %}
+                                 <span class="price-old">{{ product['special'] }}</span> <span class="price-new">{{ product['discount_price'] }}</span>
+                                 {% endif %}
+                              </p>
+                              <input type="hidden" name="tgset_products[]" value="{{ product['product_id'] }}" />
+                              <input type="hidden" name="option[{{ product['product_id'] }}][set]" value="{{ combo_set['aridiuscombo_id'] }}">
+                              <!-- options -->
+                              {% if (product['options']) %}
+                              <i class="fa fa-check-square-o" aria-hidden="true"></i> <a href="#combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }}-{{ product['product_id'] }}" class="combo-modal-link combo-modal-link-{{ product['product_id'] }}">{{ text_choose_options }}</a>
+                              <div id="combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }}-{{ product['product_id'] }}" class="combo-set-modal combo-one-set-product-modal combo-one-set-product-modal-{{ combo_set['aridiuscombo_id'] }} white-popup mfp-hide" data-tgsetmodal="#combo-set-product-{{ combo_set['aridiuscombo_id'] }}">
+                                 <div class="title-module_combo">{{ text_option }}{{ product['name'] }}</div>
+                                 <div id="combo2">
+                                    {% for option in product['options'] %}
+                                    {% if (option['type'] == 'select') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <select name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" id="combo-input-option{{ option['product_option_id'] }}" class="form-control">
+                                          {% for option_value in option['product_option_value'] %}
+                                          <option value="{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }}
+                                             {% if (option_value['price']) %}
+                                             ({{ option_value['price_prefix'] }}{{ option_value['price'] }})
+                                             {% endif %}
+                                          </option>
+                                          {% endfor %}
+                                       </select>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'radio') %}
+                                    <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label">{{ option['name'] }}</label>
+                                       <div id="input-option{{ option['product_option_id'] }}">
+                                          {% for option_value in option['product_option_value'] %}
+                                          <div class="radio">
+                                             <label>
+                                             {% if (option_value['image']) %}
+                                             <span class="opthe">
+                                             <input class="optstyle js-input-option" type="radio" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                             <span class="select_check"></span>
+                                             <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top" title="{{ option_value['name'] }}  {% if (option_value['price'] and deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}" class="img-thumbnail imgpopcat" alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                             {% if (option_value['price']) %}
+                                             <br />
+                                             <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                             {% endif %}
+                                             </span>
+                                             {% else %}
+                                             <input type="radio"  class="options_none" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                             <span class="im_option" {% if (option_value['price'] and deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                             {% if (option_value['price']) %}
+                                             <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                             {% endif %}<span class = "options-prheight"></span>
+                                             {% endif %}
+                                             </label>
+                                          </div>
+                                          {% endfor %}
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'checkbox') %}
+                                    <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label">{{ option['name'] }}</label>
+                                       <div id="input-option{{ option['product_option_id'] }}">
+                                          {% for option_value in option['product_option_value'] %}
+                                          <div class="checkbox">
+                                             <label>
+                                             {% if (option_value['image']) %}
+                                             <span class="opthe">
+                                             <input class="optstyle js-input-option" type="checkbox" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                             <span class="select_check"></span>
+                                             <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top" title="{{ option_value['name'] }}  {% if (option_value['price'] and deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}" class="img-thumbnail imgpopcat" alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                             {% if (option_value['price']) %}
+                                             <br />
+                                             <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                             {% endif %}
+                                             </span>
+                                             {% else %}
+                                             <input type="checkbox" class="options_none" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                             <span class="im_option" {% if (option_value['price'] and deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                             {% if (option_value['price']) %}
+                                             <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                             {% endif %}<span class = "options-prheight"></span>
+                                             {% endif %}
+                                             </label>
+                                          </div>
+                                          {% endfor %}
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'text') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <input type="text" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" placeholder="{{ option['name'] }}" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'textarea') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <textarea name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" rows="5" placeholder="{{ option['name'] }}" id="combo-input-option{{ option['product_option_id'] }}" class="form-control">{{ option['value'] }}</textarea>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'file') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label">{{ option['name'] }}</label>
+                                       <button type="button" id="button-upload{{ option['product_option_id'] }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                                       <input type="hidden" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="" id="combo-input-option{{ option['product_option_id'] }}" />
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'date') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <div class="input-group date">
+                                          <input type="text" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                          <span class="input-group-btn">
+                                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'datetime') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <div class="input-group datetime">
+                                          <input type="text" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD HH:mm" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                          <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if (option['type'] == 'time') %}
+                                    <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                                       <label class="control-label" for="combo-input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                                       <div class="input-group time">
+                                          <input type="text" name="option[{{ product['product_id'] }}][{{ option['product_option_id'] }}]" value="{{ option['value'] }}" data-date-format="HH:mm" id="combo-input-option{{ option['product_option_id'] }}" class="form-control" />
+                                          <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                          </span>
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="input-group">
+                                       <button title="{{ button_complete }}" type="button" class="btn btn-primary combo-close-modal">{{ button_complete }}</button>
+                                    </div>
+                                 </div>
+                              </div>
+                              {% endif %}
+                              <!-- options end //-->
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+                  <!-- Add Arrows -->
+                  <div class="swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+                  <div class="swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+               </div>
+            </div>
+            <div class="col-xs-2 col-sm-1 combo-equal">
+               <span>=</span>
+            </div>
+            <div class="col-xs-12 col-sm-3 combo-summ">
+               <div>
+                  <div class="combo-product-thumb transition">
+                     <div class="combo-image">
+                        <div class="price-old combo-price-set-old"></div>
+                        <div class="price-new combo-price-set-new"></div>
+                        <div class="combo-set-button">
+                           <button data-tgset_id="{{ combo_set['aridiuscombo_id'] }}" class="btn-cart">{{ button_set }}</button>
+                           <input type="hidden" name="tgset_id" value="{{ combo_set['aridiuscombo_id'] }}" />
+                           <input type="hidden" name="tgset_type" value="1" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="clearfix"></div>
+   </div>
+</div>
+{% endfor %}
+<script>
+   $('.combo-modal-link').magnificPopup({
+   type: 'inline',
+   closeBtnInside: true,
+   preloader: false,
+   midClick: true,
+   removalDelay: 300,
+   });
+   $('.combo-close-modal').on( "click", function() {
+   $.magnificPopup.close();
+   });
+</script>
+{% for combo_set in combo_sets %}
+<script>
+   $(document).ready(function() {
+   if($(".slider .slide").length == 1) {
+   $('.combo-set2 .swiper-wrapper').addClass( "disabled" );
+   $('.combo-set2 .swiper-pagination').addClass( "disabled" );
+   }
+   var tgOneSetProductSwiper = new Swiper('.combo-one-set-product.swiper-container', {
+   navigation: {
+   nextEl: '.swiper-button-next',
+   prevEl: '.swiper-button-prev',
+   },
+   on: {
+   transitionEnd: function () {
+   var i = $(event.target).closest('.combo-set-one-product').attr('id');
+   recalculateprice_combo('#' + i, '0');
+   },
+   }
+   });
+   });
+</script>
+<script>
+   $('.combo-set-button').on('click', function() {
+   var tgt = $(event.target);
+   var wrapper = '#combo-set-product-' + tgt.attr("data-tgset_id");
+   $.ajax({
+   url: 'index.php?route=checkout/cart/comboSetAdd',
+   type: 'post',
+   data: $(`${wrapper} .combo-product input[type=\'hidden\'], ${wrapper} .combo-product input[type=\'text\'], ${wrapper} .combo-product input[type=\'radio\']:checked, ${wrapper} .combo-product input[type=\'checkbox\']:checked, ${wrapper} .combo-product select, ${wrapper} .combo-product textarea, ${wrapper} .combo-products .swiper-slide-active input[type=\'hidden\'], ${wrapper} .combo-products .swiper-slide-active input[type=\'text\'], ${wrapper} .combo-products .swiper-slide-active input[type=\'radio\']:checked, ${wrapper} .combo-products .swiper-slide-active input[type=\'checkbox\']:checked, ${wrapper} .combo-products .swiper-slide-active select, ${wrapper} .combo-products .swiper-slide-active textarea, ${wrapper} .combo-set-button input[type=\'hidden\']`),
+   dataType: 'json',
+   beforeSend: function() {
+   tgt.button('loading');
+   },
+   complete: function() {
+   tgt.button('reset');
+   },
+   success: function(json) {
+   $('.alert, .text-danger').remove();
+   $('.form-group').removeClass('has-error');
+   if (json['error']) {
+   //if (json['error']['option']) {
+   for (i in json['error']) {
+   for (ii in json['error'][i]['option']) {
+   var element = $(wrapper + ' #combo-input-option' + ii.replace('_', '-'));
+   if (element.parent().hasClass('input-group')) {
+   element.parent().after('<div class="text-danger">' + json['error'][i]['option'][ii] + '</div>');
+   } else {
+   element.after('<div class="text-danger">' + json['error'][i]['option'][ii] + '</div>');
+   }
+   var trig = i
+   }
+   //}
+   }
+   // Highlight any found errors
+   $('.text-danger').parent().addClass('has-error');
+   $(wrapper + ' .combo-modal-link-' + i).trigger('click');
+   }
+   if (json['success']) {
+   $.magnificPopup.open({
+   removalDelay: 500,
+   fixedContentPos: true,
+   items: {
+   src: 'index.php?route=common/aridius_cart/info'
+   },
+   type: 'ajax',
+   removalDelay: 0,
+   mainClass: 'my-mfp-zoom-in'
+   });
+   $('#cart button > span').html('<span> &nbsp;' + json['total'] + '&nbsp;<span class="caret"></span></span>');
+   $('#cart').load('index.php?route=common/cart/info #cart > *');
+   $('#cart2').load('index.php?route=common/cart2/info #cart2 > *');
+   $('#aridius_cart').load('index.php?route=common/aridius_cart/info #aridius_cart > *', function() {
+   carousel();
+   });
+   }
+   },
+   error: function(xhr, ajaxOptions, thrownError) {
+   alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+   }
+   });
+   });
+</script>
+{% endfor %}
+<script>
+   function recalculateprice_combo(wrapper, wrapper2) {;
+   $.ajax({
+   url: 'index.php?route=checkout/cart/checksum',
+   type: 'post',
+   data: $(`${wrapper} .combo-product input[type=\'hidden\'], ${wrapper} .combo-product input[type=\'text\'], ${wrapper} .combo-product input[type=\'radio\']:checked, ${wrapper} .combo-product input[type=\'checkbox\']:checked, ${wrapper} .combo-product select, ${wrapper} .combo-product textarea, ${wrapper} .combo-products .swiper-slide-active input[type=\'hidden\'], ${wrapper} .combo-products .swiper-slide-active input[type=\'text\'], ${wrapper} .combo-products .swiper-slide-active input[type=\'radio\']:checked, ${wrapper} .combo-products .swiper-slide-active input[type=\'checkbox\']:checked, ${wrapper} .combo-products .swiper-slide-active select, ${wrapper} .combo-products .swiper-slide-active textarea, ${wrapper} .combo-set-button input[type=\'hidden\'], ${wrapper2} input[type=\'hidden\'], ${wrapper2} input[type=\'text\'], ${wrapper2} input[type=\'radio\']:checked, ${wrapper2} input[type=\'checkbox\']:checked, ${wrapper2} select, ${wrapper2} textarea`),
+   dataType: 'json',
+   beforeSend: function() {
+   $(wrapper + ' .combo-price-set-new').css({'position': 'relative'});
+   //$('<img style="height: 16px; line-height: 20px;" class="recalc-loader" src="/image/loading.gif" />').appendTo(wrapper + ' .combo-price-set-new');
+   },
+   complete: function() {
+   $('.recalc-loader').remove();
+   $('.product-price .new-price').css({'position': 'static'});
+   },
+   success: function(json) {
+   if (json) {
+   $(wrapper + ' .combo-price-set-new').html(json['new_price']);
+   $(wrapper + ' .combo-price-set-old').html(json['old_price']);
+   }
+   },
+   error: function(xhr, ajaxOptions, thrownError) {
+   alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+   }
+   });
+   }
+</script>
+<script><!--
+   $(document).ready(function() {
+   {% for combo_set in combo_sets %}
+   recalculateprice_combo("#combo-set-product-{{ combo_set['aridiuscombo_id'] }}", '0');
+   {% endfor %}
+   $('.combo-set input, .combo-set select').on('change', function (event) {
+   var i = $(event.target).closest('.combo-set-modal').attr('data-tgsetmodal');
+   var ii = $(event.target).closest('.combo-one-set-product-modal').attr('id');
+   recalculateprice_combo(i, '#' + ii);
+   });
+   });
+</script>
+{% endif %}

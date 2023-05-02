@@ -1,0 +1,134 @@
+{{ header }}
+<div class="container">
+  <div class="col-xs-12">
+   <h2>{{ heading_title }}</h2>
+  </div>
+  <div class="clearfix"></div>
+	<ul class="breadcrumb">
+	{% for breadcrumb in breadcrumbs %} 
+		<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+	{% endfor %} 
+	</ul> 
+ <div id="custom-confirm" style="display: none;"></div>	
+  {% if errors %}
+  {% for error in errors %}
+  <div class="alert alert-warning"> error </div>
+  {% endfor %}
+{% elseif empty %}
+  <div class="alert alert-info">{{ text_cart_empty }}</div>
+  {% endif %}
+  <div class="col-md-8">
+   {% if login and  not logged %}
+   <div id="custom-login">
+     {{ login }}
+   </div>
+   {% endif %}
+	{% if login and not logged %} 
+   <div id="custom-customer">
+     {{ customer }}
+   </div>
+   {% endif %}
+		{% if shipping and shipping != constant('false') %} 
+   <div id="custom-shipping">
+     {{ shipping }}
+   </div>
+   {% endif %}
+   {% if payment %}
+   <div id="custom-payment">
+     {{ payment }}
+   </div>
+   {% endif %}
+{% if comment and comment != constant('false') %} 
+   <div id="custom-comment">
+     {{ comment }}
+   </div>
+   {% endif %}
+  
+  </div>
+  {% if cart %}
+  <div id="cart-sticky" class="cart_sticky col-md-4">
+   <div id="custom-cart">
+     {{ cart }}
+   </div>
+{% if total %} 
+   <div id="custom-total">
+     {{ total }}
+   </div>
+   {% endif %}
+   {% if payment %}
+   <div class="buttons" id="custom-control">
+     <div class="pull-payment">
+      <input type="button" value="{{ button_continue }}" id="button-custom-order" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+      <div class="clearfix"></div>
+     </div>
+     {% if text_agree %}
+     <div class="clearfix"></div>
+     <div class="agree_cart"{% if custom_checkout_id == 0 %}style="display: none!important;"{% endif %}>{{ text_agree }}
+      <input type="checkbox" name="agree" value="1" checked="checked" />
+      &nbsp;
+     </div>
+     <div class="clearfix"></div>
+     {% endif %}
+   </div>
+   {% endif %}
+{% if module %} 
+   <div id="custom-module">
+     {{ module }}
+   </div>
+   {% endif %}
+  </div>
+  {% endif %}
+</div>
+<script>
+$(document).ready(function() {
+
+  $('#button-custom-order').on('click', function(){
+
+  	{% if (not logged) %} 
+
+			checkoutCustomer()
+				{% if (login is defined and login != constant('false')) %} 
+					.then( checkoutLogin )
+				{% endif %} 
+				{% if (shipping is defined and shipping != constant('false')) %} 
+					.then( checkoutShipping )
+				{% endif %} 
+					.then( checkoutPayment )
+				{% if (comment is defined and comment != constant('false')) %} 
+					.then( checkoutComment )
+				{% endif %} 
+					.then( checkoutConfirm )
+					.catch( failureCallback );
+
+  	{% else %} 
+
+  		{% if (shipping is defined and shipping != constant('false')) %} 
+
+  			checkoutShipping()
+  				.then( checkoutPayment )
+  				{% if (comment is defined and comment != constant('false')) %} 
+					.then( checkoutComment )
+				{% endif %} 
+				.then( checkoutConfirm )
+				.catch( failureCallback );
+
+  		{% else %} 
+
+  			checkoutPayment()
+  				{% if (comment is defined and comment != constant('false')) %} 
+						.then( checkoutComment )
+					{% endif %} 
+					.then( checkoutConfirm )
+					.catch( ailureCallback );
+
+
+  		{% endif %}	
+
+  	{% endif %} 
+
+  });
+
+});
+  
+</script>
+{{ footer }}

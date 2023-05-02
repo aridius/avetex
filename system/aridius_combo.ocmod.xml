@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>combo</name>
+  <code>combo</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="catalog/controller/checkout/cart.php">
+<operation>
+			<search><![CDATA[
+			public function remove() {
+			]]></search>
+			<add position="before">
+			<![CDATA[
+
+	public function comboSetAdd() {
+		$this->load->language('extension/module/combo_set');
+		$text_success = $this->language->get('text_success');
+
+		$json = array();
+
+		if (!empty($this->request->post['tgset_id']) && !empty($this->request->post['tgset_type']) && !empty($this->request->post['tgset_products'])) {
+			$json = $this->cartcombo->validateCartAdd($this->request->post['tgset_id'], $this->request->post['tgset_type'], $this->request->post['tgset_products'], $this->request->post['option']);
+			if(empty($json['error'])) {
+				$json['total'] = $this->textTotal();
+				$json['success'] = sprintf($text_success, $this->url->link('checkout/cart'));
+			}
+
+		} else {
+			$json['error'] = '';
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+	}
+
+	public function checksum() {
+		$this->load->language('checkout/cart');
+		$this->load->language('extension/module/aridius_combo');
+		$text_success = $this->language->get('text_success');
+
+		$json = array();
+
+		if (!empty($this->request->post['tgset_id']) && !empty($this->request->post['tgset_type']) && !empty($this->request->post['tgset_products'])) {
+			$json = $this->cartcombo->validateCartAddTmp($this->request->post['tgset_id'], $this->request->post['tgset_type'], $this->request->post['tgset_products'], $this->request->post['option']);
+			//if(empty($json['error'])) {
+				//$json['total'] = $this->textTotal();
+				//$json['success'] = sprintf($text_success, $this->url->link('checkout/cart'));
+			//}
+
+		} else {
+			$json['error'] = '';
+		}
+
+        $json['total']['new_price'] = $this->currency->format($this->cartcombo->getTotaltmp()['new_price'], $this->session->data['currency']);
+        $json['total']['old_price'] = $this->currency->format($this->cartcombo->getTotaltmp()['old_price'], $this->session->data['currency']);
+        $this->cartcombo->removetmp();
+        
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json['total']));
+	}
+
+	public function textTotal() {
+		$this->load->language('common/cart');
+
+		// Totals
+		$this->load->model('setting/extension');
+
+		$totals = array();
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$sort_order = array();
+
+			$results = $this->model_setting_extension->getExtensions('total');
+
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
+			}
+
+			array_multisort($sort_order, SORT_ASC, $results);
+
+			foreach ($results as $result) {
+        if ($this->config->get('total_' . $result['code'] . '_status')) {
+					$this->load->model('extension/total/' . $result['code']);
+
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				}
+			}
+
+			$sort_order = array();
+
+			foreach ($totals as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $totals);
+		}
+
+		return sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
+	}
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+			]]></search>
+			<add position="after">
+			<![CDATA[
+					$combo_price = 0;
+					if($product['set_discount'] > 0.0000) {
+						$tgset_unit_price = $this->tax->calculate($product['price'] - $product['set_discount'], $product['tax_class_id'], $this->config->get('config_tax'));
+						$combo_price = $this->currency->format($tgset_unit_price, $this->session->data['currency']);
+
+						$total = $this->currency->format($tgset_unit_price * $product['quantity'], $this->session->data['currency']);
+					}	
+			]]></add>
+</operation>		
+<operation>
+			<search><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add position="before">
+			<![CDATA[
+				$set_id = !empty($product['set_id']) ? $product['set_id'] : 0; // added
+				$combo_idx = 0;
+				if(!empty($product['set_id'])) {
+					$setid_array = explode('_', $product['set_id']);
+					array_pop($setid_array);
+					$combo_idx = implode('', $setid_array);
+					$data['products'][$set_id]['info'] = $this->cartcombo->getaridiuscombo($setid_array[0]);
+				}
+			]]></add>
+</operation>	
+<operation>
+			<search><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            $data['products'][$set_id]['products'][] = array( 
+			]]></add>
+</operation>	
+<operation>
+			<search><![CDATA[
+			'price'     => $price,
+			]]></search>
+			<add position="before">
+			<![CDATA[
+			'set_id'   => isset($product['set_id']) ? $product['set_id'] : '',
+			'combo_price'     => $combo_price ? $combo_price : 0, 
+			'combo_idx'  	=> $combo_idx, 
+			]]></add>
+</operation>		
+</file>
+<file path="catalog/controller/product/product.php">
+<operation>
+			<search><![CDATA[
+			$data['column_left'] = $this->load->controller('common/column_left');
+			]]></search>
+			<add position="before">
+			<![CDATA[
+            $data['combo_set'] = $this->load->controller('extension/module/aridius_combo');
+			]]></add>
+</operation>
+</file>
+<file path="catalog/controller/common/cart.php">
+<operation>
+			<search><![CDATA[
+			$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+			]]></search>
+			<add position="after">
+			<![CDATA[
+					$combo_price = 0;
+					if($product['set_discount'] > 0.0000) {
+						$tgset_unit_price = $this->tax->calculate($product['price'] - $product['set_discount'], $product['tax_class_id'], $this->config->get('config_tax'));
+						$combo_price = $this->currency->format($tgset_unit_price, $this->session->data['currency']);
+
+						$total = $this->currency->format($tgset_unit_price * $product['quantity'], $this->session->data['currency']);
+					}	
+			]]></add>
+</operation>		
+<operation>
+			<search><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add position="before">
+			<![CDATA[
+				$set_id = !empty($product['set_id']) ? $product['set_id'] : 0; // added
+				$combo_idx = 0;
+				if(!empty($product['set_id'])) {
+					$setid_array = explode('_', $product['set_id']);
+					array_pop($setid_array);
+					$combo_idx = implode('', $setid_array);
+					$data['products'][$set_id]['info'] = $this->cartcombo->getaridiuscombo($setid_array[0]);
+				}
+			]]></add>
+</operation>	
+<operation>
+			<search><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            $data['products'][$set_id]['products'][] = array( 
+			]]></add>
+</operation>	
+<operation>
+			<search><![CDATA[
+			'price'     => $price,
+			]]></search>
+			<add position="before">
+			<![CDATA[
+			'combo_price'     => $combo_price ? $combo_price : 0, 
+			'combo_idx'  	=> $combo_idx, 
+			]]></add>
+</operation>		
+</file>
+<file path="catalog/controller/startup/startup.php">
+<operation>
+			<search><![CDATA[
+			$this->registry->set('cart', new Cart\Cart($this->registry));
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            $this->registry->set('cartcombo', new Cart\Cartcombo($this->registry));
+			]]></add>
+</operation>
+</file>
+<file path="system/library/cart/cart.php">
+<operation>
+			<search><![CDATA[
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = '" . (int)$quantity . "' WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+          	$query = $this->db->query("SELECT set_id FROM " . DB_PREFIX . "cart WHERE set_id<>'' and  cart_id = '" .  (int)$cart_id  . "'");
+
+		    if($query->num_rows) {
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = '" . (int)$quantity . "' WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND set_id = '" .  $this->db->escape($query->row['set_id'])  . "'");
+		    } else {
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = '" . (int)$quantity . "' WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		    }
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+		    $query = $this->db->query("SELECT set_id FROM " . DB_PREFIX . "cart WHERE set_id<>'' and  cart_id = '" .  (int)$cart_id  . "'");
+
+		    if($query->num_rows) {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND set_id = '" .  $this->db->escape($query->row['set_id'])  . "'");
+		    } else {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		    }
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			'cart_id'         => $cart['cart_id'],
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			'set_id'         => !empty($cart['set_id']) ? $cart['set_id'] : 0, 
+			'set_discount'         => !empty($cart['set_discount']) ? $cart['set_discount'] : 0.0000, 
+			'set_discount_price'         => !empty($cart['set_discount']) ? (($price + $option_price) - $cart['set_discount']) : 0.0000, 
+			]]></add>
+</operation>		
+<operation>
+			<search><![CDATA[
+			'total'           => ($price + $option_price) * $cart['quantity'],
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            'total'           => !empty($cart['set_discount']) ? (( ($price + $option_price) - $cart['set_discount']) * $cart['quantity']) : ($price + $option_price) * $cart['quantity'],
+			]]></add>
+</operation>	
+</file>
+<file path="catalog/view/theme/deluxe/template/checkout/confirm.twig">
+<operation>
+			<search><![CDATA[
+			{{ product.price }}
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            {% if (product['combo_price']) %}{{ product['combo_price'] }}{% else %}{{ product['price'] }}{% endif %}
+			]]></add>
+</operation>
+</file>
+<file path="catalog/controller/checkout/confirm.php">
+<operation>
+			<search><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add position="before">
+			<![CDATA[
+                    $total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
+					
+					$combo_price = 0;
+					if($product['set_discount'] > 0.0000) {
+						$tgset_unit_price = $this->tax->calculate($product['price'] - $product['set_discount'], $product['tax_class_id'], $this->config->get('config_tax'));
+						$combo_price = $this->currency->format($tgset_unit_price, $this->session->data['currency']);
+
+						$total = $this->currency->format($tgset_unit_price * $product['quantity'], $this->session->data['currency']);
+					}
+			]]></add>
+</operation>
+		
+<operation>
+			<search><![CDATA[
+			'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            'total'      => $total,
+			]]></add>
+</operation>	
+<operation>
+			<search><![CDATA[
+			'total'      => $total,
+			]]></search>
+			<add position="before">
+			<![CDATA[
+            'combo_price'     => $combo_price ? $combo_price : 0, 
+			]]></add>
+</operation>					
+</file> 
+<file path="catalog/view/theme/deluxe/template/product/product.twig">
+<operation>
+			<search><![CDATA[
+		 {{ content_bottom }}
+			]]></search>
+			<add position="before">
+			<![CDATA[
+		   {{ combo_set }}
+			]]></add>
+</operation>
+</file>
+
+<file path="catalog/controller/checkout/simplecheckout_cart.php">
+<operation>
+			<search><![CDATA[
+		    'cart_id'   => isset($product['cart_id']) ? $product['cart_id'] : '',
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            'set_id'   => isset($product['set_id']) ? $product['set_id'] : '',
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+		    if (!empty($this->request->post['quantity'])) {
+			]]></search>
+			<add position="before">
+			<![CDATA[
+            $user_set_id=[];
+			$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+			$quantities=[];
+			foreach($cart_query->rows as $row){
+				$quantities[$row['cart_id']]=$row['quantity'];
+			}
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+		    $this->cart->update($key, $value);
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+                if(isset($this->request->post['set_id'][$key]) && $this->request->post['set_id'][$key]) {
+                    if(!in_array($this->request->post['set_id'][$key],$user_set_id) && $quantities[$key]!=$value) {
+                        $this->cart->update($key, $value);
+                        $user_set_id[]=$this->request->post['set_id'][$key];
+
+                    }
+                }else{
+                    $this->cart->update($key, $value);
+                }
+			]]></add>
+</operation>
+</file>
+<file path="catalog/view/theme/default/template/checkout/simplecheckout_cart.twig">
+<operation>
+			<search index="1"><![CDATA[
+		    <a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" /></a>
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            <a href="{{ product['href'] }}">{{ product['set_id'] }}<img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" /></a>
+
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+		    <td class="model">{{ product['model'] }}</td>
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            <td class="model">{{ product['model'] }}         <input type="hidden" name="set_id[{{ product['cart_id']}}]" value=" {{ product['set_id']}}"></td>
+			]]></add>
+</operation>
+</file>
+ </modification>

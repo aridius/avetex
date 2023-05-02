@@ -1,0 +1,40 @@
+{% if (top_links ) %}
+<div class="container">
+   <div class="messenger">
+      <div class="messenger-btn"><img src="{{ aridiusmessenger_mailnamemain }}" width="33" height="33" alt="messenger"></div>
+      <div class="circle_mess"></div>
+      <div id="messenger-links" class="messenger-links">
+         {% for top_link in top_links %}
+         <a class="linksm_hiver" href="{{ top_link['href'] }}" target="_blank">
+            <img src="{{ top_link['image'] }}" width="32" height="32" alt="{{ top_link['title'] }}">
+            <p class="text-links">{{ top_link['title'] }}</p>
+         </a>
+         {% endfor %}
+         {% if (aridiusmessenger_mailstatus ) %}
+         <div class="call-order">
+            <img src="{{ aridiusmessenger_mail }}" width="32" height="32" alt="call">
+            <p class="text-links">{{ aridiusmessenger_mailname[language_id] }}</p>
+         </div>
+         {% endif %}
+      </div>
+   </div>
+</div>
+<script>
+   var main_btn = $('.messenger-btn'),
+   menu    = $('.messenger-links');
+   main_btn.on('click', function() {
+   if ( menu.hasClass('show2') ) {
+   menu.removeClass('show2');
+   } else {
+   menu.addClass('show2');
+   }
+   });
+   $(document).mouseup(function (e){
+   var div = $('.messenger');
+   if (!div.is(e.target)
+   && div.has(e.target).length === 0) {
+   $('.messenger-links').removeClass('show2');
+   }
+   });
+</script>
+{% endif %}

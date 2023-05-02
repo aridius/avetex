@@ -1,0 +1,304 @@
+<div id="aridius_cart">
+   <div class="aridius_cart">
+      <button title="close" type="button" class="mfp-close">&#215;</button>
+      <div class="name-popup">{{ heading_title }}</div>
+   </div>
+   <ul class="arcart_popup">
+      {% if (products or vouchers) %}
+      {% for val in products %}
+      {% if (val['info'] is not empty) %}
+      <div class="tg-set-start">
+         <div class="combo_name">
+            <div class="combo_label">{{ val['info']['name'] }}</div>
+         </div>
+         {% endif %}
+         {% for product in val['products'] %}
+         <div class="cartpop_box">
+            <div class="row">
+               <div class="col-xs-3 col-md-2 col-lg-2">
+                  {% if (product['thumb']) %}
+                  <a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-thumbnail" /></a>
+                  {% endif %}
+               </div>
+               <div class="col-xs-7 col-md-5 col-lg-5 pull-left_cart">
+                  <a href="{{ product['href'] }}"><span class="aridius_cart_name">{{ product['name'] }}</span></a>
+                  <div class="aridius_cart_price">
+                     {{ product['price'] }}
+                  </div>
+                  {% if (not product['stock']) %}
+                  {% if (product['quantity'] >= product['stock_qty']) %}
+                  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_maximum }} {{ product['stock_qty'] }}</div>
+                  {% endif %}
+                  {% endif %}
+                  {% if (config_stock) %}
+                  <input type="hidden" name="qua_st" value="1" />
+                  {% endif %}
+                  {% if (product['option']) %}
+                  {% for option in product['option'] %}
+                  - <small>{{ option['name'] }} {{ option['value'] }}</small> <br />
+                  {% endfor %}
+                  {% endif %}
+                  {% if (product['recurring']) %}
+                  <br />
+                  - <small>{{ text_recurring }} {{ product['recurring'] }}</small>
+                  {% endif %}
+               </div>
+               <div class="col-xs-2 hidden-md hidden-lg">
+                  <td class="text-center"><button type="button" onclick="cart.remove('{{ product['cart_id'] }}');" title="{{ button_remove }}" class="cart_trash"><i class="fa fa-trash-o"></i></button></td>
+               </div>
+               <div class="clearfix visible-xs visible-sm cartpop_bot">  </div>
+               <div class="col-xs-6 col-md-2 col-lg-2 pull-left_cart">
+                  <td class="quantity">
+                     <div class="pull-left1">
+                        <button onclick="cart.update('{{ product['id'] }}', '{{ product['cart_id'] }}', '-', '{{ product['stock_qty'] }}', '{{ product['minimum'] }}')" type="button" id="minus" class="items-countcart"><i class="fa fa-minus">&nbsp;</i></button>
+                        <input type="text" name="{{ product['cart_id'] }}" class="val_g{{ product['id'] }}"  size="2" id="input-quantitycart" value="{{ product['quantity'] }}" oninput="cart.update_valpop('{{ product['id'] }}', '{{ product['cart_id'] }}', '{{ product['stock_qty'] }}', '{{ product['minimum'] }}')" data-maximum="{{ product['stock_qty'] }}"/>
+                        <button  onclick="cart.update('{{ product['id'] }}', '{{ product['cart_id'] }}', '+', '{{ product['stock_qty'] }}', '{{ product['minimum'] }}')"type="button" id="plus" class="items-countcart2" ><i class="fa fa-plus">&nbsp;</i></button>
+                     </div>
+                  </td>
+               </div>
+               <div class="col-xs-6 col-md-2 col-lg-2 pull-right_cart">
+                  <td class="text-right table_carts">{{ product['total'] }}</td>
+               </div>
+               <div class="col-md-1 col-lg-1 visible-md visible-lg">
+                  <td class="text-center"><button type="button" onclick="cart.remove('{{ product['cart_id'] }}');" title="{{ button_remove }}" class="cart_trash"><i class="fa fa-trash-o"></i></button></td>
+               </div>
+            </div>
+         </div>
+         <div class="cartpop_botline">  </div>
+         {% endfor %}
+         {% if (val['info'] is not empty) %}
+      </div>
+      {% endif %}
+      {% endfor %}
+      <li>
+         <div>
+            <table class="table table-bordered table_cartt">
+               {% for total in totals %}
+               <tr>
+                  <td class="text-right"><strong>{{ total['title'] }}</strong></td>
+                  <td class="text-right">{{ total['text'] }}</td>
+               </tr>
+               {% endfor %}
+            </table>
+            <div class="cart">
+               {% if (deluxe_cart_continue != 1) %}
+               <button type="button" class="btn-cart continue_cart" data-dismiss="modal">{{ text_continue }}</button>
+               <div class = "visible-xs"><br /></div>
+               {% endif %}
+               {% if (deluxe_cart_open != 1) %}
+               <a class="btn-cart cart_cartp" href="{{ cart }}" role="button">{{ text_cart }}</a>
+               {% endif %}
+               {% if (deluxe_cart_forder != 1) %}
+               <a class="btn-cart" id="fastorder__cart" onclick="fastOrder('');" role="button">
+                  <svg class ="w_clock_pr">
+                     <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
+                  </svg>
+                  {{ text_fastorder }}
+               </a>
+               {% endif %}
+               {% if (deluxe_cart_checkout != 1) %}
+               <a class="btn-cart margin_cart" href="{{ checkout }}" role="button">
+                  <svg class ="w_clock_pr2">
+                     <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="22" height="22" />
+                  </svg>
+                  {{ text_checkout }}
+               </a>
+               {% endif %}			   
+            </div>
+         </div>
+      </li>
+      {% else %}
+      <li>
+         <p class="text-center">{{ text_empty }}</p>
+         {{ deluxe_cart_description }}
+         <button type="button" class="btn-cart continue_cart" data-dismiss="modal">{{ text_continue }}</button>
+      </li>
+      {% if (deluxe_cart_viewed != 1 and products_viewed) %}
+      <div class="tittle_cart">{{ text_viewed }}</div>
+      <div id="products_viewed" class="swiper-container">
+         <div class="swiper-wrapper">
+            {% for product in products_viewed %}
+            <div class="swiper-slide product-layout_carusel">
+               <div class="gtile-i-wrap caption">
+                  <div class="raiting_thumb product-thumb">
+                     <div class="box_spec">
+                        <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                        <div class="product-name">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+                        <div class="box_flex2">
+                           {% if (product['price']) %}
+                           <p class="price">
+                              {% if (not product['special']) %}
+                              {{ product['price'] }}
+                              {% else %}
+                              <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                              {% endif %}
+                              {% if (product['tax']) %}
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %}
+                           </p>
+                           {% endif %}
+                           <div class="cart">
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                          <span class="cart_open">{{ button_cart }}</span>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+         <div class="#products_viewed swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+         <div class="#products_viewed swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% if (deluxe_cart_relpr != 1 and products_cart) %}
+      <div class="tittle_cart">{{ text_rel }}</div>
+      <div id="related_cart" class="swiper-container">
+         <div class="swiper-wrapper">
+            {% for product in products_cart %}
+            <div class="swiper-slide product-layout_carusel">
+               <div class="gtile-i-wrap caption">
+                  <div class="raiting_thumb product-thumb">
+                     <div class="box_spec">
+                        <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                        <div class="product-name">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+                        <div class="box_flex2">
+                           {% if (product['price']) %}
+                           <p class="price">
+                              {% if (not product['special']) %}
+                              {{ product['price'] }}
+                              {% else %}
+                              <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                              {% endif %}
+                              {% if (product['tax']) %}
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %}
+                           </p>
+                           {% endif %}
+                           <div class="cart">
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                          <span class="cart_open">{{ button_cart }}</span>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+         <div class="#related_cart swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+         <div class="#related_cart swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+      </div>
+      {% endif %}
+   </ul>
+</div>
+<script><!--
+   function carousel_cart_related () {
+   var ocSwiper = new Swiper('#related_cart.swiper-container', {
+   slidesPerView: 4,
+   spaceBetween: 20,
+   mode: 'horizontal',
+   pagination: false,
+   autoplay: false,
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: 4,
+   },
+   1600: {
+   slidesPerView: 4,
+   }
+   },
+   navigation: {
+   nextEl: '#related_cart .swiper-button-next',
+   prevEl: '#related_cart .swiper-button-prev',
+   },
+   });
+   }
+   $(document).ready(function(){
+   carousel_cart_related();
+   });
+   //-->
+</script>
+<script><!--
+   function carousel_cart_viewed () {
+   var ocSwiper = new Swiper('#products_viewed.swiper-container', {
+   slidesPerView: 4,
+   spaceBetween: 20,
+   mode: 'horizontal',
+   pagination: false,
+   autoplay: false,
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: 4,
+   },
+   1600: {
+   slidesPerView: 4,
+   }
+   },
+   navigation: {
+   nextEl: '#products_viewed .swiper-button-next',
+   prevEl: '#products_viewed .swiper-button-prev',
+   },
+   });
+   }
+   $(document).ready(function(){
+   carousel_cart_viewed();
+   });
+   //-->
+</script>
+<script><!--
+   $(document).on("click",'.continue_cart',function(){
+   $.magnificPopup.close();
+   });
+   //-->
+</script>

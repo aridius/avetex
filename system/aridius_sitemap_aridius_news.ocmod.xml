@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>sitemap_aridius_news</name>
+  <code>sitemap_aridius_news</code>
+  <version>v_1</version>
+  <author>mrz(aridius)</author>
+<file path="catalog/controller/information/sitemap.php">
+<operation>
+      <search><![CDATA[
+					$this->load->language('information/sitemap');
+      ]]></search>
+      <add position="before"><![CDATA[
+				    $this->load->language('extension/module/deluxe');
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					$data['column_left'] = $this->load->controller('common/column_left');
+      ]]></search>
+      <add position="before"><![CDATA[
+				  $this->load->model('catalog/aridiusnews');
+					$data['aridius_news_data'] = array();
+		            $aridius_news_data = $this->model_catalog_aridiusnews->getaridius_news($data);
+						foreach ($aridius_news_data as $result) {
+					    $data['aridius_news_data'][] = array(
+						'title'				=> $result['title'],
+						'href'				=> $this->url->link('information/aridius_news', 'aridius_news_id=' . $result['aridius_news_id'])
+					      );
+				        }
+      ]]></add>
+</operation>
+</file> 
+<file path="catalog/view/theme/deluxe/template/information/sitemap.twig">
+<operation>
+      <search index="6"><![CDATA[
+					</ul>
+      ]]></search>
+      <add position="before"><![CDATA[
+				  {% if (aridius_news_data) %} 
+						<li>{{ text_news }} 
+						  <ul>
+							{% for aridius_news_datas in aridius_news_data %} 
+							<li><a href="{{ aridius_news_datas['href'] }}">{{ aridius_news_datas['title'] }}</a></li>
+							{% endfor %} 
+						  </ul>
+						</li>
+				  {% endif %}
+      ]]></add>
+</operation>
+</file>
+<file path="catalog/controller/extension/feed/google_sitemap.php">
+<operation>
+      <search><![CDATA[
+					$output .= '</urlset>';
+      ]]></search>
+      <add position="before"><![CDATA[
+		$this->load->model('catalog/aridiusnews');
+				$data['aridius_news_data'] = array();
+		        $aridius_news_data = $this->model_catalog_aridiusnews->getaridius_news($data);
+
+				foreach ($aridius_news_data as $result) {
+				$output .= '<url>';
+				$output .= '<loc>' . $this->url->link('information/aridius_news', 'aridius_news_id=' . $result['aridius_news_id']) . '</loc>';
+				$output .= '<changefreq>weekly</changefreq>';
+				$output .= '<priority>0.5</priority>';
+				$output .= '</url>';  
+				}
+      ]]></add>
+</operation>
+</file>  
+</modification>

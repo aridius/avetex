@@ -1,0 +1,109 @@
+{% if (not aridiusundersell_descriptionshow == '1' or not aridiusundersell_img == '1') %}
+<div class="undersell">
+{% else %}
+<div class="undersell_fl">
+   {% endif %}
+   <div class="undersellf">
+      <button title="close" type="button" class="mfp-close">&#215;</button>
+      <div class="name-popup">{{ heading_title }}</div>
+   </div>
+   <div class="undersell2">
+      <div class="row">
+         {% if (not aridiusundersell_descriptionshow == '1' or not aridiusundersell_img == '1') %}
+         <div class="col-sm-6">
+            <div class="name-product">{{ product_name }}</div>
+            {% if (not aridiusundersell_img == '1') %}
+            <div class="image_wrap">
+               <img src="{{ popup }}" title="{{ product_name }}" alt="{{ product_name }}" class="img-responsive" />
+            </div>
+            {% endif %}
+            {% if (not aridiusundersell_descriptionshow == '1') %}
+            {{ product_description }}
+            {% endif %}
+            <div class="priceall" {% if (aridiusundersell_price == '1') %} style="display: none"{% endif %}	>
+            {% if (formated_special) %}
+            <div class="price-new">{{ formated_special }}</div>
+            <input type="hidden" value="{{ not_formated_special }}" name="fo_total_price"/>
+            {% endif %}
+            {% if (formated_special != formated_price ) %}
+            <div class="price-old">{{ formated_price }}</div>
+            {% endif %}
+         </div>
+      </div>
+      {% endif %}
+      {% if (not aridiusundersell_descriptionshow == '1' or not aridiusundersell_img == '1' ) %}
+      <div class="col-sm-6">
+         {% else %}
+         <div class="col-sm-12">
+            {% endif %}
+            {% if (aridiusundersell_descriptionshow == '1' and aridiusundersell_img == '1' ) %}
+            <div class="name-product">{{ product_name }}</div>
+            {% endif %}
+            <div class="form-horizontal formundersell">
+               {% if (not aridiusundersell_firstnameshow == '1') %}
+               <div class="form-group {% if (not aridiusundersell_firstnamevalid) %}required{% endif %}">
+                  <label class="control-label" for="input-firstname">{{ enter_firstname }}</label>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                     <input  name="aridiusundersell_firstname" placeholder="{{ aridiusundersell_placeholderfirstname[language_id] }}" class="form-control"  type="text">
+                  </div>
+                  <div class="aridiusundersell_errorfirstname"></div>
+               </div>
+               {% endif %}
+               <div class="form-group required">
+                  <label class="control-label" for="input-contact">{{ enter_phone }}</label>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                     <input id="telephone" name="aridiusundersell_contact" placeholder="{{ aridiusundersell_placeholdertell[language_id] }}" class="form-control" type="text">
+                  </div>
+                  <div class="aridiusundersell_errorcontact"></div>
+               </div>
+               {% if (not aridiusundersell_emailshow == '1') %}
+               <div class="form-group {% if (not aridiusundersell_emailvalid) %}required{% endif %}">
+                  <label class="control-label" for="inputt-email">{{ enter_email }}</label>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                     <input name="aridiusundersell_email" placeholder="{{ aridiusundersell_placeholderemail[language_id] }}" class="form-control"  type="text">
+                  </div>
+                  <div class="aridiusundersell_erroremail"></div>
+               </div>
+               {% endif %}
+               {% if (not aridiusundersell_linkshow == '1') %}
+               <div class="form-group {% if (not aridiusundersell_linkvalid) %}required{% endif %}">
+                  <label class="control-label" for="input-link">{{ enter_link }}</label>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+                     <input name="aridiusundersell_link" placeholder="{{ aridiusundersell_placeholderlink[language_id] }}" class="form-control"  type="text">
+                  </div>
+                  <div class="aridiusundersell_errorlink"></div>
+               </div>
+               {% endif %}
+               {% if (not aridiusundersell_commentshow == '1') %}
+               <div class="form-group">
+                  <label class="control-label" for="input-firstname">{{ enter_comment }}</label>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                     <textarea class="form-control" name="aridiusundersell_comment" placeholder="{{ aridiusundersell_placeholdercomment[language_id] }}"></textarea>
+                  </div>
+               </div>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      {% if (aridiusundersell_adddescriptionshow == '1') %}
+      <br />
+      <div class="row">
+         <div class="col-xs-12">
+            {{ aridiusundersell_description }}
+         </div>
+      </div>
+      {% endif %}
+      <br />
+      <button type="button" id="undersell-order-submit" data-loading-text="{{ enter_load }}" class="btn-cart fixcenter">{{ button_send }}</button>
+   </div>
+</div>
+<script>
+   jQuery(function($){
+   $("#telephone").mask("{{ aridiusundersell_mask[language_id] }}");
+   });
+</script>

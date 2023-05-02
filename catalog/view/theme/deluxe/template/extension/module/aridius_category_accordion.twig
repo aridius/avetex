@@ -1,0 +1,59 @@
+<div class="box">
+   <div class="title-module">{{ heading_title }}</div>
+   <div class="box-content">
+      <div class="box-category">
+         <ul class="accordion"  id="accordion">
+            {% for category in categories %} 
+            <li>
+               {% if (category['category_id'] == category_id) %} 
+               <a href="{{ category['href'] }}" class="active cat_bold"> {{ category['name'] }}</a>
+               <div class="dcjq-icon">&nbsp;&nbsp;&nbsp;</div>
+               {% elseif (category['children']) %} 
+               <a class="cat_bold" href="{{ category['href'] }}"> {{ category['name'] }}</a>
+               <div class="dcjq-icon cat_bold">&nbsp;&nbsp;&nbsp;</div>
+               {% else %} 
+               <a class="cat_bold" href="{{ category['href'] }}"> {{ category['name'] }}</a>
+               {% endif %} 
+               {% if (category['children']) %} 
+               <ul>
+                  {% for child in category['children'] %} 
+                  <li>
+                     {% if (child['category_id'] == child_id) %} 
+                     <a href="{{ child['href'] }}" class="active"> {{ child['name'] }}</a>
+                     <div class="dcjq-icon">&nbsp;&nbsp;&nbsp;</div>
+                     {% else %} 
+                     <a href="{{ child['href'] }}"> {{ child['name'] }}</a>
+                     <div class="dcjq-icon">&nbsp;&nbsp;&nbsp;</div>
+                     {% endif %} 
+                     <!--3lv-->
+                     {% if (child['sister_id']) %} 
+                     <ul>
+                        {% for sisters in child['sister_id'] %} 
+                        <li>
+                           {% if (sisters['category_id'] == sisters_id) %} 
+                           <a href="{{ sisters['href'] }}" class="active"> - {{ sisters['name'] }}</a>
+                           {% else %} 
+                           <a href="{{ sisters['href'] }}"> - {{ sisters['name'] }}</a>
+                           {% endif %} 
+                        </li>
+                        {% endfor %} 
+                     </ul>
+                     {% endif %} 
+                     <!--3lv-->
+                  </li>
+                  {% endfor %} 
+               </ul>
+               {% endif %} 
+            </li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+</div>
+<script>
+   $(document).ready(function($){
+   $('#accordion').dcAccordion({
+   eventType: 'click',
+   });
+   });
+</script>

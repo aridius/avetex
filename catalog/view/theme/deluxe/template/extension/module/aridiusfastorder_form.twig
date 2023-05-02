@@ -1,0 +1,520 @@
+<div class="fastorder-cust">
+<div class="overlay__fastorder"></div>
+{% if (not aridiusfastorder_descriptionshow == '1' or not aridiusfastorder_img == '1') %} 
+<div class="fastorder_pop {% if (not product_id) %} forder_cart {% endif %}">
+   {% else %} 
+   <div class="fastorder_fl {% if (not product_id) %} forder_cart {% endif %}">
+      {% endif %} 
+      <div class="fastorderf">
+         <button title="close" type="button" class="mfp-close">&#215;</button>
+         <div class="name-popup">{{ heading_title_fastorder }}</div>
+      </div>
+      <div class="fastorder2_pop">
+         <div class="row">
+            {% if (product_id) %} 
+            {% if (not aridiusfastorder_descriptionshow == '1' or not aridiusfastorder_img == '1') %} 
+            <div class="{% if (product_id) %} col-sm-6 {% else %} col-sm-12  {% endif %}">
+               <div class="fastorder-cust__information">
+                  <div class="fastorder-cust__name">
+                     {{ product_name }} 
+                  </div>
+                  {% if (not aridiusfastorder_descriptionshow == '1' or not aridiusfastorder_img == '1' ) %} 
+                  {% if (not aridiusfastorder_img == '1') %} 
+                  <div class="fastorder-cust__image">
+                     <img src="{{ popup }}" alt="" class="fastorder-cust__img">
+                  </div>
+                  {% endif %} 
+                  {% if (not aridiusfastorder_descriptionshow == '1') %} 
+                  <div class="fastorder-cust__description">{{ product_description }}</div>
+                  {% endif %} 
+                  {% endif %} 
+               </div>
+            </div>
+            {% endif %} 
+            {% endif %} 
+            {% if (not aridiusfastorder_descriptionshow == '1' or not aridiusfastorder_img == '1' ) %} 
+            <div class="{% if (product_id) %} col-sm-6 {% else %} col-sm-12  {% endif %}">
+               {% else %} 
+               <div class="col-sm-12">
+                  {% endif %} 
+                  {% if (aridiusfastorder_descriptionshow == '1' and aridiusfastorder_img == '1' ) %} 
+                  {% if (product_id) %} 
+                  <div class="fastorder-cust__name">{{ product_name }}</div>
+                  {% endif %} 
+                  {% endif %} 
+                  <div class="fastorder-cust__form {% if (not product_id) %} fastorder-cust__form_cart {% endif %}">
+                     <form action="formFastOrder" class="formFastOrder">
+                        <input name="formFastOrderID" type="text" value="{{ product_id }}" class="display-none">
+                        {% if (not aridiusfastorder_firstnameshow == '1') %} 
+                        <div class="formFastOrder__item {% if (not aridiusfastorder_firstnamevalid) %}required{% endif %}">
+                           <label for="formFastOrderName"
+                              class="formFastOrder__label">{{ enter_firstname }}</label>
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                              <input id="formFastOrderName"
+                                 placeholder="{{ aridiusfastorder_placeholderfirstname[language_id] }}"
+                                 name="formFastOrderName"
+                                 type="text" class="formFastOrder form-control">
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        <div class="formFastOrder__item required">
+                           <label for="formFastOrderTel" class="formFastOrder__label">{{ enter_phone }}</label>
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                              <input id="formFastOrderTel"
+                                 placeholder="{{ aridiusfastorder_placeholdertell[language_id] }}"
+                                 name="formFastOrderTel"
+                                 type="tel"
+                                 class="formFastOrder form-control">
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% if (not aridiusfastorder_emailshow == '1') %} 
+                        <div class="formFastOrder__item {% if (not aridiusfastorder_emailvalid) %}required{% endif %}">
+                           <label for="formFastOrderEmail" class="formFastOrder__label">{{ enter_email }}</label>
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                              <input id="formFastOrderEmail"
+                                 placeholder="{{ aridiusfastorder_placeholderemail[language_id] }}"
+                                 name="formFastOrderEmail"
+                                 type="email" class="formFastOrder form-control">
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (not aridiusfastorder_commentshow == '1') %} 
+                        <div class="formFastOrder__item">
+                           <label for="formFastOrderComment"
+                              class="formFastOrder__label">{{ enter_comment }}</label>
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                              <textarea id="formFastOrderComment"
+                                 placeholder="{{ aridiusfastorder_placeholdercomment[language_id] }}"
+                                 name="formFastOrderComment"
+                                 type="text"
+                                 class="formFastOrder form-control"></textarea>
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (product_id) %} 
+                        {% if (price) %} 
+                        <p class="price">
+                           {% if (not special) %} 
+                           <span class="price_no_formatfr" data-pricefr = "{{ price_calck }}" >{{ price }} </span>
+                           {% else %} 
+                           <span class="price-new"><span class="special_no_formatfr" data-pricefr="{{ special_calck }}">{{ special }} </span></span>
+                           <span class="price-old"><span class="price_no_formatfr" data-pricefr="{{ price_calck }}">{{ price }}</span></span>
+                           {% endif %} 
+                        </p>
+                        {% endif %} 
+                        <div class="pull-left1 qtfr">
+                           <button type="button" class="minus items-count" onclick="quantity_controlfr('{{ minimum }}', '{{ quantity }}', '-')" ><i class="fa fa-minus">&nbsp;</i>
+                           </button>
+                           <input type="text" name="quantity" value="{{ minimum }}" data-toggle="tooltip" oninput="inputs_valuefr();" size="2"
+                              class="input-quantity form-control fr_quantity" data-maximumfr="{{ quantity }}" />
+                           <button type="button" class="plus items-count2" onclick="quantity_controlfr('{{ minimum }}', '{{ quantity }}', '+')" ><i class="fa fa-plus">&nbsp;</i></button>
+                           <input type="hidden" name="product_id" value="{{ product_id }}"/>
+                        </div>
+                        <div class="product_stock_quantityfr"></div>
+                        <div class="formFastOrder__item">
+                           <div id="formFastOrderQuantity"></div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% if (minimum > 1) %} 
+                        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
+                        {% endif %} 
+                        {% endif %} 
+                     </form>
+                     <div id="fastorder-cust_option">
+                        {% if (options) %} 
+                        <hr>
+                        {% for option in options %} 
+                        {% if (option['type'] == 'select') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <select name="option[{{ option['product_option_id'] }}][]" onchange="recalc_catfr();" id="input-option{{ option['product_option_id'] }}" class="form-control">
+                              <option value="" data-price_prefixfr="" data-pricefr="">{{ text_select }}</option>
+                              {% for option_value in option['product_option_value'] %} 
+                              <option value="{{ option_value['product_option_value_id'] }}" data-price_prefixfr="{{ option_value['price_prefix'] }}" data-pricefr="{{ option_value['price_n'] }}" >{{ option_value['name'] }} 
+                                 {% if (option_value['price']) %} 
+                                 ({{ option_value['price_prefix'] }}{{ option_value['price'] }})
+                                 {% endif %} 
+                              </option>
+                              {% endfor %} 
+                           </select>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'radio') %} 
+                        <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label">{{ option['name'] }}</label>
+                           <div id="input-option{{ option['product_option_id'] }}">
+                              {% for option_value in option['product_option_value'] %} 
+                              <div class="radio">
+                                 <label>
+                                 {% if (option_value['image']) %} 
+                                 <span class="opthe">
+                                 <input class="optstyle js-input-option" type="radio" data-price_prefixfr="{{ option_value['price_prefix'] }}" data-pricefr="{{ option_value['price_n'] }}" onchange="recalc_catfr();" onclick="change_img_opt('{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                 <span class="select_check"></span>
+								 <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top" title="{{ option_value['name'] }}  {% if (option_value['price'] and deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}" class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                 {% if (option_value['price']) %} 
+                                 <br />
+                                 <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                 {% endif %} 
+                                 </span>
+                                 {% else %} 
+                                 <input type="radio" data-price_prefixfr="{{ option_value['price_prefix'] }}" class="options_none" data-pricefr="{{ option_value['price_n'] }}" onchange="recalc_catfr();" onclick="change_img_opt('{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                 <span class="im_option" {% if (option_value['price'] and deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                 {% if (option_value['price']) %} 
+                                 <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                 {% endif %}<span class = "options-prheight"></span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                              {% endfor %} 
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'checkbox') %} 
+                        <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label">{{ option['name'] }}</label>
+                           <div id="input-option{{ option['product_option_id'] }}">
+                              {% for option_value in option['product_option_value'] %} 
+                              <div class="checkbox">
+                                 <label>
+                                 {% if (option_value['image']) %} 
+                                 <span class="opthe">
+                                 <input class="optstyle js-input-option" type="checkbox" data-price_prefixfr="{{ option_value['price_prefix'] }}" data-pricefr="{{ option_value['price_n'] }}" onchange="recalc_catfr();" onclick="change_img_opt('{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}"/>
+                                 <span class="select_check"></span>
+								 <img src="{{ option_value['image'] }}" data-toggle="tooltip" data-placement="top"
+                                    title="{{ option_value['name'] }}  {% if (option_value['price'] and deluxe_options_prise == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %}"
+                                    class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                 {% if (option_value['price']) %} 
+                                 <br />
+                                 <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                 {% endif %} 
+                                 </span>
+                                 {% else %} 
+                                 <input type="checkbox" data-price_prefixfr="{{ option_value['price_prefix'] }}" class="options_none" data-pricefr="{{ option_value['price_n'] }}" onchange="recalc_catfr();" onclick="change_img_opt('{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                 <span class="im_option" {% if (option_value['price'] and deluxe_options_prise == 0) %} data-toggle="tooltip" data-placement="top" title="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" {% endif %}>{{ option_value['name'] }} </span>
+                                 {% if (option_value['price']) %} 
+                                 <span class = "hide_optprise">{{ option_value['price_prefix'] }}{{ option_value['price'] }}</span>
+                                 {% endif %}<span class = "options-prheight"></span>
+                                 {% endif %} 
+                                 </label>
+                              </div>
+                              {% endfor %} 
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'text') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <input type="text" name="option[{{ option['product_option_id'] }}][]" value="{{ option['value'] }}" placeholder="{{ option['name'] }}" id="input-option{{ option['product_option_id'] }}" class="form-control" />
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'textarea') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <textarea name="option[{{ option['product_option_id'] }}][]" rows="5" placeholder="{{ option['name'] }}" id="input-option{{ option['product_option_id'] }}" class="form-control">{{ option['value'] }}</textarea>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'file') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label">{{ option['name'] }}</label>
+                           <button type="button" id="button-upload{{ option['product_option_id'] }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                           <input type="hidden" name="option[{{ option['product_option_id'] }}][]" value="" id="input-option{{ option['product_option_id'] }}" />
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'date') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <div class="input-group date">
+                              <input type="text" name="option[{{ option['product_option_id'] }}][]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD" id="input-option{{ option['product_option_id'] }}" class="form-control" />
+                              <span class="input-group-btn">
+                              <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                              </span>
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'datetime') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <div class="input-group datetime">
+                              <input type="text" name="option[{{ option['product_option_id'] }}][]" value="{{ option['value'] }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option['product_option_id'] }}" class="form-control" />
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              </span>
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% if (option['type'] == 'time') %} 
+                        <div class="form-group{{ option['required'] ? ' required' : '' }}">
+                           <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label>
+                           <div class="input-group time">
+                              <input type="text" name="option[{{ option['product_option_id'] }}][]" value="{{ option['value'] }}" data-date-format="HH:mm" id="input-option{{ option['product_option_id'] }}" class="form-control" />
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              </span>
+                           </div>
+                           <span class="text-danger"></span>
+                        </div>
+                        {% endif %} 
+                        {% endfor %} 
+                        {% endif %} 
+                     </div>
+                  </div>
+                  <button type="button" id="__fastSubmit" data-loading-text="{{ enter_load }}"
+                     class="btn-cart fastorder-cust__btn">{{ button_send }}</button>
+                  <br />
+               </div>
+               {% if (aridiusfastorder_adddescriptionshow == '1') %} 
+               <div class="fdescription">
+                  {{ aridiusfastorder_description }} 
+               </div>
+               {% endif %} 
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   jQuery(function ($) {
+   $("#formFastOrderTel").mask("{{ aridiusfastorder_mask[language_id] }}");
+   });
+</script>
+<script>
+   $("#__fastSubmit").click(async function () {
+   let data = {};
+   let options = {};
+   let options__arr = {};
+   let i = 0;
+   data['option'] = {};
+   $('.formFastOrder').find('input, textarea').each(function () {
+   data[this.name] = $(this).val();
+   });
+   $('#fastorder-cust_option').find('input[type=\'text\'],  input[type=\'hidden\'],  input[type=\'radio\']:checked,  input[type=\'checkbox\']:checked,  select,  textarea').each(function () {
+   options[i] = $(this).val();
+   i++;
+   options__arr[this.name] = options;
+   });
+   data['option'] = options__arr;
+   data['price'] = $('.price_no_formatfr').data('pricefr2');
+   data['price2'] = $('.special_no_formatfr').data('pricefr2');
+   $(".text-danger").text('');
+   $("#__fastSubmit").button('loading');
+   let response = await fetch("index.php?route=extension/module/aridius_fastorder/write", {
+   method: 'POST',
+   headers: {
+   'Content-Type': 'application/json;charset=utf-8'
+   },
+   body: JSON.stringify(data),
+   }).then(response => {
+   return response.json()
+   }
+   ).then(json => {
+   if ("error" in json) {
+   $.each(json.error, function (index, value) {
+   let elem = document.querySelector('#' + index);
+   if (elem != null) {
+   let parent_elem = elem.closest(".formFastOrder__item");
+   $(parent_elem).find('.text-danger').text(value);
+   }
+   if (index == "option") {
+   $.each(value, function (index_opt, value_opt) {
+   let option_element = document.getElementById('input-option' + index_opt);
+   let option_parent = option_element.closest('.form-group')
+   $(option_parent).children('.text-danger').text(value_opt);
+   });
+   }
+   });
+   $("#__fastSubmit").button('reset');
+   } else {
+   async function success() {
+   let success = await fetch("index.php?route=extension/module/aridius_fastorder/success");
+   if (success.ok) {
+   let result = await success.text();
+   $('.fastorder-cust').remove();
+   $('.fastorder-custf').prepend(result);
+   if (json['total']) {
+   setTimeout(function () {
+   $('#cart button > span').html('<span> &nbsp;' + json['total'] + '&nbsp;<span class="caret"></span></span>');
+   }, 100);
+   }
+   }
+   $('#cart').load('index.php?route=common/cart/info #cart > *');
+   $('#cart2').load('index.php?route=common/cart2/info #cart2 > *');
+   $('html').css('overflow','auto');
+   setTimeout(function() {
+   let fastorder = document.querySelector(".fastorder-custf");
+   if (fastorder) {
+   fastorder.remove();
+   }
+   }, 3500);
+   }
+   success();
+   }
+   });
+   });
+   $('html').css({overflow: 'hidden'});
+   $('.mfp-close').click(function () {
+   let fastorder = document.querySelector(".fastorder-custf");
+   $('html').css('overflow','auto');
+   fastorder.remove();
+   });
+   $('.overlay__fastorder').click(function () {
+   let fastorder = document.querySelector(".fastorder-custf");
+   $('html').css('overflow','auto');
+   fastorder.remove();
+   });
+</script>
+<script>
+   function recalc_catfr() {
+   var quantityfr = $('.fr_quantity').val();
+   var options_pricefr = 0;
+   var $has_eq_modcatfr = true;
+   $('#fastorder-cust_option option:selected, #fastorder-cust_option input:checked').each(function() {
+   if ($(this).attr('data-price_prefixfr') == '+') { options_pricefr = options_pricefr + Number($(this).attr('data-pricefr')); }
+   if ($(this).attr('data-price_prefixfr') == '-') { options_pricefr = options_pricefr - Number($(this).attr('data-pricefr')); }
+   if ($(this).attr('data-price_prefixfr') == '=') { options_pricefr = Number($(this).attr('data-pricefr')); $has_eq_modcatfr = false; }
+   });
+   var price_no_formatfr = Number($('.price_no_formatfr').attr('data-pricefr'));
+   var special_no_formatfr = Number($('.special_no_formatfr').attr('data-pricefr'));
+   if (special_no_formatfr) {
+   var special_coefficientfr = price_no_formatfr/special_no_formatfr;
+   } else {
+   var special_coefficientfr = 1;
+   }
+   if (!$has_eq_modcatfr){
+   $new_pricefr = 0;
+   var new_pricefr = (options_pricefr*special_coefficientfr) * quantityfr;
+   var new_specialfr = options_pricefr * quantityfr;
+   $has_eq_modcatfr = true;
+   } else {
+   var new_pricefr = (price_no_formatfr + options_pricefr) * quantityfr;
+   var new_specialfr = (special_no_formatfr + options_pricefr) * quantityfr;
+   }
+   $('.price_no_formatfr').html(price_format_cat(new_pricefr));
+   $('.price_no_formatfr').attr('data-pricefr2',new_pricefr);
+   $('.special_no_formatfr').attr('data-pricefr2',new_specialfr)
+   $('.special_no_formatfr').html(price_format_cat(new_specialfr));
+   }
+</script>
+<script>
+   function quantity_controlfr (minimum, maximumfr, flagfr) {
+   var pr_quantityfr = $('.fr_quantity');
+   var pr_quantity_valfr = Number((pr_quantityfr).val());
+   var minimum = Number(minimum);
+   var maximumfr = Number(maximumfr);
+   if($('input[name^=quantity_stock]').val() == 1) {
+   var maximumfr = 7777;
+   } else {
+   var maximumfr = Number(maximumfr);
+   }
+   if (flagfr == '+') {
+   if (pr_quantity_valfr  < maximumfr) {
+   pr_quantityfr.val(Math.round(pr_quantity_valfr + 1));
+   recalc_catfr( pr_quantityfr.val())
+   } else {
+   quantity_infofr(maximumfr);
+   show_quantityfr(maximumfr);
+   }
+   }
+   if (flagfr == '-') {
+   if (Number(pr_quantity_valfr > minimum)) {
+   pr_quantityfr.val(Math.round(((pr_quantity_valfr  - 1)*10))/10);
+   recalc_catfr(pr_quantityfr.val())
+   }
+   hide_quantityfr(maximumfr);
+   }
+   }
+</script>
+<script>
+   function inputs_valuefr() {
+   $('input[name^=quantity]').each(function() {
+   var minimum = Number($(this).val());
+   {% if (config_stock ) %} 
+   var maximumfr = 7777;
+   {% else %} 
+   var maximumfr = Number($(this).attr('data-maximumfr'));
+   {% endif %} 
+   quantity_controlfr(minimum, maximumfr);
+   recalc_catfr(minimum);
+   $(this).bind('input', function() {
+   var value2fr = $(this).val();
+   if (~~value2fr > maximumfr) {
+   $(this).val(maximumfr);
+   quantity_infofr(maximumfr);
+   show_quantityfr( maximumfr);
+   recalc_catfr($(this).val())
+   }
+   if (~~value2fr < maximumfr) {
+   hide_quantityfr(maximumfr);
+   }
+   recalc_catfr($(this).val())
+   });
+   var value2fr = $(this).val();
+   if(value2fr <= 0) {
+   $(this).val('1');
+   recalc_catfr($(this).val())
+   }
+   });
+   }
+</script>
+<script>
+   function quantity_infofr(maximumfr) {
+   if(maximumfr >= 0) {
+   $('.product_stock_quantityfr').html('<span class="forder alert_danger"><i class="fa fa-exclamation-circle"></i> {{ text_maximum }} '  + maximumfr + '</span>').show();
+   }
+   }
+</script>
+<script>
+   function hide_quantityfr(maximumfr) {
+   $('.product_stock_quantityfr').hide();
+   }
+   function show_quantityfr(maximumfr) {
+   $('.product_stock_quantityfr').show();
+   }
+</script>
+<script>
+   $(document).ready(function() {
+   inputs_valuefr();
+   });
+</script>
+{% if (deluxe_options_mainimg == '0') %} 
+<script>
+   function change_img_opt(src) {
+   if (src) {
+   $('.fastorder-cust__img').attr('src', src);
+   }
+   }
+</script>
+{% endif %} 
+<script>
+   // tooltips on hover
+   $('[data-toggle=\'tooltip\']').tooltip({container: '.fastorder-cust',trigger: 'hover'});
+</script>
+{% if (autocalc_select_first) %} 
+<script>
+   $('select[name^="option"] option[value=""]').remove();
+   last_name = '';
+   $('input[type="radio"][name^="option"]').each(function(){
+   if ($(this).attr('name') != last_name) $(this).prop('checked', true);
+   last_name = $(this).attr('name');
+   });
+   $('input[type="checkbox"][name^="option"]').each(function(){
+   if ($(this).attr('name') != last_name) $(this).prop('checked', true);
+   last_name = $(this).attr('name');
+   });
+</script>
+{% endif %}

@@ -1,0 +1,21 @@
+<i class="fa fa-calendar"></i>&nbsp;<a class="popup-modal" href="#popup-modal">{{ aridius_size_name }}</a>
+<div id="popup-modal" class="white-popup-block mfp-hide">
+   <div class="popupsize">
+      <div class="popupsizebor">
+         <button title="close" type="button" class="mfp-close">&#215;</button>
+         <div class="name-popup">{{ aridius_size_name }}</div>
+      </div>
+      <br />
+      <div class="popupsize2">
+         <div class="tab-content">
+            {{ aridius_size_description }}
+         </div>
+      </div>
+   </div>
+</div>
+<script><!--
+   $('.popup-modal').magnificPopup({
+   preloader: true,
+   });
+   //-->
+</script>

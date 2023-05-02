@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>aridius_stickers</name>
+  <code>aridius_stickers</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="admin/controller/catalog/product.php">
+<operation>
+			<search ><![CDATA[
+			'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+			]]></search>
+			<add position="after"><![CDATA[
+            'video' => $product_image['video'],
+			]]></add>
+</operation>
+</file>	
+
+<file path="admin/view/template/catalog/product_form.twig">
+<operation>
+			<search><![CDATA[
+			<td class="text-left">{{ entry_additional_image }}</td>
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			<td class="text-left">video:</td>
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			<td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+			]]></search>
+			<add position="before">
+			<![CDATA[
+			<td class="text-left"><input type="text" name="product_image[{{ image_row }}][video]" value="{{ product_image.video }}" class="form-control"/></td>
+ 			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			 html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+			]]></search>
+			<add position="before">
+			<![CDATA[
+			 html += '  <td class="text-left"><input type="text" name="product_image[' + image_row + '][video]" value="" class="form-control" /></td>';
+			]]></add>
+</operation>
+</file>  
+  
+<file path="admin/model/catalog/product.php"> 
+<operation>
+			<search><![CDATA[
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int)$product_image['sort_order'] . "'");
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int)$product_image['sort_order'] . "', video = '" . $this->db->escape($product_image['video']) . "'");
+			]]></add>
+</operation>
+<operation>
+			<search><![CDATA[
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int)$product_image['sort_order'] . "'");
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int)$product_image['sort_order'] . "', video = '" . $this->db->escape($product_image['video']) . "'");
+			]]></add>
+</operation>
+</file> 
+ 
+<file path="catalog/controller/product/product.php"> 
+<operation>
+			<search><![CDATA[
+			$data['images'][] = array(
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            'video' => $result['video'],
+			]]></add>
+</operation>
+</file>
+  
+</modification>

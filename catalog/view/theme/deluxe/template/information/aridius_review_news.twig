@@ -1,0 +1,39 @@
+<!-- Echo reviews -->
+{% if (reviews) %}
+<div id="reviewst">
+
+   {% for review in reviews %}
+   <div class="review_table">
+   <div class="review_main">
+      <div class="review_avatar">{{ review['author']|slice(0, 1) }}</div>
+      <div class="review_author"><strong itemprop = "author">{{ review['author'] }}</strong></div>
+      <div class="review_date"><time itemprop = "datePublished" datetime = "{{ review['date_added'] }}" >{{ review['date_added'] }}</time></div>
+      <div class="review_text">
+         <p itemprop = "reviewBody">{{ review['text'] }}</p>
+      </div>
+      {% if (aridius_news_display_answer_button != 1) %}
+      <i class="fa fa-reply" aria-hidden="true"></i>
+      <a data-parent="{{ review['review_id'] }}" class="comment-reply" href="javascript:void(0);"> {{ text_write_reply }}</a>
+      {% endif %}
+   </div>
+   {% if (review['parent_id']) %}
+   {% for parent in review['parent_id'] %}
+   <div class="review_table qa-parent">
+      <div class="review_avatar">{{ parent['author']|slice(0, 1) }}</div>
+      <div class="review_author"><strong>{{ parent['author'] }}</strong></div>
+      <div class="review_date">{{ parent['date_added'] }}</div>
+      <div class="qa-parent-text">
+         <div class="review_text">
+            <p>{{ parent['text'] }}</p>
+         </div>
+      </div>
+   </div>
+   {% endfor %}
+   {% endif %}
+ </div>  
+   {% endfor %}
+
+<div class="text-right">{{ pagination }}</div>
+{% else %}
+<p>{{ text_no_reviews }}</p>
+{% endif %}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>aridius_image_option_change</name>
+  <code>aridius_image_option_change</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="admin/model/catalog/product.php">
+<operation>
+      <search><![CDATA[
+		            $this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+	  ]]></search>
+      <add position="replace"><![CDATA[
+		            $this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', image_opt = '" . $this->db->escape($product_option_value['image_opt']) . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+  
+	  ]]></search>
+      <add position="replace"><![CDATA[
+				    $this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', image_opt = '" . $this->db->escape($product_option_value['image_opt']) . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+	 ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					'price_prefix'            => $product_option_value['price_prefix'],
+      ]]></search>
+      <add position="before"><![CDATA[
+				    'image_opt'               => $product_option_value['image_opt'],
+      ]]></add>
+</operation>
+</file>  
+<file path="admin/controller/catalog/product.php">
+<operation>
+      <search><![CDATA[
+			$data['product_options'] = array();
+      ]]></search>
+      <add position="before"><![CDATA[
+			$this->load->model('tool/image');
+      ]]></add>
+</operation>
+<operation>
+      <search index="0"><![CDATA[
+		    foreach ($product_option['product_option_value'] as $product_option_value) {
+      ]]></search>
+      <add position="after"><![CDATA[
+			if (is_file(DIR_IMAGE . $product_option_value['image_opt'])) {
+				$image_opt = $product_option_value['image_opt'];
+				$thumb_opt = $product_option_value['image_opt'];
+			} else {
+				$image_opt = '';
+				$thumb_opt = 'no_image.png';
+			}
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+		        'price_prefix'            => $product_option_value['price_prefix'],
+      ]]></search>
+      <add position="before"><![CDATA[
+				'image_opt'               => $image_opt,
+				'thumb_opt'         	  => $this->model_tool_image->resize($thumb_opt, 100, 100),
+      ]]></add>
+</operation>
+</file>   
+<file path="admin/view/template/catalog/product_form.twig">
+<operation>
+      <search><![CDATA[
+                   <td class="text-right"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>  
+	  
+	  
+	  ]]></search>
+      <add position="before"><![CDATA[
+				   <td class="text-right"><a href="" id="thumb-imageopt{{ option_value_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_option_value['thumb_opt'] }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][image_opt]" value="{{ product_option_value['image_opt'] }}" id="input-imageopt{{ option_value_row }}" /></td>
+
+	 ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+          	        html += '  <td class="text-left"><button type="button" onclick="$(this).tooltip(\'destroy\');$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" rel="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	  ]]></search>
+      <add position="before"><![CDATA[
+                    html += '  <td class="text-left"><a href="" id="thumb-imageopt' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][image_opt]" value="" id="input-imageopt' + option_value_row + '" /></td>';
+      ]]></add>
+</operation>
+
+<operation>
+      <search index="0"><![CDATA[
+					<td colspan="6"></td>
+      ]]></search>
+      <add position="replace"><![CDATA[
+                    <td colspan="7"></td>
+      ]]></add>
+</operation>
+</file>
+<file path="catalog/controller/product/product.php">
+	<operation>
+      <search><![CDATA[
+					 'name'                    => $option_value['name'],
+      ]]></search>
+      <add position="before"><![CDATA[
+                     'image_opt'               => $option_value['image_opt'] ? $this->model_tool_image->resize($option_value['image_opt'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height')) : '',
+                     'image_opt_additional'    => $option_value['image_opt'] ? $this->model_tool_image->resize($option_value['image_opt'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height')) : '',
+	                 'image_opt_popup'         => $option_value['image_opt'] ? $this->model_tool_image->resize($option_value['image_opt'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')) : '',
+	 ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+			'price'                   => $price,
+      ]]></search>
+      <add position="before"><![CDATA[
+			'opt_additional'     => $this->model_tool_image->resize($option_value['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height')),
+     		'opt_thumb'          => $this->model_tool_image->resize($option_value['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height')),
+	 ]]></add>
+</operation>
+</file> 
+<file path="catalog/model/catalog/product.php">
+	<operation>
+      <search><![CDATA[
+		             'image'                   => $product_option_value['image'],
+      ]]></search>
+      <add position="before"><![CDATA[
+                     'image_opt'               => $product_option_value['image_opt'],
+      ]]></add>
+</operation>
+</file>
+</modification>

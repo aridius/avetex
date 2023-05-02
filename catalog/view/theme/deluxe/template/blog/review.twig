@@ -1,0 +1,22 @@
+<!-- Echo reviews -->
+{% if (reviews) %}
+<div id="reviewst">
+
+   {% for review in reviews %}
+   <div class="review_table">
+   <div class="review_main">
+      <div class="review_avatar">{{ review['author']|slice(0, 1) }}</div>
+      <div class="review_author"><strong itemprop = "author">{{ review['author'] }}</strong></div>
+      <div class="review_date"><time itemprop = "datePublished" datetime = "{{ review['date_added'] }}" >{{ review['date_added'] }}</time></div>
+      <div class="review_text">
+         <p itemprop = "reviewBody">{{ review['text'] }}</p>
+      </div>
+   </div>
+
+ </div>  
+   {% endfor %}
+
+<div class="text-right">{{ pagination }}</div>
+{% else %}
+<p>{{ text_no_reviews }}</p>
+{% endif %}

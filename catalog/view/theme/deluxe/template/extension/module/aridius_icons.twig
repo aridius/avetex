@@ -1,0 +1,78 @@
+{% if (mod_icons ) %}
+<div class = "row ico_wall_flex appedbl {% if (aridius_icons_top == 1) %}hiddeni{% endif %}">
+{% for key,mod_icon in mod_icons %}
+{% if (aridius_icons_colico == 1) %}
+<div class = "fix_rowm catb col-xs-12 col-sm-6 col-md-3 block_desc_all2">
+   {% else %}
+   <div class = "fix_rowm catb col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 block_desc_all2">
+      {% endif %}
+      <div class = "block_ico">
+         {% if (aridius_icons_popup == 1) %}
+         <a href="#text-popup{{ key }}" class="popup-ico{{ key }}">
+            <div class = "ico_msvg">
+               <img class="img-responsive" src="{{ mod_icon['image'] }}" alt="{{ mod_icon['title'][language_id] }}" width="44" height="44">
+            </div>
+            <span class = "ico_sz">{{ mod_icon['title'][language_id] }}</span>
+            {{ mod_icon['main_text'][language_id] }}
+         </a>
+         {% elseif (aridius_icons_link == 1) %}
+         <a href="{{ mod_icon['add_link'] }}" target="_blank" class="popup-ico{{ key }}">
+            <div class = "ico_msvg">
+               <img class="img-responsive" src="{{ mod_icon['image'] }}" alt="{{ mod_icon['title'][language_id] }}" width="44" height="44">
+            </div>
+            <span class = "ico_sz">{{ mod_icon['title'][language_id] }}</span>
+            {{ mod_icon['main_text'][language_id] }}
+         </a>
+         {% else %}
+         <span class="popup-ico{{ key }}">
+            <div class = "ico_msvg">
+               <img class="img-responsive" src="{{ mod_icon['image'] }}" alt="{{ mod_icon['title'][language_id] }}" width="44" height="44">
+            </div>
+            <span class = "ico_sz">{{ mod_icon['title'][language_id] }}</span>
+            {{ mod_icon['main_text'][language_id] }}
+         </span>
+         {% endif %}
+         {% if (aridius_icons_popup == 1) %}
+         <div id="text-popup{{ key }}" class="white-popup mfp-hide">
+            {{ mod_icon['description'] }}
+         </div>
+         {% endif %}
+      </div>
+   </div>
+   {% if (aridius_icons_popup == 1) %}
+   <script>
+      $(document).ready(function() {
+      $('.popup-ico{{ key }}').magnificPopup({
+      type: 'inline'
+      });
+      });
+   </script>
+   {% endif %}
+   {% endfor %}
+</div>
+{% endif %}
+<div class="clearfix"></div>
+<script>
+   //Active Tab
+   $(document).ready(function() {
+   $(".block_ico:last").addClass("block_icolast");
+   });
+</script>
+{% if (aridius_icons_top == 1) %}
+<script>
+   function AppedBlock_Slow() {
+   if ($(window).width() < 1199) {
+   $('.appedbl').appendTo($('#appendToinfoblock'));
+   $('.appedbl').removeClass('hiddeni');
+   } else {
+   $('.appedbl').appendTo($('#appendToinfoblock2'));
+   }
+   }
+   $(document).ready(function() {
+   AppedBlock_Slow();
+   });
+   $(window).resize(function() {
+   AppedBlock_Slow();
+   });
+</script>
+{% endif %}

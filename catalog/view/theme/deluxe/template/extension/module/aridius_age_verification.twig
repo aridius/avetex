@@ -1,0 +1,26 @@
+<div class="modal fade" id="textModalAge" role="dialog" data-backdrop="static" data-keyboard="false">
+   <div class="ptext modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+            {{ (aridius_age_verification_description) }}
+            <div class="hide_agtext2">
+               {{ (aridius_age_verification_description2) }}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   if (localStorage.getItem('popState', 'value') != 'shown') {
+   $("#textModalAge").modal('show');
+   $(".hide_agtext2").css({display:"none"});
+   $("img").css({opacity:".025"});
+   $('#replace-all').click(function() {
+   $(".hide_agtext").css({display:"none"});
+   $(".hide_agtext2").css({display:"block"});
+   });
+   $('#replace-all2').click(function() {
+   $("img").css({opacity:"1"});
+   });
+   }
+</script>

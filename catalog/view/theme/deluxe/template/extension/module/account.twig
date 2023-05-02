@@ -1,0 +1,34 @@
+<div class="list-group">
+  {% if (not logged) %} 
+  <a href="{{ login }}" class="list-group-item"><i class="fa fa-sign-in"></i> {{ text_login }}</a> <a href="{{ register }}" class="list-group-item"><i class="fa fa-user-plus"></i> {{ text_register }}</a> <a href="{{ forgotten }}" class="list-group-item"><i class="fa fa-question-circle"></i> {{ text_forgotten }}</a>
+  {% endif %} 
+  <a href="{{ account }}" class="list-group-item"><i class="fa fa-user"></i> {{ text_account }}</a>
+  {% if (logged) %} 
+  <a href="{{ edit }}" class="list-group-item"><i class="fa fa-pencil"></i> {{ text_edit }}</a> <a href="{{ password }}" class="list-group-item"><i class="fa fa-key"></i> {{ text_password }}</a>
+  {% endif %} 
+  
+  <a href="{{ address }}" class="list-group-item"><i class="fa fa-home"></i> {{ text_address }}</a> 
+  {% if (deluxe_wishlist_footer != 1) %}	
+  <a href="{{ wishlist }}" class="list-group-item"><i class="fa fa-heart"></i> {{ text_wishlist }}</a> 
+  {% endif %}	
+  <a href="{{ order }}" class="list-group-item"><i class="fa fa-file"></i> {{ text_order }}</a> 
+  {% if (deluxe_download_footer != 1) %}	
+  <a href="{{ download }}" class="list-group-item"><i class="fa fa-download"></i> {{ text_download }}</a>
+  {% endif %}	
+  <a href="{{ recurring }}" class="list-group-item"><i class="fa fa-clock-o "></i> {{ text_recurring }}</a> 
+  <a href="{{ reward }}" class="list-group-item"><i class="fa fa-diamond"></i> {{ text_reward }}</a> 
+  {% if (deluxe_return_footer != 1) %} 
+  <a href="{{ return }}" class="list-group-item"><i class="fa fa-retweet"></i> {{ text_return }}</a>
+  {% endif %}	
+  <a href="{{ transaction }}" class="list-group-item"><i class="fa fa-credit-card"></i> {{ text_transaction }}</a> 
+  {% if (deluxe_newsletter_footer != 1) %} 
+  <a href="{{ newsletter }}" class="list-group-item"><i class="fa fa-envelope"></i> {{ text_newsletter }}</a>
+  {% endif %}	
+  {% if (logged) %} 
+  <a href="{{ logout }}" class="list-group-item"><i class="fa fa-sign-out"></i> {{ text_logout }}</a>
+  {% endif %} 
+</div>
+
+
+
+

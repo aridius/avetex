@@ -1,0 +1,99 @@
+<div class="title-module">{{ heading_title }}</div>
+<div class="row">
+   <div class ="veiwed-grid">
+      {% for product in products %}
+      <div class="product-layout_carusel col-xs-12 catb">
+         <div class="gtile-i-wrap">
+            <div class="item_best caption">
+               <div class="product-thumb">
+                  <div class="box_veiwed">
+                     {% if (deluxe_lazy) %}
+                     <div class="image"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% else %}
+                     <div class="image"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% endif %}
+                     <div class="box_flex flex_r">
+                        <div class="positionsticker">
+                           <!-- special -->
+                           {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0 ) %}
+                           {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                           {% endif %}
+                           <!-- special END -->
+                           <!-- new -->
+                           {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                           {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                           {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                           {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                           <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                           {% endif %}
+                           <!-- new END -->
+                           <!-- top -->
+                           {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                           <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                           {% endif %}
+                           <!-- top END -->
+                           {% if (product['stickers2']) %}
+                           {% for sticker2 in product['stickers2'] %}
+                           <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                           {% endfor %}
+                           {% endif %}
+                        </div>
+                        <div class="product-name">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+                        <div class="box_flex2">
+                           {% if (product['price']) %}
+                           <p class="price">
+                              {% if (not product['special']) %}
+                              {{ product['price'] }}
+                              {% else %}
+                              <span class="price-old">{{ product['price'] }}</span><span class="stickers-special">-{{ percent }}%</span><span class="price-new">{{ product['special'] }}</span>
+                              {% endif %}
+                              {% if (product['tax']) %}
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %}
+                           </p>
+                           {% endif %}
+                           <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                              {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% else %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>

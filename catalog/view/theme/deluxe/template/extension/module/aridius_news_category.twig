@@ -1,0 +1,30 @@
+<div class="title-module">{{ heading_title }}</div>
+<div class="row">
+   <div class ="veiwed-grid">
+      {% for new in news %}
+      <div class="product-layout_carusel col-xs-12 catb">
+         <div class="gtile-i-wrap">
+            <div class="item_best caption">
+               <div class="product-thumb">
+                  <div class="box_veiwed">
+                     {% if (add_img == '1') %}
+                     {% if (deluxe_lazy) %}
+                     <div class="image"><a href="{{ new['href'] }}"><img src="{{ new['thumb'] }}" alt="{{ new['title'] }}" title="{{ new['title'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% else %}
+                     <div class="image"><a href="{{ new['href'] }}"><img data-src="{{ new['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ new['title'] }}" title="{{ new['title'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% endif %}
+                     {% endif %}
+                     <div class="box_flex flex_r">
+                        <div class="product-name"><a href="{{ new['href'] }}">{{ new['title'] }}</a></div>
+                        {% if (not aridius_news_show_date) %}
+                        <span class="posted-aridius_news"><i class="fa fa-calendar"></i> {{ new['posted'] }}</span>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>

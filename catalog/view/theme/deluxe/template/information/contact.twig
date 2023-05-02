@@ -1,0 +1,124 @@
+{{ header }}
+<div class="container">
+   <ul class="breadcrumb">
+      {% for i,breadcrumb in breadcrumbs %}
+      <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+      {% endfor %}
+   </ul>
+   <div class="row">
+      {{ column_left }}
+      {% if (column_left and column_right) %}
+      {% set class = 'col-sm-6' %}
+      {% elseif (column_left or column_right) %}
+      {% set class = 'col-sm-9' %}
+      {% else %}
+      {% set class = 'col-sm-12' %}
+      {% endif %}
+      <div id="content" class="{{ class }}">
+         {{ content_top }}
+         <div class="box_contact_usp">
+            <div class="col-xs-12 col-sm-4 contact_usp">
+               <legend>{{ heading_title }}</legend>
+               <ul class="list-unstyled">
+                  {% if (theme_tells) %}
+                  {% for theme_tell in theme_tells %}
+                  <li class = "footer_tell">
+                     <a {% if (theme_tell['title']) %} href="tel:{{ theme_tell['title2'] }}"{% endif %} ><span class="svg_tell"><img src="{{ theme_tell['image'] }}" alt="phone"></span><span class="title_tell">{{ theme_tell['title'] }}</span></a>
+                  </li>
+                  {% endfor %}
+                  {% endif %}
+                  <li class = "footer_tell">
+                     <a href="tel:{{ deluxe_telephone_mainheader2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheader[language_id] }}</span></a>
+                     <a href="tel:{{ deluxe_telephone_mainheader2n2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheadern2[language_id] }}</span></a>
+                  </li>
+                  {% if (deluxe_time_footer == '0') %}
+               </ul>
+               <div class="work_time_all fl2">
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  <ul class="list-unstyled">
+                     {% if (deluxe_work_time is not empty) %}
+                     <li class = "work_time work_timef ">
+                        {{ deluxe_work_time }}
+                     </li>
+                     {% endif %}
+                     {% if (deluxe_work_time1 is not empty) %}
+                     <li class = "work_time">
+                        {{ deluxe_work_time1 }}
+                     </li>
+                     {% endif %}
+                     {% if (deluxe_work_time2 is not empty) %}
+                     <li class = "work_time">
+                        {{ deluxe_work_time2 }}
+                     </li>
+                     {% endif %}
+                  </ul>
+               </div>
+               <ul class="list-unstyled">
+                  {% endif %}
+                  {% if (deluxe_mail_header[language_id] and deluxe_mail_footer == '0' ) %}
+                  <li class = "footer_mail"><i class="fa fa-envelope" aria-hidden="true"></i> <a onClick="javascript:window.open('mailto:{{ deluxe_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ deluxe_mail_header[language_id] }}</a></li>
+                  {% endif %}
+               </ul>
+               {% if (deluxe_address[language_id] and deluxe_address_footer == '0' ) %}
+               <div class="work_time_all fl">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <ul class="list-unstyled">
+                     <li class = "work_time adress">
+                        {{ deluxe_address }}
+                     </li>
+                  </ul>
+               </div>
+               {% endif %}
+            </div>
+            <div class="col-xs-12 col-sm-8 contact_usp2">
+               <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                  <fieldset>
+                     <legend>{{ text_contact }}</legend>
+                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                        <div class="col-sm-10">
+                           <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+                           {% if (error_name) %}
+                           <div class="text-danger">{{ error_name }}</div>
+                           {% endif %}
+                        </div>
+                     </div>
+                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+                        <div class="col-sm-10">
+                           <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
+                           {% if (error_email) %}
+                           <div class="text-danger">{{ error_email }}</div>
+                           {% endif %}
+                        </div>
+                     </div>
+                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
+                        <div class="col-sm-10">
+                           <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+                           {% if (error_enquiry) %}
+                           <div class="text-danger">{{ error_enquiry }}</div>
+                           {% endif %}
+                        </div>
+                     </div>
+                     {{ captcha }}
+                  </fieldset>
+                  <div class="buttons">
+                     <div class="pull-right">
+                        <input class="btn btn-primary" type="submit" value="{{ button_submit }}" />
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+         {% if (deluxe_contact_map == '0') %}
+         <div class="mapcode">
+            {{ deluxe_mapcode }}
+         </div>
+         {% endif %}
+         {{ content_bottom }}
+      </div>
+      {{ column_right }}
+   </div>
+</div>
+{{ footer }}

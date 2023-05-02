@@ -1,0 +1,256 @@
+{{ header }}
+<div class="container">
+   <div class="row">
+      <div id="cont" class="col-sm-12">
+         {{ column_left }}
+         {% if (column_left and column_right) %}
+         {% set class = 'col-sm-6' %}
+         {% elseif (column_left or column_right) %}
+         {% set class = 'col-sm-9' %}
+         {% else %}
+         {% set class = 'col-sm-12' %}
+         {% endif %}
+         <div id="content" class="{{ class }}">
+            {{ content_top }}
+            <ul class="breadcrumb">
+               {% for i,breadcrumb in breadcrumbs %}
+               <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+               {% endfor %}
+            </ul>
+            {% if (aridius_store_review_status == 1) %}
+            <form id="store-review" class="form-horizontal review-form" style="display: none;">
+               {% if (review_guest) %}
+               <div class="review_shop"></div>
+               <div class="form-group required">
+                  <div class="col-sm-12">
+                     <label class="control-label" for="input-name">{{ entry_name }}</label>
+                     <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <div class="col-sm-12">
+                     <label class="control-label" for="input-review_shop">{{ entry_review }}</label>
+                     <textarea name="text" rows="5" id="input-review_shop" class="form-control"></textarea>
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ entry_rating }}</label>
+                     <input type="hidden" name="rating" value="{{ aridius_store_review_default_rating }}" class="rating-tooltip"/>
+                  </div>
+               </div>
+               {{ captcha }}
+               <div class="buttons clearfix">
+                  <div class="pull-right">
+                     <button type="submit" data-loading-text="{{ text_loading }}"  class="btn-cart add-review">{{ button_continue }}</button>
+                  </div>
+               </div>
+               <input type="hidden" name="parent" value="0">
+               {% else %}
+               {{ text_login }}
+               <br /><br />
+               {% endif %}
+            </form>
+            <div class="clearh"></div>
+            <div class="rating_main2">
+               {% if (aridius_store_review_display_average_rating == 0) %}
+               <div class="rating_avrstext">
+                  {{ text_rating_avr }}
+               </div>
+               <div class="rating_main">
+                  <div class="col-xs-6 col-sm-4">
+                     <div class="avr_sum1">
+                        <span class="avr_rating">{{ rating_avr|round(1) }}</span> 
+                        <div class="avr3">{{ text_rating_avrmax }}</div>
+                     </div>
+                     <input type="hidden" class="rating" data-readonly value="{{ rating_avr|round(1) }}"/><span class="hide_awr"></span>
+                     {% if (stack_rating != '') %}
+                     {% for stack_ratings in stack_rating %}
+                     <div class="rating_all">
+                        {{ text_rating_all }} {{ stack_ratings['total'] }}
+                     </div>
+                     {% endfor %}
+                     {% endif %}
+                  </div>
+                  <div class="col-xs-6 col-sm-8">
+                     {% if (stack_rating != '') %}
+                     {% for stack_ratings in stack_rating %}
+                     <div class="line_rew">
+                        <span class="retihf fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span><span class="reting_num">5</span>
+                        <div class="percent_rating_line">
+                           <div class="percent_line" style="width: {{ stack_ratings['five'] }}%"></div>
+                        </div>
+                        <span class="rating_per">{{ stack_ratings['five'] }}% </span>
+                     </div>
+                     <div class="line_rew">
+                        <span class="retihf fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span><span class="reting_num">4</span>
+                        <div class="percent_rating_line">
+                           <div class="percent_line" style="width: {{ stack_ratings['four'] }}%"></div>
+                        </div>
+                        <span class="rating_per">{{ stack_ratings['four'] }}%</span>
+                     </div>
+                     <div class="line_rew">
+                        <span class="retihf fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span><span class="reting_num">3</span>
+                        <div class="percent_rating_line">
+                           <div class="percent_line" style="width: {{ stack_ratings['three'] }}%"></div>
+                        </div>
+                        <span class="rating_per">{{ stack_ratings['three'] }}%</span>
+                     </div>
+                     <div class="line_rew">
+                        <span class="retihf fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span><span class="reting_num">2</span>
+                        <div class="percent_rating_line">
+                           <div class="percent_line" style="width: {{ stack_ratings['two'] }}%"></div>
+                        </div>
+                        <span class="rating_per">{{ stack_ratings['two'] }}%</span>
+                     </div>
+                     <div class="line_rew">
+                        <span class="retihf fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span><span class="reting_num">1</span>
+                        <div class="percent_rating_line">
+                           <div class="percent_line" style="width: {{ stack_ratings['one'] }}%"></div>
+                        </div>
+                        <span class="rating_per">{{ stack_ratings['one'] }}%</span>
+                     </div>
+                     {% endfor %}
+                     {% endif %}
+                  </div>
+               </div>
+               {% endif %}
+               <div class="buttons_rew">
+                  <button type="button" class="btn-cart" onclick="hide_show(event, '#store-review')"><i class="fa fa-pencil" aria-hidden="true"></i> {{ text_write_review }}</button>
+               </div>
+            </div>
+            {% if (reviews) %}
+            <div id="reviewst">
+               {% for review in reviews %}
+               <div class="review_table">
+                  <div class="review_main">
+                     <div class="review_avatar">{{ review['author']|slice(0, 1) }}</div>
+                     <div class="review_author"><strong>{{ review['author'] }}</strong></div>
+                     <div class="review_date">{{ review['date_added'] }}</div>
+                     <div class="review_stack">
+                        {% set i = 1 %}{% for i in i..5 %}
+                        {% if (review['rating'] < i) %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% else %}
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% endif %}
+                        {% endfor %}
+                        {% if (aridius_store_review_display_answer_button != 1) %}
+                        <br/>
+                        <i class="fa fa-reply" aria-hidden="true"></i>
+                        <a data-parent="{{ review['review_id'] }}" class="comment-reply" href="javascript:void(0);">{{ text_write_reply }}</a>
+                        {% endif %}
+                     </div>
+                     <div class="review_text">
+                        <p>{{ review['text'] }}</p>
+                     </div>
+                  </div>
+                  {% for parent in review['parent'] %}
+                  <div class="review_table review-parent">
+                     <div class="review_avatar">{{ parent['author']|slice(0, 1) }}</div>
+                     <div class="review_author"><strong>{{ parent['author'] }}</strong></div>
+                     <div class="review_date">{{ parent['date_added'] }}</div>
+                     <div class="qa-parent-text">
+                        <div class="review_text">
+                           <p>{{ parent['text'] }}</p>
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+               {% endfor %}
+               <div class="row">
+                  <div class="col-sm-6 text-left">{{ pagination }}</div>
+                  <div class="col-sm-6 text-right">{{ results }}</div>
+               </div>
+            </div>
+            {% else %}
+            <br /><br />
+            <p>{{ text_no_reviews }}</p>
+            {% endif %}
+            {% endif %}
+            {{ content_bottom }}
+         </div>
+         {{ column_right }}
+      </div>
+   </div>
+</div>
+<script src="catalog/view/theme/deluxe/js/bootstrap_rating/bootstrap-rating.js"></script>
+{% if (aridius_store_review_status == 1) %}
+<!-- rating -->
+<script><!--
+   $('#review_shop').delegate('.pagination a', 'click', function (e) {
+   e.preventDefault();
+   $('#review_shop').fadeOut('slow');
+   $('#review_shop').load(this.href);
+   $('#review_shop').fadeIn('slow');
+   });
+   $(document).on('submit','form.review-form',function(e){
+   e.preventDefault();
+   var $this=$(this);
+   $.ajax({
+   url: 'index.php?route=extension/module/aridius_store_review/write',
+   type: 'post',
+   dataType: 'json',
+   data: $this.serialize(),
+   beforeSend: function () {
+   $this.find('.button-review_shop').button('loading');
+   },
+   complete: function () {
+   $this.find('.button-review_shop').button('reset');
+   },
+   success: function (json) {
+   $('.alert-success, .alert-danger').remove();
+   if (json['error']) {
+   $this.find('.review_shop').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+   }
+   if (json['success']) {
+   $this.find('.review_shop').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+   $this.find('input[name=\'name\']').val('');
+   $this.find('textarea[name=\'text\']').val('');
+   $this.find('input[name=\'rating\']:checked').prop('checked', false);
+   setTimeout(function(){ $('.reply-form').remove();},2500)
+   }
+   }
+   });
+   });
+   $(document).on('click', '.cancel-review', function () {
+   $('.reply-form').remove();
+   });
+   $(document).on('click', '.comment-reply', function () {
+   var $this=$(this);
+   $.post( "index.php?route=extension/module/aridius_store_review/reply", { parent: $this.attr("data-parent") }, function( data ) {
+   $('.reply-form').remove();
+   $this.parent().append('<div class="reply-form">' + data.html + '</div>');
+   }, "json");
+   });
+   //-->
+</script>
+<script><!--
+   function hide_show(event, selector) {
+   var form = document.querySelector(selector)
+   if (form.style.display == "none") {
+   form.style.display = "block"
+   } else {
+   form.style.display = "none"
+   }
+   event.currentTarget.style.display = 'none';
+   }
+   //-->
+</script>
+<script><!--
+   $(function () {
+   $('.rating-tooltip').ar_rating({
+   extendSymbol: function (rate) {
+   $(this).tooltip({
+   container: 'body',
+   placement: 'bottom',
+   title: rate
+   });
+   }
+   });
+   });
+   //-->
+</script>
+{% endif %}
+{{ footer }}

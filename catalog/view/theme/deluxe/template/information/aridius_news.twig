@@ -1,0 +1,458 @@
+{{ header }} 
+<div class="container">
+   <div class="row">
+      <div id="cont" class="col-sm-12">
+         {{ column_left }} 
+         {% if (column_left and column_right) %} 
+         {% set class = 'col-sm-6' %} 
+         {% elseif (column_left or column_right) %} 
+         {% set class = 'col-sm-9' %} 
+         {% else %} 
+         {% set class = 'col-sm-12' %} 
+         {% endif %} 
+         <div id="content" class="{{ class }}">
+            {{ content_top }} 
+            <div class="bread_scroll">
+               <ul class="breadcrumb">
+                  {% for i,breadcrumb in breadcrumbs %}
+                  <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+                  {% endfor %}
+               </ul>
+            </div>
+            {% if (aridius_news_info is defined) %} 
+            <div class="content-news">
+               <div class="news">
+                  <h1 class="pr_h1">{{ heading_title }}</h1>
+                  {% if (aridius_news_show_imgp != 1) %} 
+                  <div><img style="width:40%" src="{{ thumb }}" alt="{{ heading_title }}" class="news_main img-responsive" /></div>
+                  {% endif %} 
+                  {{ description }} 
+               </div>
+               <br />
+               <div>
+                  {% if (deluxe_product_show_share != 1) %}
+                  {% if (deluxe_share is empty) %}
+                  <!-- AddThis Button BEGIN -->
+                  <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+                  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
+                  <!-- AddThis Button END -->
+                  {% else %}
+                  {{ deluxe_share }}
+                  {% endif %}
+                  {% endif %}
+               </div>
+            </div>
+            {% if (aridius_news_status_review != 1) %} 
+            <!-- Main form -->
+            <form id="store-review" class="form-horizontal review_news-form">
+               {% if (review_guest) %} 
+               <div class="review_shop"></div>
+               <div class="form-group required">
+                  <div class="col-sm-12">
+                     <label class="control-label" for="input-name">{{ entry_name }}</label>
+                     <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <div class="col-sm-12">
+                     <label class="control-label" for="input-review_shop">{{ entry_review }}</label>
+                     <textarea name="text" rows="5" id="input-review_shop" class="form-control"></textarea>
+                  </div>
+               </div>
+               {{ captcha }} 
+               <div class="buttons clearfix">
+                  <div class="pull-right">
+                     <button type="submit" data-loading-text="{{ text_loading }}"  class="btn-cart">{{ button_continue }}</button>
+                  </div>
+               </div>
+               <input type="hidden" name="parent" value="0">
+               {% else %} 
+               {{ text_login }} 
+               <br /><br />
+               {% endif %} 
+            </form>
+            <!-- Echo reviews -->
+            <div id="review_news"></div>
+            <br />
+            {% endif %} 
+            <div class="clearfix"></div>
+            {% if (products) %} 
+            <div class="title-module">{{ text_products_related }}</div>
+            <div id="products_nf" class="swiper-container">
+               <div class="swiper-wrapper">
+                  {% for product in products %} 
+                  <div class="swiper-slide product-layout_carusel">
+                     <div class="gtile-i-wrap caption">
+                        <div class="product-thumb">
+                           {% if (deluxe_lazy) %} 
+                           <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="swiper-lazy img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                           {% else %} 
+                           <div class="image"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                           {% endif %} 
+                          <div class="additional-links ">
+                              <ul>
+                                 {% if (aridius_news_wish) %} 
+                                 <li class = "additional-action">
+                                    <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
+                                    <i class="fa fa-heart"></i>
+                                    </a>
+                                 </li>
+                                 {% endif %} 
+                                 {% if (aridius_news_comp) %} 
+                                 <li class = "additional-action">
+                                    <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
+                                    <i class="fa fa-fw fa-balance-scale"></i>
+                                    </a>
+                                 </li>
+                                 {% endif %} 
+                                 {% if (aridius_news_quickview) %} 
+                                 <li class = "additional-action">
+                                    <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
+                                    <i class="fa fa-search"></i>
+                                    </a>
+                                 </li>
+                                 {% endif %} 
+                              </ul>
+                           </div>
+                           <div class="positionsticker">
+                              <!-- special -->
+                              {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0 ) %}
+                              {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                              {% endif %}
+                              <!-- special END -->
+                              <!-- new -->
+                              {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                              {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                              {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                              {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                              <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                              {% endif %}
+                              <!-- new END -->
+                              <!-- top -->
+                              {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                              <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                              {% endif %}
+                              <!-- top END -->
+                              {% if (product['stickers2']) %}
+                              {% for sticker2 in product['stickers2'] %}
+                              <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                              {% endfor %}
+                              {% endif %}
+                           </div>
+                           {% if (aridius_news_rat) %} 
+                           <div class="rating">
+                              {% set i = 1 %}{% for i in i..5 %} 
+                              {% if (product['rating'] < i) %} 
+                              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                              {% else %} 
+                              <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                              {% endif %} 
+                              {% endfor %} 
+                              <span class="reviews_qt">
+                              <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                              </span>
+                           </div>
+                           {% endif %} 
+                           <div class="product-name"><a href="{{ product['href'] }}">
+                              {% if (product['name'])|length < deluxe_limit_symbolst %}
+                              {{ product['name'] }}
+                              {% else %}
+                              {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                              {% endif %}
+                              </a>
+                           </div>
+                           <div class="box_flex2">
+                              {% if (product['price']) %} 
+                              <p class="price">
+                                 {% if (not product['special']) %} 
+                                 {{ product['price'] }} 
+                                 {% else %} 
+                                 <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %}<span class="stickers-special">-{{ percent }}%</span>{% endif %}<span class="price-new">{{ product['special'] }}</span>
+                                 {% endif %} 
+                                 {% if (product['tax']) %} 
+                                 <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                 {% endif %} 
+                              </p>
+                              {% endif %} 
+                              <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                                 {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                 <div class="snav snav_cart en">
+                                    <ul>
+                                       <li>
+                                          <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                             <svg>
+                                                <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                             </svg>
+                                          </a>
+                                       </li>
+                                    </ul>
+                                 </div>
+                                 {% else %} 
+                                 <div class="snav snav_cart en">
+                                    <ul>
+                                       <li>
+                                          <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                             <svg>
+                                                <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                             </svg>
+                                             <span class="cart_open">{{ button_cart }}</span>
+                                          </a>
+                                       </li>
+                                    </ul>
+                                 </div>
+                                 {% endif %} 
+                              </div>
+                           </div>
+                           {% if (product['quantity'] > 0 ) %} 
+                           {% if (deluxe_forder != 1) %} 
+                           <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
+                              <svg class ="w_clock">
+                                 <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
+                              </svg>
+                              <span>{{ text_fastorder }}</span>
+                           </a>
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                           <div class="status_st">
+                              {{ text_stockst }} 
+                           </div>
+                           {% endif %} 
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %} 
+               </div>
+               {% if (aridius_news_relnavigation) %} 
+               <div class="#featured_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+               <div class="#featured_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+               {% endif %} 
+            </div>
+		
+            <script><!--
+               $(document).ready(function () {
+               var ocSwiper = new Swiper('#products_nf.swiper-container', {
+               // Enable lazy loading
+               lazy: {
+               loadPrevNext: true,
+               loadPrevNextAmount: 6,
+               },
+               slidesPerView: {{ aridius_news_relitems }},
+               mode: 'horizontal',
+               pagination: false,
+               spaceBetween: 20,
+               speed: {{ aridius_news_relrew_speed }},
+               {% if (aridius_news_relautoplay_on) %} 
+               autoplay: {delay: {{ aridius_news_relautoplay }}},
+               autoplayDisableOnInteraction: true,
+               {% endif %} 
+               breakpoints: {
+			   360: {
+               slidesPerView: 1,
+               },
+               640: {
+               slidesPerView: 2,
+               },
+               910: {
+               slidesPerView: 3,
+               },
+               1200: {
+               slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+               },
+               1600: {
+               slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+               }
+               },
+               {% if (aridius_news_relnavigation) %} 
+               navigation: {
+               nextEl: '#products_nf.swiper-button-next',
+               prevEl: '#products_nf.swiper-button-prev',
+               },
+               {% endif %} 
+               });
+               {% if (aridius_news_relstophover and aridius_news_relautoplay_on) %} 
+               $("#products_nf.swiper-container").hover(function() {
+               ocSwiper.autoplay.stop();
+               }, function() {
+               ocSwiper.autoplay.start();
+               });
+               {% endif %} 
+               });
+               -->
+            </script>
+            {% endif %} 
+            {% if (aridius_news) %} 
+            <div class="title-module">{{ text_aridius_news_related }}</div>
+            <div id="aridius_news_carusel_nn" class="swiper-container">
+               <div class="swiper-wrapper">
+             
+                  {% for new in aridius_news %} 
+                                   <div class="swiper-slide product-layout_carusel">
+                     <div class="gtile-i-wrap caption">
+                     <div class="product-thumb">
+                        {% if (deluxe_lazy) %} 
+                        <div class="image"><a href="{{ new['href'] }}"><img src ="{{ new['image'] }}" alt="{{ new['title'] }}" title="{{ new['title'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                        {% else %} 
+                        <div class="image"><a href="{{ new['href'] }}"><img data-src ="{{ new['image'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ new['title'] }}" title="{{ new['title'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                        {% endif %} 
+                        <div class="item-title">
+                           <div class="product-namenews"><a href="{{ new['href'] }}">{{ new['title'] }}</a></div>
+                        </div>
+                        <div class="description-aridius_news">
+                           <p>{{ new['description'] }}</p>
+                        </div>
+                        <p class="btn_readmore"> <a href="{{ new['href'] }}"> {{ text_more }}    <i class="btn_readmore2 fa fa-long-arrow-right"></i></a></p>
+                     </div>
+                  </div>
+				  </div>
+                  {% endfor %} 
+              </div>
+            </div>
+			   <script><!--
+               $(document).ready(function () {
+               var ocSwiper = new Swiper('#aridius_news_carusel_nn.swiper-container', {
+               // Enable lazy loading
+               lazy: {
+               loadPrevNext: true,
+               loadPrevNextAmount: 5,
+               },
+               slidesPerView: 4,
+               mode: 'horizontal',
+               pagination: false,
+               spaceBetween: 20,
+               speed: {{ aridius_news_relrew_speed }},
+               {% if (aridius_news_relautoplay_on) %} 
+               autoplay: {delay: {{ aridius_news_relautoplay }}},
+               autoplayDisableOnInteraction: true,
+               {% endif %} 
+               breakpoints: {
+               768: {
+               slidesPerView: 2,
+               },
+               992: {
+               slidesPerView: 3,
+               },
+               1200: {
+               slidesPerView: 3,
+               },
+               1600: {
+               slidesPerView: 4,
+               }
+               },
+               {% if (aridius_news_relnavigation) %} 
+               navigation: {
+               nextEl: '#aridius_news_carusel_nn.swiper-button-next',
+               prevEl: '#aridius_news_carusel_nn.swiper-button-prev',
+               },
+               {% endif %} 
+               });
+               {% if (aridius_news_relstophover and aridius_news_relautoplay_on) %} 
+               $("#aridius_news_carusel_nn.swiper-container").hover(function() {
+               ocSwiper.autoplay.stop();
+               }, function() {
+               ocSwiper.autoplay.start();
+               });
+               {% endif %} 
+               });
+               -->
+            </script>
+            {% endif %} 
+            <div class="buttons">
+               <div class="pull-right"><a href="{{ aridius_newslist }}" class="btn-cart">{{ button_news }}</a></div>
+               <br /><br />
+            </div>
+            {% elseif (aridius_news_data is defined) %} 
+            <h1>{{ heading_title }}</h1>
+            <div class="clearfix">	</div>
+            <br />
+            <div class="row flex_height_row news_list">
+               {% for aridius_news in aridius_news_data %} 
+               <!-- grid -->
+               <div class="cat_heightflex product-layout product-layout_cat product-grid col-xs-12 col-sm-6 col-md-4 col-lg-4" style="display: flex;">
+                  <div class="gtile-i-wrap">
+                     <div class="product-thumb gtile-i_news">
+                        <div class="image image_news">
+                           <a href="{{ aridius_news['href'] }}" title="{{ aridius_news['title'] }}"><img src="{{ aridius_news['thumb'] }}" alt="{{ aridius_news['title'] }}" class="img-responsive" /></a>
+                        </div>
+                        <div>
+                           <div class="item_news caption caption-left">
+                              {% if (not aridius_news_show_date) %} 
+                              <span class="allnews posted-aridius_news"><i class="fa fa-calendar"></i> {{ aridius_news['posted'] }}</span>
+                              {% endif %} 
+                              <div class="item-title">
+                                 <div class="product-namenews"><a href="{{ aridius_news['href'] }}">{{ aridius_news['title'] }}</a></div>
+                              </div>
+                              <p class="newsdesc">{{ aridius_news['description'] }}</p>
+                           </div>
+                           <p class="newsall btn_readmore"> <a href="{{ aridius_news['href'] }}"> {{ text_more }}    <i class="btn_readmore2 fa fa-long-arrow-right"></i></a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- grid END-->
+               {% endfor %} 
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+               <div class="col-sm-6 text-left">{{ pagination }}</div>
+               <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+            {% endif %} 
+            {{ content_bottom }} 
+         </div>
+         {{ column_right }} 
+      </div>
+   </div>
+</div>
+{% if (aridius_news_data is not defined) %} 
+<script><!--
+   $('#review_news').delegate('.pagination a', 'click', function(e) {
+   e.preventDefault();
+   $('#review_news').fadeOut('slow');
+   $('#review_news').load(this.href);
+   $('#review_news').fadeIn('slow');
+   });
+   $('#review_news').load('index.php?route=information/aridius_news/review&aridius_news_id={{ aridius_news_id }}');
+   $(document).on('submit','form.review_news-form',function(e){
+   e.preventDefault();
+   var $this=$(this);
+   $.ajax({
+   url: 'index.php?route=information/aridius_news/write&aridius_news_id={{ aridius_news_id }}',
+   type: 'post',
+   dataType: 'json',
+   data: $this.serialize(),
+   beforeSend: function () {
+   $this.find('.button-review').button('loading');
+   },
+   complete: function () {
+   $this.find('.button-review').button('reset');
+   },
+   success: function (json) {
+   $('.alert-success, .alert-danger').remove();
+   if (json['error']) {
+   $this.find('.review_shop').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+   }
+   if (json['success']) {
+   $this.find('.review_shop').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+   $this.find('input[name=\'name\']').val('');
+   $this.find('textarea[name=\'text\']').val('');
+   $this.find('input[name=\'rating\']:checked').prop('checked', false);
+   setTimeout(function(){ $('.reply-form').remove();},3000)
+   }
+   }
+   });
+   });
+   $(document).on('click', '.cancel-review', function () {
+   $('.reply-form').remove();
+   });
+   $(document).on('click', '.comment-reply', function () {
+   var $this=$(this);
+   $.post( "index.php?route=information/aridius_news/reply", { parent: $this.attr("data-parent") }, function( data ) {
+   $('.reply-form').remove();
+   $this.parent().append('<div class="reply-form">' + data.html + '</div>');
+   }, "json");
+   });
+   //-->
+</script>
+{% endif %} 
+{{ footer }} 

@@ -1,0 +1,524 @@
+{{ header }}
+<link href="catalog/view/theme/deluxe/js/brazzers_carousel/jQuery.Brazzers-Carousel.css" rel="stylesheet" type="text/css" />
+<script src="catalog/view/theme/deluxe/js/brazzers_carousel/jQuery.Brazzers-Carousel.js"></script>
+<script>
+   $(document).ready(function() {
+   $(".item_img").brazzersCarousel();
+   });
+</script>
+<div id="product-manufacturer" class="container">
+<ul class="breadcrumb">
+   {% for i,breadcrumb in breadcrumbs %}
+   <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+   {% endfor %}
+</ul>
+<div class="row">
+{{ column_left }}
+{% if column_left and column_right %}
+{% set class = 'col-sm-6' %}
+{% elseif column_left or column_right %}
+{% set class = 'col-sm-9' %}
+{% else %}
+{% set class = 'col-sm-12' %}
+{% endif %}
+<div id="content" class="{{ class }}">
+{{ content_top }}
+<h1>{{ heading_title }}</h1>
+{% if thumb or description %}
+<div class="row">
+   {% if thumb %}
+   <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+   {% endif %}
+   {% if description %}
+   <div class="col-sm-10">{{ description }}</div>
+   {% endif %}
+</div>
+<hr>
+{% endif %}
+{% if (products) %}
+<div class="clearfix">	</div>
+<div class="row catfl">
+   <div class="col-xs-12 col-sm-9 catf2">
+      <div class="sort1">
+         {% if (deluxe_sort_cat != 1) %}
+         <div class="form-group input-group input-group-sm">
+            <label class="input-group-addon" for="input-sort"><i class="fa fa-sort"></i></label>
+            <select id="input-sort" class="form-control" onchange="location = this.value;">
+               {% for sorts in sorts %}
+               {% if (sorts['value'] == sort ~ '-' ~ order) %}
+               <option value="{{ sorts['href'] }}" selected="selected">{{ sorts['text'] }}</option>
+               {% else %}
+               <option value="{{ sorts['href'] }}">{{ sorts['text'] }}</option>
+               {% endif %}
+               {% endfor %}
+            </select>
+         </div>
+         {% endif %}
+      </div>
+      <div class="sort2">
+         {% if (deluxe_count_cat != 1) %}
+         <div class="form-group input-group input-group-sm">
+            <label class="input-group-addon" for="input-limit"><i class="fa fa-eye"></i></label>
+            <select id="input-limit" class="form-control" onchange="location = this.value;">
+               {% for limits in limits %}
+               {% if (limits['value'] == limit) %}
+               <option value="{{ limits['href'] }}" selected="selected">{{ limits['text'] }}</option>
+               {% else %}
+               <option value="{{ limits['href'] }}">{{ limits['text'] }}</option>
+               {% endif %}
+               {% endfor %}
+            </select>
+         </div>
+         {% endif %}
+      </div>
+   </div>
+   <div class="hidden-xs">
+      <div class="sort3">
+         <div class="btn-group hidden-xs">
+            <button type="button" id="list-view" class="btn btn-default2" data-toggle="tooltip" title="{{ button_list }}"><i class="fa fa-th-list"></i></button>
+            <button type="button" id="grid-view" class="btn btn-default2" data-toggle="tooltip" title="{{ button_grid }}"><i class="fa fa-th"></i></button>
+         </div>
+      </div>
+   </div>
+</div>
+<br />
+<div class="row flex_height_row">
+   {% for product in products %}
+   <div class=" cat_heightflex product-layout product-layout_cat product-grid col-xl-3 col-lg-4 col-md-6 col-sm-4 col-xs-6">
+      <div class="cat_heightflex gtile-i-wrap n_shad">
+         <div class="gtile-i">
+            <div class="gtile-i-box">
+               <div class="item_cat caption">
+                  <div class="{% if (deluxe_rating_cat != 1) %}raiting_thumb{% endif %} product-thumb">
+                     {% if (deluxe_rating_cat != 1) %}
+                     <div class="rating rating_sm">
+                        {% set i = 1 %}{% for i in i..5 %}
+                        {% if (product['rating'] < i) %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% else %}
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="reviews_qt">
+                        <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                        </span>
+                     </div>
+                     {% endif %}
+                     {% if ((product['img_hover']) and deluxe_img_additional != 1) %}
+                     <a href="{{ product['href'] }}">
+                        <div class="item_img">
+                           {% if (deluxe_lazy) %}
+                           <div class="image"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></div>
+                           {% else %}
+                           <div class="image"><img data-src="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></div>
+                           {% endif %}
+                           {% for img_hover in product['img_hover'] %}
+                           <div class="image"><img src="{{ img_hover }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" ></div>
+                           {% endfor %}
+                        </div>
+                     </a>
+                     {% else %}
+                     {% if (deluxe_lazy) %}
+                     <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></a></div>
+                     {% else %}
+                     <div class="image"><a href="{{ product['href'] }}"><img data-src="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></a></div>
+                     {% endif %}
+                     {% endif %}
+                     {% if (deluxe_rating_cat != 1) %}
+                     <div class="rating rating_lg">
+                        {% set i = 1 %}{% for i in i..5 %}
+                        {% if (product['rating'] < i) %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% else %}
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="reviews_qt">
+                        <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                        </span>
+                     </div>
+                     {% endif %}
+                     <div class="product-name listsh">
+                        <a href="{{ product['href'] }}">
+                        {% if (product['name'])|length < deluxe_limit_symbolst %}
+                        {{ product['name'] }}
+                        {% else %}
+                        {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                        {% endif %}
+                        </a>
+                     </div>
+                     <div class="additional-links ">
+                        <ul>
+                           {% if (deluxe_wishlist_cat != 1) %}
+                           <li class = "additional-action">
+                              <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
+                              <i class="fa fa-heart"></i>
+                              </a>
+                           </li>
+                           {% endif %}
+                           {% if (deluxe_compare_cat != 1) %}
+                           <li class = "additional-action">
+                              <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
+                              <i class="fa fa-fw fa-balance-scale"></i>
+                              </a>
+                           </li>
+                           {% endif %}
+                           {% if (aridius_qckview_status) %}
+                           <li class = "additional-action">
+                              <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
+                              <i class="fa fa-search"></i>
+                              </a>
+                           </li>
+                           {% endif %}
+                        </ul>
+                     </div>
+                     <div class="positionsticker">
+                        <!-- special -->
+                        {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0 ) %}
+                        {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                        {% endif %}
+                        <!-- special END -->
+                        <!-- new -->
+                        {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                        {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                        {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                        {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                        <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                        {% endif %}
+                        <!-- new END -->
+                        <!-- top -->
+                        {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                        <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                        {% endif %}
+                        <!-- top END -->
+                        {% if (product['stickers2']) %}
+                        {% for sticker2 in product['stickers2'] %}
+                        <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                        {% endfor %}
+                        {% endif %}
+                     </div>
+                     <div class="product_stp">
+                        <div class="cat_quantity form-group pull-left1">
+                           <button type="button" class="minus items-count" onclick="quantity_control('{{ product['product_id'] }}', '{{ product['min_quantity'] }}', '{{ product['quantity'] }}', '-')"> <i class="fa fa-minus">&nbsp;</i></button>
+                           <input type="text" name="quantity" class="quantity_input product_id_quantity{{ product['product_id'] }} input-quantity form-control" oninput="inputs_value();" size="2" value="{{ product['min_quantity'] }}" data-id="{{ product['product_id'] }}" data-maximum="{{ product['quantity'] }}" />
+                           <button type="button" class="plus items-count2" onclick="quantity_control('{{ product['product_id'] }}', '{{ product['min_quantity'] }}', '{{ product['quantity'] }}', '+')"><i class="fa fa-plus">&nbsp;</i></button>
+                        </div>
+                        <span class="product_stock_quytty_fix"></span>
+                        <span class="product_stock_quantity{{ product['product_id'] }}"></span>
+                        {% if (product['options']) %}
+                        <div class="category_optc">
+                           <div class="options">
+                              <div id="optionpr_{{ product['product_id'] }}" class="options_select">
+                                 {% for option in product['options'] %}
+                                 {% if (option['type'] == 'select') %}
+                                 <div id="option-{{ option['product_option_id'] }}" class="option form-group{{ option['required'] ? ' required' : '' }}">
+                                    <label class="control-label" for="input-option{{ option['product_option_id'] }}">{{ option['name'] }}</label><br />
+                                    <select name="option[{{ option['product_option_id'] }}]" id="input-option{{ option['product_option_id'] }}" onchange="recalc_cat({{ product['product_id'] }});">
+                                       <option value="" data-price_prefix="" data-price="">{{ text_select }}</option>
+                                       {% for option_value in option['product_option_value'] %}
+                                       <option value="{{ option_value['product_option_value_id'] }}" data-price_prefix="{{ option_value['price_prefix'] }}" data-price="{{ option_value['price_n'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+                                       {% endfor %}
+                                    </select>
+                                 </div>
+                                 {% endif %}
+                                 {% if (option['type'] == 'radio') %}
+                                 <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                    <label class="control-label">{{ option['name'] }}</label>
+                                    <div id="input-option{{ option['product_option_id'] }}">
+                                       {% for option_value in option['product_option_value'] %}
+                                       <div class="radio">
+                                          <label>
+                                          {% if (option_value['image']) %}
+                                          <span class="opthe tool tool_img" data-tool="{{ option_value['name'] }} {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }}{% endif %}" tabindex="2">
+                                          <input class="optstyle js-input-option" type="radio" data-price_prefix="{{ option_value['price_prefix'] }}" data-price="{{ option_value['price_n'] }}" onchange="recalc_cat({{ product['product_id'] }});"  onclick="change_img_opt('{{ product['product_id'] }}' , '{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                          <img src="{{ option_value['image'] }}" {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %} class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                          {% if (option_value['price']) %}
+                                          <br />
+                                          <span class = "hide_optprise_cat">
+                                          {% if (option_value['price']) %}
+                                          {{ option_value['price_prefix'] }}
+                                          {{ option_value['price'] }}
+                                          {% endif %}
+                                          </span>
+                                          {% endif %}
+                                          </span>
+                                          {% else %}
+                                          <input type="radio"  class="options_none" data-price_prefix="{{ option_value['price_prefix'] }}" data-price="{{ option_value['price_n'] }}" onchange="recalc_cat({{ product['product_id'] }});" onclick="change_img_opt('{{ product['product_id'] }}' , '{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" />
+                                          <span class="im_option {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}tool{% endif %}" {% if (option_value['price'] and deluxe_options_prise_cat == 0) %} data-tool="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" tabindex="2"  {% endif %}>  {{ option_value['name'] }} </span>
+                                          {% if (option_value['price']) %}
+                                          <span class = "hide_optprise_cat">
+                                          {% if (option_value['price']) %}
+                                          {{ option_value['price_prefix'] }}
+                                          {{ option_value['price'] }}
+                                          {% endif %}
+                                          </span>
+                                          {% endif %}<span class = "options-prheight"></span>
+                                          {% endif %}
+                                          </label>
+                                       </div>
+                                       {% endfor %}
+                                    </div>
+                                 </div>
+                                 {% endif %}
+                                 {% if (option['type'] == 'checkbox') %}
+                                 <div class="options_group form-group{{ option['required'] ? ' required' : '' }}">
+                                    <label class="control-label">{{ option['name'] }}</label>
+                                    <div id="input-option{{ option['product_option_id'] }}">
+                                       {% for option_value in option['product_option_value'] %}
+                                       <div class="checkbox">
+                                          <label>
+                                          {% if (option_value['image']) %}
+                                          <span class="opthe tool tool_img" data-tool="{{ option_value['name'] }} {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }}{% endif %}" tabindex="2">
+                                          <input class="optstyle js-input-option" type="checkbox" data-price_prefix="{{ option_value['price_prefix'] }}" data-price="{{ option_value['price_n'] }}" onchange="recalc_cat({{ product['product_id'] }});" onclick="change_img_opt('{{ product['product_id'] }}' , '{{ option_value['image_opt'] }}');" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                          <img src="{{ option_value['image'] }}" {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}{{ option_value['price_prefix'] }}{{ option_value['price'] }} {% endif %} class="img-thumbnail imgpopcat" {% if (option_value['image_opt']) %} data-image="{{ option_value['image_opt'] }}" {% else %} data-image="{{ option_value['opt_thumb'] }}" {% endif %} alt="{{ option_value['name'] ~ option_value['price'] ? ' ' ~ option_value['price_prefix'] ~ option_value['price'] : '' }}" />
+                                          {% if (option_value['price']) %}
+                                          <br />
+                                          <span class = "hide_optprise_cat">
+                                          {% if (option_value['price']) %}
+                                          {{ option_value['price_prefix'] }}
+                                          {{ option_value['price'] }}
+                                          {% endif %}
+                                          </span>
+                                          {% endif %}
+                                          </span>
+                                          {% else %}
+                                          <input type="checkbox" data-price_prefix="{{ option_value['price_prefix'] }}" data-price="{{ option_value['price_n'] }}" onchange="recalc_cat({{ product['product_id'] }});" onclick="change_img_opt('{{ product['product_id'] }}' , '{{ option_value['image_opt'] }}');" class="options_none" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" />
+                                          <span class="im_option {% if (option_value['price'] and deluxe_options_prise_cat == 0) %}tool{% endif %}" {% if (option_value['price'] and deluxe_options_prise_cat == 0) %} data-tool="{{ option_value['price_prefix'] }}{{ option_value['price'] }}" tabindex="2"  {% endif %}>  {{ option_value['name'] }} </span>
+                                          <span class = "hide_optprise_cat">
+                                          {% if (option_value['price']) %}
+                                          {{ option_value['price_prefix'] }}
+                                          {{ option_value['price'] }}
+                                          {% endif %}
+                                          </span>
+                                          <span class = "options-prheight"></span>
+                                          {% endif %}
+                                          </label>
+                                       </div>
+                                       {% endfor %}
+                                    </div>
+                                 </div>
+                                 {% endif %}
+                                 {% endfor %}
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                        <div class="box_flex2">
+                           {% if (product['price']) %}
+                           <p class="price">
+                              {% if (not product['special']) %}
+                              <span class="price_no_format{{ product['product_id'] }}" data-price = "{{ product['price_calck'] }}" >{{ product['price'] }}</span>
+                              {% else %}
+                              <span class="price-old"><span class="price_no_format{{ product['product_id'] }}" data-price="{{ product['price_calck'] }}">{{ product['price'] }}</span></span> {% if (deluxe_sticker_sale_product_auto != 1) %} <span class="stickers-special">-{{ percent }}%</span> {% endif %}<span class="price-new"><span class="special_no_format{{ product['product_id'] }}" data-price="{{ product['special_calck'] }}">{{ product['special'] }}</span></span>
+                              {% endif %}
+                              {% if (product['tax']) %}
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %}
+                           </p>
+                           {% endif %}
+                           <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                              {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% else %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart_category.add_category('{{ product['product_id'] }}', $(this).parent().parent().parent().parent().parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                          <span class="cart_open">{{ button_cart }}</span>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        {% if (product['quantity'] > 0 ) %}
+                        {% if (deluxe_forder != 1) %}
+                        <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
+                           <svg class ="w_clock">
+                              <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
+                           </svg>
+                           <span>{{ text_fastorder }}</span>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                        <div class="status_st">
+                           {{ text_stockst }}
+                        </div>
+                        {% endif %}
+                     </div>
+                     {% if (((not deluxe_description_cat) or (product['attribute_cat'])) or product['options']) %}
+                     <div class="boxadd">
+                        <div class="product-name list">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+                        <div class="product_inf">
+                           <div class="{% if (deluxe_description_catsm) %}desc_hide {% else %}desc_show {% endif %}{% if (deluxe_description_cat) %}all_hidedesc{% endif %}">
+                              <hr>
+                              <p>{{ product['description'] }}</p>
+                           </div>
+                           {% if (product['attribute_cat']) %}
+                           <div class="{% if (deluxe_atr_catsm) %}atr_hide {% else %}atr_show {% endif %}">
+                              <hr>
+                              <div class="attribute_cat">
+                                 {% set total_atr = product['attribute_cat']|length %}
+                                 {% set counter_atr = 0 %}
+                                 {% set break_atr = false %}
+                                 {% for attribute_cats in product['attribute_cat'] if not break_atr %}
+                                 {% set counter_atr = counter_atr + 1 %}
+                                 {% if (counter_atr + 1 > deluxe_limit_atr) %}
+                                 {% set break_atr = true %}
+                                 {% endif %}
+                                 {% if (counter_atr == total_atr) %}
+                                 <span class="attribute_name">{{ attribute_cats['name'] }}:</span> {{ attribute_cats['text'] }}
+                                 {% else %}
+                                 <span class="attribute_name">{{ attribute_cats['name'] }}:</span> {{ attribute_cats['text'] }}  {% if (counter_atr < deluxe_limit_atr) %} / {% endif %}
+                                 {% endif %}
+                                 {% endfor %}
+                              </div>
+                           </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                     {% else %}
+                     <div class="boxadd">
+                        <div class="product-name list">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+                     </div>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endfor %}
+</div>
+<div class="row pag_res">
+   <div class="col-sm-7 text-left">{{ pagination }}</div>
+   <div class="col-sm-5 text-right">{{ results }}</div>
+</div>
+{% if (deluxe_showmore != 1) %}
+<div id="load_more" style="display:none;">
+   <div class="row text-center">
+      <a href="#" class="load_more"> <i class="pr_spinner"></i> {{ pr_load_more }}</a>
+   </div>
+</div>
+{% endif %}
+{% endif %}
+{% if (not categories and not products) %}
+<p>{{ text_empty }}</p>
+<div class="buttons">
+   <div class="pull-right"><a href="{{ continue }}" class="btn-cart">{{ button_continue }}</a></div>
+</div>
+{% endif %}
+<br />
+{% if (deluxe_description_pg1 != 1) %}
+{% if (page == 1) %}
+{% if (deluxe_description_top_or_bot != 0) %}
+{% if (thumb or description) %}
+<div class="row desc-cat_top">
+   {% if (thumb and not deluxe_categories_img) %}
+   <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+   {% endif %}
+   {% if (description) %}
+   {% if (deluxe_description_length != 1 and description|length > deluxe_categories_limit ) %}
+   {% if (thumb and deluxe_categories_img != 1) %}
+   <div class="cat_desc col-sm-10">
+      {% else %}
+      <div class="cat_desc col-sm-12">
+         {% endif %}
+         <div class="block_desc">
+            {{ description }}
+         </div>
+         <a class="button_sh">{{ text_show_desc }}</a>
+      </div>
+      {% else %}
+      {% if (thumb and deluxe_categories_img != 1) %}
+      <div class="cat_desc col-sm-10">
+         {% else %}
+         <div class="cat_desc col-sm-12">{% endif %}{{ description }}</div>
+         {% endif %}
+         {% endif %}
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      {% else %}
+      {% if (deluxe_description_top_or_bot != 0) %}
+      {% if (thumb or description) %}
+      <div class="row desc-cat_top">
+         {% if (thumb and not deluxe_categories_img) %}
+         <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+         {% endif %}
+         {% if (description) %}
+         {% if (deluxe_description_length != 1 and description|length > deluxe_categories_limit ) %}
+         {% if (thumb and deluxe_categories_img != 1) %}
+         <div class="cat_desc col-sm-10">
+            {% else %}
+            <div class="cat_desc col-sm-12">
+               {% endif %}
+               <div class="block_desc">
+                  {{ description }}
+               </div>
+               <a class="button_sh">{{ text_show_desc }}</a>
+            </div>
+            {% else %}
+            {% if (thumb and deluxe_categories_img != 1) %}
+            <div class="cat_desc col-sm-10">
+               {% else %}
+               <div class="cat_desc col-sm-12">{% endif %}{{ description }}</div>
+               {% endif %}
+               {% endif %}
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {{ content_bottom }}
+         </div>
+         {{ column_right }}
+      </div>
+   </div>
+</div>
+{% if (autocalc_select_first) %}
+<script>
+   $('select[name^="option"] option[value=""]').remove();
+   last_name = '';
+   $('input[type="radio"][name^="option"]').each(function(){
+   if ($(this).attr('name') != last_name) $(this).prop('checked', true);
+   last_name = $(this).attr('name');
+   });
+   $('input[type="checkbox"][name^="option"]').each(function(){
+   if ($(this).attr('name') != last_name) $(this).prop('checked', true);
+   last_name = $(this).attr('name');
+   });
+</script>
+{% endif %}
+{{ footer }}

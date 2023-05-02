@@ -1,0 +1,62 @@
+{{ header }}
+<div class="container" >
+   <div class="row">
+      <div id="cont" class="col-sm-12">
+         {{ column_left }}
+         {% if (column_left and column_right) %}
+         {% set class = 'col-sm-6' %}
+         {% elseif (column_left or column_right) %}
+         {% set class = 'col-sm-9' %}
+         {% else %}
+         {% set class = 'col-sm-12' %}
+         {% endif %}
+         <div id="content" class="{{ class }}">
+            <ul class="breadcrumb">
+               {% for i,breadcrumb in breadcrumbs %}
+               <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+               {% endfor %}
+            </ul>
+            {{ content_top }}
+            {{ aridius_faq_description }}
+            <br />
+            <div class="panel-group" id="accordion_faql" role="tablist" aria-multiselectable="true">
+               {% if (faq_tabs ) %}
+               {% for key, faq_tab  in faq_tabs %}
+               <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="tabfaq-{{ key }}">
+                     <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion_faql" href="#collapsetab-{{ key }}" aria-expanded="true" aria-controls="collapsetab-{{ key }}">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        {% if (faq_tab.faicons_faq) %} <i class="{{ faq_tab.faicons_faq }}"></i>{% endif %} {{ faq_tab.title[language_id] }}
+                        </a>
+                     </h4>
+                  </div>
+                  <div id="collapsetab-{{ key }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="tabfaq-{{ key }}">
+                     <div class="panel-body">
+                        {{ faq_tab.description }}
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+               {% endif %}
+            </div>
+            {{ aridius_faq_description2 }}
+            {{ content_bottom }}
+         </div>
+      </div>
+      {{ column_right }}
+   </div>
+</div>
+<span class="for-block-contacts">
+{{ footer }}
+</span>
+<script>
+   function toggleIcon(e) {
+   $(e.target)
+   .prev('.panel-heading')
+   .find(".more-less")
+   .toggleClass('glyphicon-plus glyphicon-minus');
+   }
+   $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+   $('.panel-group').on('shown.bs.collapse', toggleIcon);
+</script>

@@ -1,0 +1,83 @@
+<?php
+$_['text_select']           = ' --- Выберите --- ';
+$_['date_format_short2']    = 'Y-m-d';
+$_['text_footer_contacts']  = 'Наши контакты';	
+$_['text_footer_aboutus']   = 'О нашем магазине';
+$_['text_footer_send']      = 'Рассылка';
+$_['text_footer_mailtext']  = 'Будьте в курсе наших акций и новостей';
+
+$_['text_compare']          = '<span class = "hide_tcompareff">Сравнение товаров</span> %s';
+
+$_['text_compare_name']     = 'Сравнение товаров';
+
+
+$_['text_search_cat']       = 'Все категории';
+$_['text_search_bt']        = 'найти';
+
+$_['text_continue']         = 'Продолжить покупки';
+$_['text_continue2']        = 'Продолжить';
+$_['text_wishlist2']        = 'Перейти в  закладки';
+$_['text_compare2']         = 'Сравнить товары';
+$_['text_homel']            = 'Главная';
+$_['text_quickview']        = 'Быстрый просмотр';
+$_['day']                   = 'дн';
+$_['hour']                  = 'час';
+$_['minute']                = 'мин';
+$_['second']                = 'сек';
+$_['end_special']           = 'Успей купить!';
+$_['end_special2']          = 'Акция закончится через:';
+$_['text_discount2']        = 'Скидка от количества:';
+$_['tab_products']          = 'Все о товаре';
+$_['text_lengthp']          = 'Длина:';
+$_['text_widthp']           = 'Ширина:';
+$_['text_heightp']          = 'Высота:';
+$_['text_weightp']          = 'Вес:';
+$_['text_dignity']          = 'Достоинства:';
+$_['text_limitations']      = 'Недостатки:';
+$_['text_related2']         = 'Покупают вместе';
+$_['text_cartp']            = 'Корзина покупок';
+$_['text_wishlistp']        = 'Мои закладки';
+$_['text_comparep']         = 'Сравнение товаров';
+$_['text_news']             = 'Новости';
+$_['text_news2']            = 'Статьи';
+$_['button_quickview']      = 'Быстрый просмотр';
+$_['button_instock']        = 'Сообщить о наличии ';
+$_['text_manufacturer']      = 'Производитель:';	
+$_['text_manufacturerf']     = 'Производители';			
+$_['text_information']      = 'Информация';	
+$_['text_description2']     = 'Подробнее';
+$_['text_tabb_main']        = 'Все о товаре';
+$_['button_load']           = 'Показать еще';
+$_['text_wish']             = 'В закладки';
+$_['text_comp']             = 'В сравнение';		
+$_['text_map_open']         = 'Cмотреть карту';	
+$_['dropdown_tell']         = 'Наши телефоны';
+$_['dropdown_work_time']    = 'Время работы';
+$_['dropdown_address']      = 'Наш адрес';
+$_['dropdown_mail']         = 'E-mail';		
+$_['dropdown_callorder']    = 'Обратный звонок';	
+$_['text_show_desc']        = 'Читать полностью';
+$_['text_hide_desc']        = 'Свернуть';
+$_['text_money_set']        = 'Выбор валюты';
+$_['text_language_set']     = 'Выбор языка';
+$_['text_account_set']      = 'Личный кабинет';		
+$_['text_info_set']         = 'Информация';	
+$_['text_home']             = 'Главная';	
+$_['text_cart']             = 'Корзина';
+$_['text_saving']           = 'Выгода';
+$_['tab_images']            = 'Фото';
+$_['pr_load_more']          = 'Показать еще';
+$_['text_maximum']          = 'Максимальное количество товара на складе';
+$_['text_fastorder']        = 'Быстрый заказ';	
+$_['text_rating_avr']       = 'Оценка:';
+$_['text_footer_mailtext2'] = 'Подпишитесь на рассылку, и узнавайте о <br> скидках и акциях первыми!';
+$_['text_stockst']          = 'Нет в наличии';
+$_['text_write_review']     = 'Оставить отзыв';
+$_['text_write_qa']         = 'Ответить';
+$_['text_rating_avrmax']    = 'из 5';	
+$_['entry_name']            = 'Ваше имя';
+$_['entry_review']          = 'Ваш отзыв';
+$_['text_is_review']        = 'Полезный отзыв?';	
+$_['text_all_cat']          = 'Смотреть все категории';
+$_['text_cat']              = 'Категории';
+		

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>slideshow_StyleEffect</name>
+  <code>slideshow_StyleEffect</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="admin/view/template/extension/module/slideshow.twig">
+<operation>
+      <search index="2"><![CDATA[
+					 <div class="form-group">
+      ]]></search>
+      <add position="before"><![CDATA[
+					<div class="form-group">
+					<label class="col-sm-2 control-label" >Transition Style</label>
+					<div class="col-sm-10">
+					<select name="transitionStyle" class="form-control">
+									<option value="0"{% if (transitionStyle == 0) %} {{ ' selected="selected"' }} {% endif %}>standart</option>
+									<option value="1"{% if (transitionStyle == 1) %} {{ ' selected="selected"' }} {% endif %}>fade</option>
+									<option value="2"{% if (transitionStyle == 2) %} {{ ' selected="selected"' }} {% endif %}>fadeUp</option>
+									<option value="3"{% if (transitionStyle == 3) %} {{ ' selected="selected"' }} {% endif %}>backSlide</option>
+									<option value="4"{% if (transitionStyle == 4) %} {{ ' selected="selected"' }} {% endif %}>goDown</option>
+				    </select>
+				    </div>
+                    </div>
+      ]]></add>
+</operation>
+</file>  
+
+<file path="admin/controller/extension/module/slideshow.php">
+<operation>
+      <search><![CDATA[
+					if (isset($this->request->post['status'])) {
+      ]]></search>
+      <add position="before"><![CDATA[
+					if (isset($this->request->post['transitionStyle'])) {
+						$data['transitionStyle'] = $this->request->post['transitionStyle'];
+					} elseif (!empty($module_info)) {
+						$data['transitionStyle'] = $module_info['transitionStyle'];
+					} else {
+						$data['transitionStyle'] = 0;
+					}
+      ]]></add>
+</operation>
+</file>  
+<file path="catalog/controller/extension/module/slideshow.php">
+<operation>
+      <search><![CDATA[
+					$data['banners'] = array();
+      ]]></search>
+      <add position="before"><![CDATA[
+					$data['transitionStyle'] = $this->config->get('transitionStyle');
+					$data['transitionStyle'] = $setting['transitionStyle'];
+      ]]></add>
+</operation>
+</file>
+</modification>

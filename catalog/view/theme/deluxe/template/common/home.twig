@@ -1,0 +1,76 @@
+{{ header }}
+{{ content_fluid }}
+<div class="container">
+   <div class="row">
+      {{ column_left }}
+      {% if (column_left and column_right) %}
+      {% set class = 'col-sm-5 col-md-6' %}
+      {% elseif (column_left or column_right) %}
+      {% set class = 'fix_cleft col-sm-9' %}
+      {% else %}
+      {% set class = 'col-sm-12' %}
+      {% endif %}
+      {% if (column_left or column_right) %}
+      {% if (content_top1 or content_top2) %}
+      {% if (content_slleft) %}
+      <div class="fix_rowm2 ban_col hcol-xs-12 col-sm-12 col-md-9 col-lg-6 fixsl"> {{ content_slleft }}</div>
+      {% endif %}
+      {% if (content_top1) %}
+      <div class="ban_col col-xs-6 col-sm-6 col-md-4 col-lg-3 fixslbann fixsn_ban">{{ content_top1 }}</div>
+      {% endif %}
+      {% if (content_top2) %}
+      <div class="fix_rowm2 ban_col col-xs-6 col-sm-6 col-md-4 col-lg-3 fixsn_ban">{{ content_top2 }}</div>
+      {% endif %}
+      {% else %}
+      {% if (content_slleft) %}
+      <div class="fix_rowm2 ban_col sm_bann hcol-xs-12 col-sm-9 fixsl"> {{ content_slleft }}</div>
+      {% endif %}
+      {% endif %}
+      {% else %}
+      {% if (content_slleft) %}
+      <div class="fix_rowm2 col-xs-12 col-sm-12 col-md-8 col-lg-8 fixsl"> {{ content_slleft }}</div>
+      {% endif %}
+      {% if (content_top1) %}
+      <div class="fix_rowm2 col-xs-6 col-sm-6 col-md-4 col-lg-4 fixslbann fixsn_ban2">{{ content_top1 }}</div>
+      {% endif %}
+      {% if (content_top2) %}
+      <div class="fix_rowm2 col-xs-6 col-sm-6 col-md-4 col-lg-4 fixsn_ban2">{{ content_top2 }}</div>
+      {% endif %}
+      {% endif %}
+      <div class="clearfix visible-xs "></div>
+      <div id="content" class="{{ class }}">
+         <div id="appendToinfoblock2"></div>
+         {{ content_top }}
+         {% if (content_bot1 or content_bot2 or content_bot3) %}
+         <div class="row flbann">
+            {% if (content_bot2) %}
+            <div class="containerfluid2 fix_rowm fluid2 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-lg-push-3">{{ content_bot2 }}</div>
+            {% endif %}
+            {% if (content_bot1) %}
+            <div class="containerfluid2 fix_rowm fluid2 col-xs-6 col-sm-6 col-md-6 col-lg-3 col-lg-pull-6">{{ content_bot1 }}</div>
+            {% endif %}
+            {% if (content_bot3) %}
+            <div class="containerfluid2 fix_rowm fluid2 col-xs-6 col-sm-6 col-md-6 col-lg-3">{{ content_bot3 }}</div>
+            {% endif %}
+         </div>
+         {% endif %}
+         {% if (content_slrig2) %}
+         {{ content_slrig2 }}
+         {% endif %}
+         {{ column_right }}
+      </div>
+   </div>
+   {% if (content_slrig1) %}
+   <br /><br />
+   <div class="fix_rowm"> {{ content_slrig1 }} </div>
+   {% endif %}
+   {% if (content_bottom) %}
+   <div class="row">
+      <div id="content2" class="col-sm-12">
+         {{ content_bottom }}
+         <div id="appendToinfoblock"></div>
+      </div>
+   </div>
+   {% endif %}
+</div>
+{{ footer }}

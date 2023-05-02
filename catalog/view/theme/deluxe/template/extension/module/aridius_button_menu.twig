@@ -1,0 +1,22 @@
+<button onclick="mobmenu_clone_h2();" type="button" class="btn-cart mm_bt"><svg class="w_clock_pr2"><use xlink:href="catalog/view/theme/deluxe/image/vmenu.svg#vmenu" x="0" y="0" width="22" height="22"></use></svg><span class="vmenu_namemm">{{ heading_titlemm }}</span></button>
+
+<script>
+   //mobile_menu
+   function mobmenu_clone_h2() {
+   slideout.open();
+   $.ajax({
+   type: 'POST',
+   url: 'index.php?route=common/header',
+   data:"aridius_mob_menu=1&location=common-home",
+   
+   success: function(mobm){
+   $('#menu_m').html(mobm);
+   $('#preloader').remove();
+   $('.cat_mob').trigger('click');
+   $(".block_mheader").css({display:"none"});
+   $(".mm_other").css({display:"none"});
+   $(".home_mob").css({display:"none"});
+   }
+   });
+   }
+</script>

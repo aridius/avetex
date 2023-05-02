@@ -1,0 +1,17 @@
+{% if (mod_ifoblocks ) %}
+{% for key,mod_ifoblock in mod_ifoblocks %}
+<div class = "info_box">
+   <div class = "info_svg">
+      <img src="{{ mod_ifoblock['image'] }}" alt="{{ mod_ifoblock['title'] }}" >
+   </div>
+   <div class = "info_inf">
+      <div class = "info_title">
+         {{ mod_ifoblock['title'] }}
+      </div>
+      <div class = "info_description">
+         {{ mod_ifoblock['description'] }}
+      </div>
+   </div>
+</div>
+{% endfor %}  
+{% endif %}

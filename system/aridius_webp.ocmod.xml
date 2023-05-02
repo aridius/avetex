@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>aridius_webp</name>
+  <code>aridius_webp</code>
+  <version>v_1</version>
+  <author>mrz</author>
+  
+    
+<file path="admin/controller/common/filemanager.php">
+<operation>
+			<search ><![CDATA[
+        $files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);			
+
+			]]></search>
+			<add position="replace"><![CDATA[
+        $files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,svg,JPG,JPEG,PNG,GIF,SVG}', GLOB_BRACE);
+			]]></add>
+</operation>
+<operation>
+			<search ><![CDATA[
+        'jpg',
+			
+			]]></search>
+			<add position="after"><![CDATA[
+			
+        'svg',
+
+			]]></add>
+</operation>
+<operation>
+			<search ><![CDATA[
+        'image/jpeg',
+			
+			]]></search>
+			<add position="after"><![CDATA[
+			
+        'image/svg+xml',
+
+			]]></add>
+</operation>
+<operation>
+			<search ><![CDATA[
+        'image/jpeg',
+			
+			]]></search>
+			<add position="before"><![CDATA[
+			
+        'image/svg+xml',
+
+			]]></add>
+</operation>
+</file>	
+<file path="admin/model/tool/image.php">
+		<operation>
+			<search>
+				<![CDATA[
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+				]]>
+			</search>
+			<add position="after">
+				<![CDATA[
+		if('svg' == $extension) {
+            if ($this->request->server['HTTPS']) {
+                return HTTPS_CATALOG . 'image/' . $filename;
+            } else {
+                return HTTP_CATALOG . 'image/' . $filename;
+            }
+    	}]]>
+			</add>
+		</operation>
+</file>
+<file path="catalog/model/tool/image.php">
+		<operation>
+			<search>
+				<![CDATA[
+				$extension = pathinfo($filename, PATHINFO_EXTENSION);
+				]]>
+			</search>
+			<add position="after">
+				<![CDATA[
+         if('svg' == $extension) {
+            if ($this->request->server['HTTPS']) {
+                return HTTPS_SERVER . 'image/' . $filename;
+            } else {
+                return HTTP_SERVER . 'image/' . $filename;
+            }
+        }
+		]]>
+			</add>
+		</operation>
+</file>
+<file path="catalog/model/tool/image.php">
+		<operation>
+			<search><![CDATA[$image_new = 'cache/']]></search>
+			<add position="after"><![CDATA[$image_new_webp = 'cachewebp/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.webp';]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[$image_new = str_replace(]]></search>
+			<add position="before" ><![CDATA[
+			$gd = gd_info();
+			if ($gd['WebP Support']) {
+				if (!is_file(DIR_IMAGE . $image_new_webp) || (filectime(DIR_IMAGE . $image_new) > filectime(DIR_IMAGE . $image_new_webp))) {
+										
+					$path = '';
+
+					$directories = explode('/', dirname($image_new_webp));
+
+					foreach ($directories as $directory) {
+						$path = $path . '/' . $directory;
+
+						if (!is_dir(DIR_IMAGE . $path)) {
+							@mkdir(DIR_IMAGE . $path, 0777);
+						}
+					}
+					
+					$image_webp = new Image(DIR_IMAGE . $image_old);
+					$image_webp->resize($width, $height);
+					$image_webp->save_webp(DIR_IMAGE . $image_new_webp);
+				}
+			}
+			]]></add>
+		</operation>
+</file>
+<file path="system/library/image.php">
+		<operation>
+			<search><![CDATA[public function save]]></search>
+			<add position="before"><![CDATA[
+			public function save_webp($file, $quality = 90) {
+				if (is_resource($this->image)) {
+					imagewebp($this->image, $file, $quality);
+					imagedestroy($this->image);
+				}
+			}
+			]]></add>
+		</operation>
+</file>
+<file path="system/library/response.php">
+		<operation>
+			<search><![CDATA[private function compress($data, $level = 0)]]></search>
+			<add position="before" ><![CDATA[ 	
+			public function webpRebuild($output) {
+				$gd = gd_info();
+				if ($gd['WebP Support']) {
+					$uri = '';
+
+					if (isset($_SERVER['REQUEST_URI'])) {
+						$uri = $_SERVER['REQUEST_URI'];
+					}
+					
+					if (stripos($uri, 'admin') === false) {
+						if (isset($_SERVER['HTTP_ACCEPT']) && isset($_SERVER['HTTP_USER_AGENT'])) {
+							if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {	
+								$re = '/(cache)([^\s\'"]+)\.(png|jpe?g)/';
+								$subst = '$1webp$2.webp';
+								$this->output = preg_replace($re, $subst, $this->output);
+							}
+						}
+					}
+				}
+			}
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[$output = $this]]></search>
+			<add position="before" ><![CDATA[ $this->webpRebuild($this->output); ]]></add>
+		</operation>
+</file>	
+</modification>

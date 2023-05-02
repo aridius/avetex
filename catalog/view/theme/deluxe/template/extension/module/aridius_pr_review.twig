@@ -1,0 +1,98 @@
+<div class="title-module">{{ heading_title }}</div>
+<div id="rev_carusel">
+<div class="swipe_col1 flex_height_row row">
+      {% for product in products %} 
+      <div class=" product-layout nth col-xs-12 col-sm-6 col-md-6 col-lg-6 catb">
+         <div class="add_pr gtile-i-wrap caption">
+            <div class="product-thumb">
+            {% if (deluxe_lazy) %} 
+            <div class="image ipp"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+            {% else %} 
+            <div class="image ipp"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+            {% endif %} 
+            <div class="caption">
+               {% if (rat) %} 
+               <div class="pr rating">
+                  {% set i = 1 %}{% for i in i..5 %} 
+                  {% if (product['rating'] < i) %} 
+                  <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% else %} 
+                  <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% endif %} 
+                  {% endfor %} 
+               </div>
+               {% endif %} 
+               <div class="product-name">
+                  <a href="{{ product['href'] }}">
+                  {% if (product['name'])|length < deluxe_limit_symbolst %}
+                  {{ product['name'] }}
+                  {% else %}
+                  {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                  {% endif %}
+                  </a>
+               </div>
+               <div class="product-text">
+                  <p>{{ product['text'] }}</p>
+               </div>
+               <div class="col-xs-6 author_left">
+                  <svg>
+                     <use xlink:href="catalog/view/theme/deluxe/image/user-icon.svg#user_icon" x="0" y="0" width="22" height="22" />
+                  </svg>
+                  {{ product['author'] }} 
+               </div>
+               <div class="col-xs-6 date_right">
+                  {{ product['date_added'] }} 
+               </div>
+            </div>
+         </div>
+         </div>
+
+      </div>
+      {% endfor %} 
+</div>
+</div>
+   <div class="swipe_col2h center_more">
+   <div id="load_morer" class="gridcount bestseller"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>
+</div>
+<script>
+   var module_idr = 1;
+   var pr_allr = {{ product_total }};
+   var pr_lastr = {{ last_page }};
+   var pr_limitr = {{ limit }};
+   if (pr_limitr >= pr_allr ) {
+   $('#load_morer').hide();
+   }
+   $('#load_morer').click(function() {
+   module_idr++;
+   $.ajax({
+   url:'index.php?route=extension/module/aridius_pr_review/loadMore',
+   type: 'post',
+   data: 'page=' +  module_idr + '&module_id={{ module_id }}&setting={{ setting }}',
+   dataType: 'html',
+   beforeSend: function() {
+   $('#load_morer .gridcount_load').addClass("fa-spinner");
+   },
+   complete: function() {
+   $('#load_morer .gridcount_load').removeClass("fa-spinner");
+   },
+   success:function (data) {
+   $('#rev_carusel .swipe_col1').append($(data).find('.product-layout '));
+   if (module_idr == pr_lastr) {
+   $('#load_morer').hide();
+   }
+   }
+   });
+   });
+</script>
+<script>
+(function() {
+  var onResizeProducts = function(event) {
+    if (this.innerWidth <= 992) {
+      $("#load_morer").click();
+      $(window).unbind('resize', onResizeProducts);
+    }
+  };
+
+  $(window).bind('resize', onResizeProducts);
+})();
+</script>

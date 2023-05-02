@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+   <name>aridius_opt</name>
+   <code>aridius_opt</code>
+   <version>v_1</version>
+   <author>mrz</author>
+   <file path="admin/view/template/catalog/product_form.twig">
+      <operation>
+         <search>
+            <![CDATA[
+               {% if product_option_value.price_prefix == '+' %}
+               ]]>
+         </search>
+         <add position="before">
+            <![CDATA[
+               {% if product_option_value.price_prefix == '=' %}
+               <option value="=" selected="selected">=</option>
+               {% else %}
+               <option value="=">=</option>
+               {% endif %}
+               {% if product_option_value.price_prefix == '*' %}
+               <option value="*" selected="selected">*</option>
+               {% else %}
+               <option value="*">*</option>
+               {% endif %}
+               {% if product_option_value.price_prefix == '/' %}
+               <option value="/" selected="selected">/</option>
+               {% else %}
+               <option value="/">/</option>
+               {% endif %}
+               {% if product_option_value.price_prefix == 'u' %}
+               <option value="u" selected="selected">+%</option>
+               {% else %}
+               <option value="u">+%</option>
+               {% endif %}
+               {% if product_option_value.price_prefix == 'd' %}
+               <option value="d" selected="selected">-%</option>
+               {% else %}
+               <option value="d">-%</option>
+               {% endif %}
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search index="2">
+            <![CDATA[
+               html += '  <td class="text-right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               html += '  <td class="text-right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
+               html += '      <option value="+">+</option>';
+               html += '      <option value="-">-</option>';
+               html += '      <option value="=">=</option>';
+               html += '      <option value="*">*</option>';
+               html += '      <option value="/">/</option>';
+               html += '      <option value="u">+%</option>';
+               html += '      <option value="d">-%</option>';
+               ]]>
+         </add>
+      </operation>
+   </file>
+   <file path="admin/model/catalog/product.php">
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$product_option_value['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$product_option_value['quantity']
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$product_discount['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$product_discount['quantity']
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$data['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$data['quantity']
+               ]]>
+         </add>
+      </operation>
+   </file>
+   <file path="admin/model/sale/order.php">
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$product['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$product['quantity']
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$order_product['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$order_product['quantity']
+               ]]>
+         </add>
+      </operation>
+   </file>
+   <file path="catalog/controller/product/product.php">
+      <operation>
+         <search>
+            <![CDATA[
+               $price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               if ($option_value['price_prefix']=="u") {
+               $price = $this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false) .'%';
+               $option_value['price_prefix'] = '+';
+               }
+               elseif ($option_value['price_prefix']=="d") {
+               $price = $this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false) .'%';
+               $option_value['price_prefix'] = '-';
+               }
+               elseif ($option_value['price_prefix']=="*") {
+               $price = $this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false);
+               $option_value['price_prefix'] = '*';
+               }
+               elseif ($option_value['price_prefix']=="/") {
+               $price = $this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false);
+               $option_value['price_prefix'] = '/';
+               }
+               else{
+               $price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+               /* if ($option_value['price_prefix']=="=") $option_value['price_prefix'] = ' '; */
+               }
+               ]]>
+         </add>
+      </operation>
+   </file>
+   <file path="catalog/model/checkout/order.php">
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$product['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$product['quantity']
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               (int)$order_product['quantity']
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               (float)$order_product['quantity']
+               ]]>
+         </add>
+      </operation>
+   </file>
+   <file path="system/library/cart/cart.php">
+      <operation>
+         <search>
+            <![CDATA[
+               $option_price = 0;
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               $option_price = array();
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search >
+            <![CDATA[
+               if ($option_value_query->row['price_prefix'] == '+') {
+               ]]>
+         </search>
+         <add position="replace" offset="4">
+            <![CDATA[
+               if ($option_value_query->row['price_prefix'] == '=') {
+               $sort_key=count($option_price) + 1;
+               }
+               else{
+               $sort_key=count($option_price)+10;
+               }
+               $option_price[$sort_key]=array(
+               $option_value_query->row['price_prefix']=>$option_value_query->row['price'],
+               );
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               $product_data[] = array(
+               ]]>
+         </search>
+         <add position="before">
+            <![CDATA[
+               $newprice = $price;
+               ksort($option_price);
+               foreach($option_price as $operations){
+               foreach($operations as $operation=>$value){
+               if ($operation == '=') {
+               //цена опции становится основной
+               if ($price!=0 ){
+               $newprice = $value;
+               $price=0;
+               }
+               else{
+               $newprice += $value;
+               }
+               }
+               elseif ($operation == '+') {
+               $newprice += $value;
+               }
+               elseif ($operation == '-') {
+               $newprice -= $value;
+               }
+               elseif ($operation == '*') {
+               $newprice = $newprice * $value;
+               }
+               elseif ($operation == '/') {
+               $newprice = $newprice / $value;
+               }
+               elseif ($operation == 'u') {
+               $newprice = $newprice + (( $newprice * $value ) / 100);
+               }
+               elseif ($operation == 'd') {
+               $newprice = $newprice - (( $newprice * $value ) / 100);
+               }
+               }
+               }
+               ]]>
+         </add>
+      </operation>
+      <operation>
+         <search>
+            <![CDATA[
+               $price + $option_price
+               ]]>
+         </search>
+         <add position="replace">
+            <![CDATA[
+               $newprice
+               ]]>
+         </add>
+      </operation>
+   </file>
+</modification>

@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>newpositions</name>
+  <code>newpositions</code>
+  <version>v_1.2</version>
+  <author>mrz</author>
+<file path="admin/controller/design/layout.php">
+<operation>
+      <search><![CDATA[
+					$this->load->language('design/layout');
+      ]]></search>
+      <add position="after"><![CDATA[
+                    $this->load->language('extension/module/deluxe');
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					protected function getForm() {
+      ]]></search>
+      <add position="after"><![CDATA[
+					if (!isset($this->request->get['layout_id'])) {
+					   $data['layout_id'] = ''; 
+					  } else { 
+					   $data['layout_id'] = $this->request->get['layout_id'];
+					}
+      ]]></add>
+</operation>
+</file>
+<file path="admin/view/template/design/layout_form.twig">
+<operation>
+      <search><![CDATA[
+					<table id="module-content-top" class="table table-striped table-bordered table-hover">
+      ]]></search>
+      <add position="before"><![CDATA[
+<!--content-fluid start-->				
+				  <table id="module-content-topfl" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_topfl }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_topfl') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-topfl');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-fluid end-->					
+			              {% if (layout_id == 1) %} 
+<!--content-fluid start-->				
+				  <table id="module-content-fluid" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_fluid }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_fluid') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-fluid');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-fluid end-->					
+<!--content-slleft start-->				
+				  <table id="module-content-slleft" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_slleft }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_slleft') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-slleft');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-slleft end-->						
+<!--content-top1 start-->				
+				  <table id="module-content-top1" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_top1 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_top1') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-top1');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-top1 end-->				
+<!--content-top2 start-->				
+				  <table id="module-content-top2" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_top2 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_top2') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-top2');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-top2 end-->						
+ {% endif %}							
+      ]]></add>
+	 </operation> 
+<operation>
+      <search><![CDATA[
+					 <table id="module-content-bottom" class="table table-striped table-bordered table-hover">
+      ]]></search>
+ <add position="before"><![CDATA[
+  {% if (layout_id == 1) %} 
+ <!--content-bot1 start-->				
+				  <table id="module-content-bot1" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_bot1 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_bot1') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-bot1');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-bot1 end-->					
+<!--content-bot2 start-->				
+				  <table id="module-content-bot2" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_bot2 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_bot2') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-bot2');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-bot2 end-->					
+<!--content-bot3 start-->				
+				  <table id="module-content-bot3" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_bot3 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_bot3') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-bot3');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-bot3 end-->		
+<!--content-slrig1 start-->				
+				  <table id="module-content-slrig1" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_slrig1 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_slrig1') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-slrig1');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-slrig1 end-->
+<!--content-slrig2 start-->				
+				  <table id="module-content-slrig2" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_slrig2 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_slrig2') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-slrig2');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-slrig2 end-->	
+  {% endif %}		
+  ]]></add>
+</operation> 
+	  <operation>
+	       <search index="13"><![CDATA[
+					</table>
+      ]]></search> 
+	        <add position="before"><![CDATA[
+			<!--content-mail start-->				
+				  <table id="module-content-mail" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_mail }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_mail') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-mail');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-mail end-->					
+<!--content-top3 start-->				
+				  <table id="module-content-top3" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_content_top3 }}</td>
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %} 
+                    {% if (layout_module['position'] == 'content_top3') %} 
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            {% if (extension['code'] == layout_module['code']) %} 
+                            <option value="{{ extension['code'] }}" selected="selected">{{ extension['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% endif %} 
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            {% if (module['code'] == layout_module['code']) %} 
+                            <option value="{{ module['code'] }}" selected="selected">{{ module['name'] }}</option>
+                            {% else %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endif %} 
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module['position'] }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module['sort_order'] }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module['edit'] }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	
+                    </tr>
+                    {% set module_row = module_row + 1 %} 
+                    {% endif %} 
+                    {% endfor %} 
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %} 
+                            <optgroup label="{{ extension['name'] }}">
+                            {% if (not extension['module']) %} 
+                            <option value="{{ extension['code'] }}">{{ extension['name'] }}</option>
+                            {% else %} 
+                            {% for module in extension['module'] %} 
+                            <option value="{{ module['code'] }}">{{ module['name'] }}</option>
+                            {% endfor %} 
+                            {% endif %} 
+                            </optgroup>
+                            {% endfor %} 
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('content-top3');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+<!--content-top3 end-->		
+	 ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').delegate('select[name*=\'code\']', 'change', function() {
+      ]]></search>
+      <add position="replace"><![CDATA[
+                    $('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-content-top1, #module-content-top2, #module-content-top3, #module-content-bot1, #module-content-bot2, #module-content-bot3, #module-content-fluid, #module-content-topfl, #module-content-slleft, #module-content-slrig1, #module-content-slrig2, #module-content-mail').delegate('select[name*=\'code\']', 'change', function() {
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');
+      ]]></search>
+      <add position="replace"><![CDATA[
+                    $('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-content-top1, #module-content-top2, #module-content-top3, #module-content-bot1, #module-content-bot2, #module-content-bot3, #module-content-fluid, #module-content-topfl, #module-content-slleft, #module-content-slrig1, #module-content-slrig2, #module-content-mail').trigger('change');
+      ]]></add>
+</operation>	
+</file>
+</modification>

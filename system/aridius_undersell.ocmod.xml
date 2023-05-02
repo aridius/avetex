@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>undersell</name>
+  <code>undersell</code>
+  <version>v_1</version>
+  <author>mrz</author>
+  <file path="admin/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token'], true);
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$qry = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "aridiusundersell'");
+		    if ($qry->num_rows) {
+			$data['undersell_status'] = $this->url->link('catalog/aridiusundersell', 'user_token=' . $this->session->data['user_token'], true);	
+			$this->load->model('catalog/aridiusundersell');		
+	        $undersell_total = $this->model_catalog_aridiusundersell->getTotalOrder();
+			$data['undersell_total'] = $undersell_total;
+			} else {
+			$data['undersell_status'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			}
+            if (empty($data['undersell_total'])) {
+            $data['undersell_total'] = 0;
+            }  
+			]]></add>
+		</operation>
+  </file>
+  <file path="admin/view/template/common/header.twig">
+		<operation>
+			<search><![CDATA[
+			<ul class="nav navbar-nav navbar-right">
+			]]></search>
+			<add position="after"><![CDATA[
+			<li><a href="{{ undersell_status }}" data-toggle="tooltip" data-placement="bottom" title="{{ undersell_name }}"><span class="label label-danger pull-left">{{ undersell_total }}</span> <i class="fa fa-bar-chart fa-lg"></i></a></li> 
+			]]></add>
+		</operation>
+  </file>
+  <file path="catalog/controller/product/product.php">
+		<operation>
+			<search><![CDATA[
+			if ($product_info) {
+			]]></search>
+			<add position="after">
+			<![CDATA[
+            $data['aridiusundersell'] = $this->load->controller('module/aridiusundersell');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$this->load->model('catalog/review');
+			]]></search>
+			<add position="before">
+			<![CDATA[
+		    $this->load->language('extension/module/aridiusundersell');
+		    $data['aridiusundersell_status'] = $this->config->get('module_aridiusundersell_status');
+			]]></add>
+		</operation>		
+  </file>
+</modification>

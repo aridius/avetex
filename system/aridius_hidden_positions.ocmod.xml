@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>hidden_pos</name>
+  <code>hidden_pos</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="admin/view/template/design/layout_form.twig">
+		<operation>
+			<search><![CDATA[
+			{% for layout_module in layout_modules %}
+			]]></search>
+			<add position="before" offset="3">
+			<![CDATA[
+			<td class="text-center" style="width: 80px;">
+			<span data-toggle="tooltip" title="mobile"><i class="fa2 fa fa-mobile" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="tablet"><i class="fa2 fa fa-tablet" aria-hidden="true"></i></span>
+			<span data-toggle="tooltip" title="desktop"><i class="fa2 fa fa-desktop" aria-hidden="true"></i>
+			</span>
+			</td> 
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			{% set module_row = module_row + 1 %}
+			]]></search>
+			<add position="before" offset="1">
+			<![CDATA[
+			<td class="text-center">
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][xs]" value="1" {% if (layout_module['xs'] is defined and (layout_module['xs'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][sm]" value="1" {% if (layout_module['sm'] is defined and (layout_module['sm'] == 1)) %} checked="checked"{% endif %}/></label>
+			<label class="ml"><input type="checkbox" name="layout_module[{{ module_row }}][md]" value="1" {% if (layout_module['md'] is defined and (layout_module['md'] == 1)) %} checked="checked"{% endif %}/></label>
+			</td>	 
+			]]></add>
+		</operation>		
+		<operation>
+			<search><![CDATA[
+             html += '  <div class="input-group-btn"><span data-toggle="tooltip" title="<?php echo $text_move; ?>" class="btn btn-success btn-sm handle"><i class="fa fa-hand-grab-o"></i></span><a href="" target="_blank" type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
+			]]></search>
+			<add position="after">
+			<![CDATA[
+	        html += '<td class="text-center"><label class="ml2"><input type="checkbox" name="layout_module[' + module_row + '][xs]" value="1"></label><label class="ml2"><input type="checkbox" name="layout_module[' + module_row + '][sm]" value="1"/></label><label class="ml2"><input type="checkbox" name="layout_module[' + module_row + '][md]" value="1"/></label></td>';
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+            {{ footer }}
+			]]></search>
+			<add position="before">
+			<![CDATA[
+			<style>					
+			input[type="checkbox"]:checked::after {
+			  content: '';
+			  position: absolute;
+			  top: 35%;
+			  left: 40%;
+			  width: 11px;
+			  height: 11px;
+			  border-radius: 50%;
+			  background-color: #0989D2;
+			  transform: translate(-50%, -50%);
+			  visibility: visible;
+			}
+			::after, ::before {
+			  -webkit-box-sizing: border-box;
+			  -moz-box-sizing: border-box;
+			  box-sizing: border-box;
+			}
+			input[type="checkbox"]::before {
+			  content: '';
+			  position: absolute;
+			  top: 35%;
+			  left: 40%;
+			  width: 18px;
+			  height: 18px;
+			  border-radius: 50%;
+			  transform: translate(-50%, -50%);
+			  background-color: white;
+			  border: 2px solid #0989D2;
+			}	
+			input[type="checkbox"] {
+			height: 0;
+			}
+			.fa2 {
+			font-size: 17px;
+			}
+			.ml {
+			margin-right:3px;	
+
+			}
+			.ml2 {
+			margin-right:5px;	
+			}	
+			.table thead td span[data-toggle="tooltip"]::after, label.control-label span::after {
+			content: "";
+			}			
+			</style>			
+			]]></add>
+		</operation>
+</file>
+<file path="admin/controller/design/layout.php">
+		<operation>
+			<search><![CDATA[
+			'position'   => $layout_module['position'],
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			'xs'   => $layout_module['xs'],
+			'sm'   => $layout_module['sm'],
+			'md'   => $layout_module['md'],
+			]]></add>
+		</operation>	
+</file>
+<file path="admin/model/design/layout.php">
+		<operation>
+			<search><![CDATA[
+			foreach ($data['layout_module'] as $layout_module) {
+			]]></search>
+			<add position="after">
+			<![CDATA[
+				if(!isset($layout_module['xs'])){
+					$layout_module['xs'] = 0;
+				}
+				if(!isset($layout_module['sm'])){
+					$layout_module['sm'] = 0;
+				}
+				if(!isset($layout_module['md'])){
+					$layout_module['md'] = 0;
+				}
+			]]></add>
+		</operation>	
+		<operation>
+			<search><![CDATA[
+			$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+			]]></search>
+			<add position="replace">
+			<![CDATA[
+            $this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', xs = '" . (int)$layout_module['xs'] . "', sm = '" . (int)$layout_module['sm'] . "', md = '" . (int)$layout_module['md'] . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+			]]></add>
+		</operation>			
+</file>
+<file path="catalog/controller/common/{content_top,content_bottom,column_left,content_bot1,content_bot2,content_bot3,content_fluid,content_mail,content_slleft,content_slrig1,content_slrig2,content_top1,content_top2,content_topfl}.php">
+		<operation>
+			<search><![CDATA[
+			$data['modules'][] = $module_data;
+			]]></search>
+			<add position="after">
+			<![CDATA[
+                    if (isset($module['xs'])) {
+                    $data['posxs'][]['xs'] = $module['xs'];
+					} else {
+					$data['posxs'][]['xs'] = 0;
+					}
+                    if (isset($module['sm'])) {
+                    $data['possm'][]['sm'] = $module['sm'];
+					} else {
+					$data['possm'][]['sm'] = 0;
+					}					
+                    if (isset($module['md'])) {
+                    $data['posmd'][]['md'] = $module['md'];
+					} else {
+					$data['posmd'][]['md'] = 0;
+					}	
+			]]></add>
+		</operation>	
+		<operation>
+			<search><![CDATA[
+			$data['modules'][] = $output;
+			]]></search>
+			<add position="after">
+			<![CDATA[
+                    if (isset($module['xs'])) {
+                    $data['posxs'][]['xs'] = $module['xs'];
+					} else {
+					$data['posxs'][]['xs'] = 0;
+					}
+                    if (isset($module['sm'])) {
+                    $data['possm'][]['sm'] = $module['sm'];
+					} else {
+					$data['possm'][]['sm'] = 0;
+					}					
+                    if (isset($module['md'])) {
+                    $data['posmd'][]['md'] = $module['md'];
+					} else {
+					$data['posmd'][]['md'] = 0;
+					}	
+			]]></add>
+		</operation>		
+</file>
+
+<file path="catalog/view/theme/*/template/common/{content_top,content_bottom,column_left,content_bot1,content_bot2,content_bot3,content_fluid,content_mail,content_slleft,content_slrig1,content_slrig2,content_top1,content_top2,content_topfl}.twig">
+		<operation>
+<search><![CDATA[{{ module }}]]></search>
+<add position="before"><![CDATA[<div class = "{% if (posxs[key]['xs'] == 1) %}hidden-xs{% endif %}{% if (possm[key]['sm'] == 1) %} hidden-sm{% endif %} {% if (posmd[key]['md'] == 1) %} hidden-md{% endif %} ">]]></add>
+		</operation>	
+		<operation>
+<search><![CDATA[{{ module }}]]></search>   	
+<add position="after"><![CDATA[</div>]]></add>
+		</operation>		
+		<operation>
+<search><![CDATA[{% for module in modules %}]]></search>		
+<add position="replace"><![CDATA[{% for key,module in modules %}]]></add>
+		</operation>
+	</file>	
+</modification>
