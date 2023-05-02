@@ -1,0 +1,16 @@
+/image
+/min
+
+.htaccess
+.htaccess.txt
+admin/config.php
+/system/engine
+/system/helper
+/system/library
+/system/config
+/system/sql
+/system/storage
+config.php
+index.php
+php.ini
+robots.txt
