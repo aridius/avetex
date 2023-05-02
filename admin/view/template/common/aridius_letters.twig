@@ -1,0 +1,139 @@
+{{ header }}{{ column_left }}
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <a href="{{ aridius_letters2 }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-default"><i class="fa fa-envelope"></i></a>
+            <button type="button" data-toggle="tooltip" title="{{ button_dell }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-newsdelete').submit() : false;"><i class="fa fa-trash-o"></i></button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %}
+      {% if (success) %}
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %}
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-newsdelete">
+               <div class="well">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           <label class="control-label" for="input-email-id">{{ text_id }}</label>
+                           <input type="text" name="filter_email_id" value="{{ filter_email_id }}" id="input-email-id" class="form-control" />
+                        </div>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           <label class="control-label" for="input-email-user">{{ text_email }}</label>
+                           <input type="text" name="filter_email_user" value="{{ filter_email_user }}" id="input-email-user" class="form-control" />
+                        </div>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           <label class="control-label" for="input-email-date">{{ text_date }}</label>
+                           <div class="input-group date">
+                              <input type="text" name="filter_email_date" value="{{ filter_email_date }}" data-date-format="YYYY-MM-DD" id="input-email-date" class="form-control" />
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-12">
+                        <button onclick="filter();" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> {{ text_filter }}</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                     <thead>
+                        <tr>
+                           <td style="width: 1px;" class="text-left">
+                              <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                           </td>
+                           <td class="text-left">{{ text_id }}</td>
+                           <td class="text-left">{{ text_email }}</td>
+                           <td class="text-left">{{ text_date }}</td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for letter in letters %}
+                        <tr>
+                           <td>
+                              {% if letter.email_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ letter['email_id'] }}" checked="checked" />
+                              {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ letter['email_id'] }}" />
+                              {% endif %}
+                           </td>
+                           <td class="text-left">{{ letter['email_id'] }}</td>
+                           <td class="text-left">{{ letter['email_user'] }}</td>
+                           <td class="text-left">{{ letter['email_date'] }}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </form>
+            <div class="row">
+               <div class="col-sm-6 text-left">{{ pagination }}</div>
+               <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script><!--
+   function filter() {
+   	url = 'index.php?route=common/aridius_letters&user_token={{ user_token }}';
+   	var filter_email_id = $('input[name=\'filter_email_id\']').val();
+   	if (filter_email_id) {
+   		url += '&filter_email_id='+encodeURIComponent(filter_email_id);
+   	}
+   	var filter_email_user = $('input[name=\'filter_email_user\']').val();
+   	if (filter_email_user) {
+   		url += '&filter_email_user='+encodeURIComponent(filter_email_user);
+   	}
+   	var filter_email_date = $('input[name=\'filter_email_date\']').val();
+   	if (filter_email_date) {
+   		url += '&filter_email_date=' + encodeURIComponent(filter_email_date);
+   	}
+   	location = url;
+   }
+   //-->
+</script>
+<script><!--
+   $('#form input').keydown(function (e) {
+   	if (e.keyCode==13) {
+   		filter();
+   	}
+   });
+   //-->
+</script>
+<script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
+<script><!--
+   $('.date').datetimepicker({
+   pickTime: false
+   });
+   //-->
+</script>
+{{ footer }}

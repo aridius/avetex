@@ -1,0 +1,608 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <a href="{{ aridius_news }}" data-toggle="tooltip" title="{{ button_news }}" class="btn btn-warning"><i class="fa fa-plus"></i> {{ button_news }}</a>
+            <a href="{{ aridius_news_reviews }}" data-toggle="tooltip" title="{{ button_news_reviews }}" class="btn btn-warning"><i class="fa fa-comment-o"></i> {{ button_news_reviews }}</a>
+            <a onclick="apply()" class="btn btn-primary" data-toggle="tooltip" title="{{ button_apply }}" ><i class="fa fa-check"></i>&nbsp;&nbsp;{{ button_apply }}</a>
+            <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;{{ button_save }}</button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %} 
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %} 
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %} 
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" name="aridius_newsform" class="form-horizontal">
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-headline">{{ entry_home_limit }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_home_limit" value="{{ module_aridius_news_home_limit }}" id="input-headline" class="form-control" />
+                     {% if (error_home_limit) %} 
+                     <div class="text-danger">{{ error_home_limit }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-headline">{{ entry_home_chars }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_home_chars" value="{{ module_aridius_news_home_chars }}" id="input-headline" class="form-control" />
+                     {% if (error_home_numchars) %} 
+                     <div class="text-danger">{{ error_home_numchars }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-headline">{{ entry_headline_chars }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_headline_chars" value="{{ module_aridius_news_headline_chars }}" id="input-headline" class="form-control" />
+                     {% if (error_headline_chars) %} 
+                     <div class="text-danger">{{ error_headline_chars }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_newspage_addthis }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_module_aridius_newspage_addthis) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_module_aridius_newspage_addthis" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_module_aridius_newspage_addthis" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_module_aridius_newspage_addthis) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_module_aridius_newspage_addthis" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_module_aridius_newspage_addthis" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_news_show_date }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_show_date) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_date" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_date" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_show_date) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_date" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_date" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_news_show_img }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_show_img) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_img" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_img" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_show_img) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_img" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_img" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_news_show_description }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_show_description) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_description" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_description" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_show_description) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_description" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_description" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+			   
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_news_show_imgp }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_show_imgp) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_imgp" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_imgp" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_show_imgp) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_imgp" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_show_imgp" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>			   
+			   
+			   
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-width">{{ entry_newspage_thumb }}</label>
+                  <div class="col-sm-10 them">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_thumb_width" value="{{ module_aridius_news_thumb_width }}" id="input-width-thumb" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_thumb_height" value="{{ module_aridius_news_thumb_height }}" class="form-control" />
+                        </div>
+                     </div>
+                     {% if (error_module_aridius_newspage_thumb) %} 
+                     <div class="text-danger">{{ error_module_aridius_newspage_thumb }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+			   
+<div class="form-group">
+<label class="col-sm-2 control-label">{{ entry_meta_title }}</label>
+<div class="col-sm-10 them">
+{% for language in languages %} 
+	<div class="input-group">
+	<span class="input-group-addon">
+	<img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+	</span>
+	<input name="module_aridius_news_meta_title[{{ language['language_id'] }}]" value="{{ module_aridius_news_meta_title[language['language_id']] }}" class="form-control" />
+	</div>
+	{% endfor %} 
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">{{ entry_meta_description }}</label>
+<div class="col-sm-10 them">
+{% for language in languages %} 
+	<div class="input-group">
+	<span class="input-group-addon">
+	<img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+	</span>
+	<input name="module_aridius_news_meta_description[{{ language['language_id'] }}]" value="{{ module_aridius_news_meta_description[language['language_id']] }}" class="form-control" />
+	</div>
+	{% endfor %} 
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">{{ entry_meta_keyword }}</label>
+<div class="col-sm-10 them">
+{% for language in languages %} 
+	<div class="input-group">
+	<span class="input-group-addon">
+	<img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+	</span>
+	<input name="module_aridius_news_meta_keyword[{{ language['language_id'] }}]" value="{{ module_aridius_news_meta_keyword[language['language_id']] }}" class="form-control" />
+	</div>
+	{% endfor %} 
+</div>
+</div>			   
+			   
+			   
+			   
+			   
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                  <div class="col-sm-10 them">
+                     <select name="module_aridius_news_status" id="input-status" class="form-control">
+                        {% if (module_aridius_news_status) %} 
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %} 
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                     </select>
+                  </div>
+               </div>
+               <legend>{{ text_comment }}</legend>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_review_guest }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_review_guest) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_review_guest" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_review_guest" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_review_guest) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_review_guest" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_review_guest" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_status_review }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_status_review) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_status_review" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_status_review" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_status_review) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_status_review" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_status_review" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_answer_button }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_display_answer_button) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_answer_button" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_answer_button" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_display_answer_button) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_answer_button" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_answer_button" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_captcha }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_display_captcha) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_captcha" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_captcha" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_display_captcha) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_captcha" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_display_captcha" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_limite_page }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_limite_page" value="{{ module_aridius_news_limite_page }}" id="input-entry_limite_page" class="form-control" />
+                     {% if (error_limite_page) %} 
+                     <div class="text-danger">{{ error_limite_page }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" >{{ entry_mail }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_mail) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_mail" value="0" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_mail" value="0" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_mail) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_mail" value="1" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_mail" value="1" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <legend>{{ text_pr }}</legend>
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-width">{{ entry_news_thumb }}</label>
+                  <div class="col-sm-10 them">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_width" value="{{ module_aridius_news_width }}" id="input-thumb" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_height" value="{{ module_aridius_news_height }}" class="form-control" />
+                        </div>
+                     </div>
+                     {% if (error_module_aridius_thumb) %} 
+                     <div class="text-danger">{{ error_module_aridius_thumb }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-rat">{{ entry_rat }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_rat) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_rat" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_rat" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_rat) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_rat" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_rat" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-wish">{{ entry_wish }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_wish) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_wish" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_wish" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_wish) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_wish" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_wish" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-comp">{{ entry_comp }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_comp) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_comp" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_comp" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_comp) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_comp" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_comp" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-comp">{{ entry_quickview }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_quickview) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_quickview" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_quickview" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_quickview) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_quickview" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_quickview" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <legend>{{ text_carusel }}</legend>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relnavigation">{{ entry_navigation }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_relnavigation) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relnavigation" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relnavigation" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_relnavigation) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relnavigation" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relnavigation" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relautoplay_on">{{ entry_autoplay_on }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_relautoplay_on) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relautoplay_on" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relautoplay_on" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_relautoplay_on) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relautoplay_on" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relautoplay_on" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relautoplay">{{ entry_autoplay }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_relautoplay" value="{{ module_aridius_news_relautoplay }}" placeholder="{{ entry_autoplay }}" id="input-module_aridius_news_relautoplay" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relitems">{{ entry_items }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_relitems" value="{{ module_aridius_news_relitems }}" placeholder="{{ entry_items }}" id="input-module_aridius_news_relitems" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relrew_speed">{{ entry_rew_speed }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_relrew_speed" value="{{ module_aridius_news_relrew_speed }}" placeholder="{{ entry_rew_speed }}" id="input-module_aridius_news_relrew_speed" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_news_relstophover">{{ entry_stophover }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_news_relstophover) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relstophover" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relstophover" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_news_relstophover) %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relstophover" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_news_relstophover" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <legend>{{ text_news }}</legend>
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-sim">{{ entry_headline_chars }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_news_sim_chars" value="{{ module_aridius_news_sim_chars }}" id="input-sim" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-widthnews">{{ entry_news_thumb }}</label>
+                  <div class="col-sm-10 them">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_simwidth" value="{{ module_aridius_news_simwidth }}" id="input-width-thumbsim" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                           <input type="text" name="module_aridius_news_simheight" value="{{ module_aridius_news_simheight }}" class="form-control" />
+                        </div>
+                     </div>
+                     {% if (error_module_aridius_simnews) %} 
+                     <div class="text-danger">{{ error_module_aridius_simnews }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script><!--
+   function apply() {
+   	$('#form').append('<input type="hidden" id="apply" name="apply" value="1" />');
+   	$('#form').submit();
+   }
+   //-->
+</script>
+{{ footer }} 

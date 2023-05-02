@@ -1,0 +1,170 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form-size" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %} 
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %} 
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %} 
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-size" class="form-horizontal">
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label">{{ entry_name }}</label>
+                  <div class="col-sm-10">
+                     {% for language in languages %} 
+                     <div class="input-group"><span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>
+                        <input type="text" name="aridius_size_description[{{ language['language_id'] }}][name]" value="{{ aridius_size_description[language['language_id']] is defined ? aridius_size_description[language['language_id']]['name'] : '' }}" class="form-control" />
+                     </div>
+                     {% if (error_name[language['language_id']] is defined) %} 
+                     <div class="text-danger">{{ error_name[language['language_id']] }}</div>
+                     {% endif %} 
+                     {% endfor %} 
+                  </div>
+               </div>
+               <ul class="nav nav-tabs" id="language">
+                  {% for language in languages %} 
+                  <li><a href="#language{{ language['language_id'] }}" data-toggle="tab"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /> {{ language['name'] }}</a></li>
+                  {% endfor %} 
+               </ul>
+               <div class="tab-content">
+                  {% for language in languages %} 
+                  <div class="tab-pane" id="language{{ language['language_id'] }}">
+                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-description{{ language['language_id'] }}">{{ entry_description }}</label>
+                        <div class="col-sm-10">
+                           <textarea name="aridius_size_description[{{ language['language_id'] }}][description]" id="input-description{{ language['language_id'] }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control summernote">{{ aridius_size_description[language['language_id']] is defined ? aridius_size_description[language['language_id']]['description'] : '' }}</textarea>
+                           {% if (error_description[language['language_id']] is defined) %} 
+                           <div class="text-danger">{{ error_description[language['language_id']] }}</div>
+                           {% endif %} 
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %} 
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
+                  <div class="col-sm-10">
+                     <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
+                     <div id="aridius_size-product" class="well well-sm" style="height: 150px; overflow: auto;">
+                        {% for product in products %} 
+                        <div id="aridius_size-product{{ product['product_id'] }}"><i class="fa fa-minus-circle"></i> {{ product['name'] }} 
+                           <input type="hidden" name="product[]" value="{{ product['product_id'] }}" />
+                        </div>
+                        {% endfor %} 
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-category">{{ entry_category }}</label>
+                  <div class="col-sm-10">
+                     <div class="well well-sm" style="min-height: 150px;max-height: 500px;overflow: auto;">
+                        <table class="table table-striped">
+                           {% for category in categories %} 
+                           <tr>
+                              <td class="checkbox">
+                                 <label>
+                                
+								 {% if category.category_id in product_category %}
+                                 <input type="checkbox" name="product_category[]" value="{{ category['category_id'] }}" checked="checked" />
+                                 {{ category['name'] }} 
+                                 {% else %} 
+                                 <input type="checkbox" name="product_category[]" value="{{ category['category_id'] }}" />
+                                 {{ category['name'] }} 
+                                 {% endif %} 
+                                 </label>
+                              </td>
+                           </tr>
+                           {% endfor %} 
+                        </table>
+                     </div>
+                     <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                     <select name="status" id="input-status" class="form-control">
+                        {% if (status) %} 
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %} 
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                     </select>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+   <script><!--
+      $('#language li:first-child a').tab('show');
+      //-->
+   </script>
+   {% if (not ckeditor) %} 
+   <script src="view/javascript/summernote/summernote.js"></script>
+   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+   <script src="view/javascript/summernote/opencart.js"></script>
+
+   {% endif %} 
+   {% if (ckeditor) %} 
+   <script><!--
+      {% for language in languages %} 
+      {% if (ckeditor) %} 
+      ckeditorInit('input-description{{ language['language_id'] }}', '{{ user_token }}');
+      {% endif %} 
+      {% endfor %} 
+      //-->
+   </script>
+   {% endif %} 
+   <script type="text/javascript"><!--
+      $('input[name=\'product_name\']').autocomplete({
+      	source: function(request, response) {
+      		$.ajax({
+      			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      			dataType: 'json',
+      			success: function(json) {
+      				response($.map(json, function(item) {
+      					return {
+      						label: item['name'],
+      						value: item['product_id']
+      					}
+      				}));
+      			}
+      		});
+      	},
+      	select: function(item) {
+      		$('input[name=\'product_name\']').val('');
+      		
+      		$('#aridius_size-product' + item['value']).remove();
+      		
+      		$('#aridius_size-product').append('<div id="aridius_size-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+      	}
+      });
+      	
+      $('#aridius_size-product').delegate('.fa-minus-circle', 'click', function() {
+      	$(this).parent().remove();
+      });
+      //-->
+   </script>
+</div>
+{{ footer }} 

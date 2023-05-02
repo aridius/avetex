@@ -1,0 +1,181 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form-news" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;{{ button_save }}</button>
+            <a onclick="apply();" class="btn btn-primary" data-toggle="tooltip" title="{{ button_apply }}" ><i class="fa fa-check"></i>&nbsp;&nbsp;{{ button_apply }}</a>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %} 
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %} 
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %} 
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-news" class="form-horizontal">
+               <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-headline">{{ entry_chars }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_review_category_chars" value="{{ module_aridius_review_category_chars }}" id="input-headline" class="form-control" />
+                     {% if (error_headline_chars) %} 
+                     <div class="text-danger">{{ error_headline_chars }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_review_category_limit" value="{{ module_aridius_review_category_limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-date">{{ entry_date }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_review_category_date) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_date" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_date" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_review_category_date) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_date" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_date" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-navigation">{{ entry_navigation }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_review_category_navigation) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_navigation" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_navigation" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_review_category_navigation) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_navigation" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_navigation" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-module_aridius_review_category_autoplayon">{{ entry_autoplay_on }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_review_category_autoplayon) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_autoplayon" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_autoplayon" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_review_category_autoplayon) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_autoplayon" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_autoplayon" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-autoplay">{{ entry_autoplay }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_review_category_autoplay" value="{{ module_aridius_review_category_autoplay }}" placeholder="{{ entry_autoplay }}" id="input-autoplay" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-items">{{ entry_items }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_review_category_items" value="{{ module_aridius_review_category_items }}" placeholder="{{ entry_items }}" id="input-items" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-rew_speed">{{ entry_rew_speed }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="module_aridius_review_category_rew_speed" value="{{ module_aridius_review_category_rew_speed }}" placeholder="{{ entry_rew_speed }}" id="input-rew_speed" class="form-control" />
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-stophover">{{ entry_stophover }}</label>
+                  <div class="col-sm-10 them">
+                     <label class="radio-inline">
+                     {% if (module_aridius_review_category_stop) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_stop" value="1" checked="checked" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_stop" value="1" />
+                     <span class="im_option">{{ text_yes }}</span>
+                     {% endif %} 
+                     </label>
+                     <label class="radio-inline">
+                     {% if (not module_aridius_review_category_stop) %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_stop" value="0" checked="checked" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% else %} 
+                     <input class="options_none" type="radio" name="module_aridius_review_category_stop" value="0" />
+                     <span class="im_option">{{ text_no }}</span>
+                     {% endif %} 
+                     </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                  <div class="col-sm-10 them">
+                     <select name="module_aridius_review_category_status" id="input-status" class="form-control">
+                        {% if (module_aridius_review_category_status) %} 
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %} 
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                     </select>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script><!--
+   function apply() {
+   	$('#form-news').append('<input type="hidden" id="apply" name="apply" value="1" />');
+   	$('#form-news').submit();
+   }
+   //-->
+</script>
+{{ footer }} 

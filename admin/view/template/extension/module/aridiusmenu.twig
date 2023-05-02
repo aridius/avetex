@@ -1,0 +1,238 @@
+{{ header }}
+<link href="view/javascript/nestable/nestable.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/nestable/jquery.nestable.js"></script>
+{{ column_left }}
+<div id="content">
+<div class="page-header">
+   <div class="container-fluid">
+      <div class="pull-right">
+         <button type="submit" form="form-aridiusmenu" data-toggle="tooltip" title="{{ button_save }}" id="btn-save" class="btn btn-primary"><i class="fa fa-save"></i></button>
+         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+         {% for breadcrumb in breadcrumbs %}
+         <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+         {% endfor %}
+      </ul>
+   </div>
+</div>
+<div class="container-fluid">
+   {% if (error_warning) %}
+   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+   </div>
+   {% endif %}
+   <div class="panel panel-default">
+      <div class="panel-heading">
+         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+         <div class="row">
+            <div class="col-sm-12" id="alert"></div>
+            <form id="form-item" enctype="multipart/form-data" method="post">
+               <div class="col-sm-4">
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_name }}</label>
+                  </div>
+                  <div class="col-sm-12">
+                     {% for language in languages %}
+                     <div class="input-group">
+                        <span class="input-group-addon">
+                        <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                        </span>
+                        <input name="information_menu[{{ language['language_id'] }}][name]" value="{{ information_menu[language['language_id']] is defined ? information_menu[language['language_id']]['name'] : '' }}" class="form-control" />
+                     </div>
+                     {% endfor %}
+                     </br>
+                  </div>
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_url }}</label>
+                  </div>
+                  <div class="col-sm-12">
+                     {% for language in languages %}
+                     <div class="input-group">
+                        <span class="input-group-addon">
+                        <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
+                        </span>
+                        <input name="information_menu[{{ language['language_id'] }}][url]" value="{{ information_menu[language['language_id']] is defined ? information_menu[language['language_id']]['url'] : '' }}" class="form-control" />
+                     </div>
+                     {% endfor %}
+                     </br>
+                  </div>
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_col }}</label>
+                  </div>
+                  <div class="col-sm-12">
+                     <input type="text" name="columnn" value="" placeholder="" id="input-columnn" class="form-control" />
+                     </br>
+                  </div>
+				  
+				  
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_top }}</label>
+                  </div>				  
+                  <div class="col-sm-12">
+                     <select name="top" class="form-control">
+                        <option value="0"  selected="selected">no</option>
+                        <option value="1">yes</option>
+                     </select>
+                     </br>
+                  </div>				  
+				  
+				  
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_img }}</label>
+                  </div>
+                  <div class="col-sm-12"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                     <input type="hidden" name="image" value="" id="input-image" />
+                     </br></br>
+                  </div>
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_img2 }}</label>
+                  </div>
+                  <div class="col-sm-12"><a href="" id="thumb-image_menu_ico" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                     <input type="hidden" name="image_menu_ico" value="" id="input-image_menu_ico" />
+                     </br></br>
+                  </div>
+                  <div class="col-sm-12">
+                     <label class="control-label">{{ text_stickers }}</label>
+                  </div>
+                  <div class="col-sm-12">
+                     <select name="stickers" class="form-control">
+                        <option value="0"  selected="selected">no</option>
+                        <option value="1">new</option>
+                        <option value="2">sale</option>
+                        <option value="3">top</option>
+                     </select>
+                     </br>
+                  </div>
+                  <div class="clearfix"> </div>
+                  <div class="col-sm-12">
+                     <div class="pull-right">
+                        <a id="btn-add" class="btn btn-primary" data-toggle="tooltip" title="">{{ text_app }}</a>
+                     </div>
+                  </div>
+               </div>
+            </form>
+            <div class="col-sm-6" style="background: #ebebeb;padding: 15px;border-radius: 8px;">
+               <br/>
+               <div class="text-right">
+                  <button class = "btn btn-primary" onclick="copyCategoryall()">{{ text_copyall }}</button>
+               </div>
+               <br/><br/>
+               <div id="aridiusmenu" class="dd"></div>
+               <br/><br/>
+               <div class="text-right">
+                  <button class = "btn btn-danger" onclick="deleteCategoryall()">{{ text_dellall }}</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   $('.dd').nestable('init');
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   $('#btn-add').on('click', function(){
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/addItem&user_token={{ user_token }}',
+   type: 'post',
+   dataType: 'json',
+   data: $('#form-item').serialize(),
+   beforeSend: function(){
+   $('#btn-add').button('loading');
+   },
+   success: function(json) {
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   var inputs = document.querySelectorAll('input');
+   for (var i = 0;  i < inputs.length; i++) {
+   inputs[i].value = '';
+   };
+   },
+   error: function(json){
+   alert(json['error']);
+   },
+   complete: function(){
+   $('#btn-add').button('reset');
+   }
+   });
+   });
+   $('#btn-save').on('click', function(){
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/updateMenu&user_token={{ user_token }}',
+   type: 'post',
+   dataType: 'json',
+   data: {menu : $('.dd').nestable('serialize')},
+   beforeSend: function(){
+   $('#btn-save').button('loading');
+   $('#alert').html('');
+   },
+   success: function(json) {
+   $('#alert').html('<div class="alert alert-success">{{ text_success }}</div>');
+   },
+   error: function(json){
+   alert(json['error']);
+   },
+   complete: function(){
+   $('#btn-save').button('reset');
+   }
+   });
+   });
+</script>
+<script>
+   function deleteItem(id) {
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/deleteItem&user_token={{ user_token }}&id=' + id,
+   type: 'post',
+   dataType: 'json',
+   success: function(json) {
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   },
+   error: function(json){
+   alert(json['error']);
+   }
+   });
+   }
+   function deleteCategoryall() {
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/deleteItemall&user_token={{ user_token }}',
+   type: 'post',
+   dataType: 'json',
+   success: function(json) {
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   },
+   error: function(json){
+   alert(json['error']);
+   }
+   });
+   }
+   function copyCategoryall() {
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/copyItemall&user_token={{ user_token }}',
+   type: 'post',
+   dataType: 'json',
+   success: function(json) {
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   },
+   error: function(json){
+   alert(json['error']);
+   }
+   });
+   }
+   function updateItem(id){
+   $.ajax({
+   url: 'index.php?route=extension/module/aridiusmenu/updateItem&user_token={{ user_token }}&id=' + id,
+   type: 'post',
+   dataType: 'json',
+   data: $('#form_' + id).serialize(),
+   success: function(json) {
+   $('#aridiusmenu').load('index.php?route=extension/module/aridiusmenu/menuBuild&user_token={{ user_token }}');
+   },
+   error: function(json){
+   alert(json['message']);
+   }
+   });
+   }
+</script>
+{{ footer }}

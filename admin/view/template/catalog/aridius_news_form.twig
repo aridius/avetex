@@ -1,0 +1,279 @@
+{{ header }}{{ column_left }}
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;{{ text_savenews }}</button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+         </div>
+         <h1>{{ heading_title3 }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %}
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title3 }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+               <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab-language" data-toggle="tab">{{ tab_language }}</a></li>
+                  <li><a href="#tab-setting" data-toggle="tab">{{ tab_setting }}</a></li>
+                  <li><a href="#tab-seo" data-toggle="tab">{{ entry_seo }}</a></li>
+                  <li><a href="#tab-relatedproducts" data-toggle="tab">{{ tab_relatedproducts }}</a></li>
+                  <li><a href="#tab-relatedaridius_news" data-toggle="tab">{{ tab_relatednews }}</a></li>
+               </ul>
+               <div class="tab-content">
+                  <div class="tab-pane active" id="tab-language">
+                     <ul class="nav nav-tabs" id="language">
+                        {% for language in languages %}
+                        <li><a href="#language{{ language['language_id'] }}" data-toggle="tab"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /> {{ language['name'] }}</a></li>
+                        {% endfor %}
+                     </ul>
+                     <div class="tab-content">
+                        {% for language in languages %}
+                        <div class="tab-pane" id="language{{ language['language_id'] }}">
+                           <div class="form-group required">
+                              <label class="col-sm-2 control-label" for="input-title{{ language['language_id'] }}">{{ entry_title }}</label>
+                              <div class="col-sm-10 them">
+                                 <input type="text" name="aridius_news_description[{{ language['language_id'] }}][title]" value="{{ aridius_news_description[language['language_id']] is defined ? aridius_news_description[language['language_id']]['title'] : '' }}" id="input-title{{ language['language_id'] }}" class="form-control" />
+                                 {% if (error_title[language['language_id']] is defined) %}
+                                 <div class="text-danger">{{ error_title[language['language_id']] }}</div>
+                                 {% endif %}
+                              </div>
+                           </div>
+                           <div class="form-group required">
+                              <label class="col-sm-2 control-label" for="input-description{{ language['language_id'] }}">{{ entry_description }}</label>
+                              <div class="col-sm-10 them">
+                                 <textarea name="aridius_news_description[{{ language['language_id'] }}][description]" id="description{{ language['language_id'] }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control">{{ aridius_news_description[language['language_id']] is defined ? aridius_news_description[language['language_id']]['description'] : '' }}</textarea>
+                                 {% if (error_description[language['language_id']] is defined) %}
+                                 <div class="text-danger">{{ error_description[language['language_id']] }}</div>
+                                 {% endif %}
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-meta-title{{ language['language_id'] }}">{{ entry_meta_title }}</label>
+                              <div class="col-sm-10 them">
+                                 <textarea name="aridius_news_description[{{ language['language_id'] }}][meta_title]" rows="5" id="input-meta-title{{ language['language_id'] }}" class="form-control">{{ aridius_news_description[language['language_id']] is defined ? aridius_news_description[language['language_id']]['meta_title'] : '' }}</textarea>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-meta-description{{ language['language_id'] }}">{{ entry_meta_description }}</label>
+                              <div class="col-sm-10 them">
+                                 <textarea name="aridius_news_description[{{ language['language_id'] }}][meta_description]" rows="5" id="input-meta-description{{ language['language_id'] }}" class="form-control">{{ aridius_news_description[language['language_id']] is defined ? aridius_news_description[language['language_id']]['meta_description'] : '' }}</textarea>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-meta-keyword{{ language['language_id'] }}">{{ entry_meta_keyword }}</label>
+                              <div class="col-sm-10 them">
+                                 <textarea name="aridius_news_description[{{ language['language_id'] }}][meta_keyword]" rows="5" id="input-meta-keyword{{ language['language_id'] }}" class="form-control">{{ aridius_news_description[language['language_id']] is defined ? aridius_news_description[language['language_id']]['meta_keyword'] : '' }}</textarea>
+                              </div>
+                           </div>
+                        </div>
+                        {% endfor %}
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="tab-setting">
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">{{ entry_store }}</label>
+                        <div class="col-sm-10 them">
+                           <div class="well well-sm" style="height: 150px; overflow: auto;">
+                              {% for store in stores %}
+                              <div class="checkbox">
+                                 <label> {% if store.store_id in aridius_news_store %}
+                                 <input type="checkbox" name="aridius_news_store[]" value="{{ store.store_id }}" checked="checked" />
+                                 {{ store.name }}
+                                 {% else %}
+                                 <input type="checkbox" name="aridius_news_store[]" value="{{ store.store_id }}" />
+                                 {{ store.name }}
+                                 {% endif %}</label>
+                              </div>
+                              {% endfor %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+                        <div class="col-sm-10 them">
+                           <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                           <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                        <div class="col-sm-10 them">
+                           <select name="status" id="input-status" class="form-control">
+                              {% if (status) %}
+                              <option value="1" selected="selected">{{ text_enabled }}</option>
+                              <option value="0">{{ text_disabled }}</option>
+                              {% else %}
+                              <option value="1">{{ text_enabled }}</option>
+                              <option value="0" selected="selected">{{ text_disabled }}</option>
+                              {% endif %}
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort }}</label>
+                        <div class="col-sm-10 them">
+                           <input type="text" name="sort_order" value="{{ sort_order }}" id="input-sort-order" class="form-control" />
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-date-added">{{ entry_date_added }}</label>
+                        <div class="col-sm-3">
+                           <div class="input-group datetime">
+                              <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control" />
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="tab-seo">
+                     <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>
+                     <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                           <thead>
+                              <tr>
+                                 <td class="text-left">{{ entry_store }}</td>
+                                 <td class="text-left">{{ entry_keyword }}</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for store in stores %}
+                              <tr>
+                                 <td class="text-left">{{ store.name }}</td>
+                                 <td class="text-left">
+                                    {% for language in languages %}
+                                    <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                                       <input type="text" name="aridius_news_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if aridius_news_seo_url[store.store_id][language.language_id] %}{{ aridius_news_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                                    </div>
+                                    {% if error_keyword[store.store_id][language.language_id] %}
+                                    <div class="text-danger">{{ error_keyword[store.store_id][language.language_id] }}</div>
+                                    {% endif %}
+                                    {% endfor %}
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="tab-relatedproducts">
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-related">{{ entry_related }}</label>
+                        <div class="col-sm-10 them">
+                           <input type="text" name="related" value="" id="input-related" class="form-control"/>
+                           <div id="aridius_news-related" class="well well-sm" style="height: 150px; overflow: auto;">
+                              {% for aridius_news_related in aridius_news_related %}
+                              <div id="aridius_news-related{{ aridius_news_related['product_id'] }}"><i class="fa fa-minus-circle"></i> {{ aridius_news_related['name'] }}
+                                 <input type="hidden" name="aridius_news_related[]" value="{{ aridius_news_related['product_id'] }}" />
+                              </div>
+                              {% endfor %}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="tab-relatedaridius_news">
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-aridius_newsrelated">{{ entry_relatedaridius_news }}</label>
+                        <div class="col-sm-10 them">
+                           <input type="text" name="aridius_newsrelated" value="" id="input-aridius_newsrelated" class="form-control"/>
+                           <div id="aridius_news-aridius_newsrelated" class="well well-sm" style="height: 150px; overflow: auto;">
+                              {% for aridius_news_aridius_newsrelated in aridius_news_aridius_newsrelated %}
+                              <div id="aridius_news-aridius_newsrelated{{ aridius_news_aridius_newsrelated['aridius_news_id'] }}"><i class="fa fa-minus-circle"></i> {{ aridius_news_aridius_newsrelated['title'] }}
+                                 <input type="hidden" name="aridius_news_aridius_newsrelated[]" value="{{ aridius_news_aridius_newsrelated['aridius_news_id'] }}" />
+                              </div>
+                              {% endfor %}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script><!--
+   $('.datetime').datetimepicker({
+   pickDate: true,
+   pickTime: true
+   });
+   //-->
+</script>
+<script src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script src="view/javascript/summernote/summernote-image-attributes.js"></script>
+<script src="view/javascript/summernote/opencart.js"></script>
+<script><!--
+   $('input[name=\'related\']').autocomplete({
+   	'source': function(request, response) {
+   		$.ajax({
+   url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+   dataType: 'json',
+   success: function(json) {
+   				response($.map(json, function(item) {
+   					return {
+   label: item['name'],
+   value: item['product_id']
+   					}
+   				}));
+   			}
+   		});
+   	},
+   	'select': function(item) {
+   		$('input[name=\'related\']').val('');
+   		$('#aridius_news-related' + item['value']).remove();
+   		$('#aridius_news-related').append('<div id="aridius_news-related' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="aridius_news_related[]" value="' + item['value'] + '" /></div>');
+   	}
+   });
+   $('#aridius_news-related').delegate('.fa-minus-circle', 'click', function() {
+   	$(this).parent().remove();
+   });
+   //-->
+</script>
+<script><!--
+   $('input[name=\'aridius_newsrelated\']').autocomplete({
+   	'source': function(request, response) {
+   		$.ajax({
+   url: 'index.php?route=extension/module/aridius_news/autocomplete&user_token={{ user_token }}&filter_aname=' +  encodeURIComponent(request),
+   dataType: 'json',
+   success: function(json) {
+   				response($.map(json, function(item) {
+   					return {
+   label: item['title'],
+   value: item['aridius_news_id']
+   					}
+   				}));
+   			}
+   		});
+   	},
+   	'select': function(item) {
+   		$('input[name=\'aridius_newsrelated\']').val('');
+   		$('#aridius_news-aridius_newsrelated' + item['value']).remove();
+   		$('#aridius_news-aridius_newsrelated').append('<div id="aridius_news-aridius_newsrelated' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="aridius_news_aridius_newsrelated[]" value="' + item['value'] + '" /></div>');
+   	}
+   });
+   $('#aridius_news-aridius_newsrelated').delegate('.fa-minus-circle', 'click', function() {
+   	$(this).parent().remove();
+   });
+   //-->
+</script>
+<script><!--
+   $('#language a:first').tab('show');
+   //-->
+</script>
+{{ footer }}

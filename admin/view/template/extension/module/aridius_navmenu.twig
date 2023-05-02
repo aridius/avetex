@@ -1,0 +1,288 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form-aridius_navmenu" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a onclick="apply();" class="btn btn-primary" data-toggle="tooltip" title="{{ button_apply }}" ><i class="fa fa-check"></i>&nbsp;&nbsp;{{ button_apply }}</a>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>	 
+         </div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %} 
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+            {% endfor %} 
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if (error_warning) %} 
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }} 
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %} 
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-aridius_navmenu" class="form-horizontal">
+               <script src="view/javascript/123/dist/js/bootstrap-colorpicker.js" type="text/javascript"></script>
+               <link href="view/javascript/123/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+               <script>
+                  $(function () {
+                  $('.ch_color').colorpicker();
+                  });
+               </script>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">{{ text_name }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+                     {% if (error_name) %} 
+                     <div class="text-danger">{{ error_name }}</div>
+                     {% endif %} 
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-top">{{ text_top }}</label>
+                  <div class="col-sm-10 them">
+                     <input type="text" name="top" value="{{ top }}" id="input-top" class="form-control" />
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-2">
+                     <ul class="nav nav-pills nav-stacked" id="top_link">
+                        {% set top_link_row = 1 %} 
+                        {% for top_link in top_links %} 
+                        <li><a href="#tab-top_link-{{ top_link_row }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-top_link-{{ top_link_row }}\']').parent().remove(); $('#tab-top_link-{{ top_link_row }}').remove(); $('#top_link a:first').tab('show');"></i> {{ tab_top_link ~ ' ' ~ top_link_row }}</a></li>
+                        {% set top_link_row = top_link_row + 1 %} 
+                        {% endfor %} 
+                        <li id="top_link-add"><a onclick="addtop_link();"><i class="fa fa-plus-circle"></i> {{ text_add_top_link }}</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-sm-10 them">
+                     <div class="tab-content first7">
+                        {% set top_link_row = 1 %} 
+                        {% for top_link in top_links %} 
+                        <div class="tab-pane" id="tab-top_link-{{ top_link_row }}">
+                           <div class="tab-content">
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" >{{ text_menu }}</label>
+                                 <div class="col-sm-10 them">
+                                    {% for language in languages %} 
+                                    <div class="input-group">
+                                       <span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>
+                                       <input type="text" class="form-control" name="aridius_navmenu_top_links[{{ top_link_row }}][title][{{ language['language_id'] }}]" value="{{ top_link['title'][language['language_id']] is defined ? top_link['title'][language['language_id']] : '' }}" size="70" />
+                                    </div>
+                                    {% endfor %} 
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" >{{ text_link }}</label>
+                                 <div class="col-sm-10 them">
+                                    {% for language in languages %} 
+                                    <div class="input-group">
+                                       <span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>
+                                       <input type="text" class="form-control" name="aridius_navmenu_top_links[{{ top_link_row }}][link][{{ language['language_id'] }}]" value="{{ top_link['link'][language['language_id']] is defined ? top_link['link'][language['language_id']] : '' }}" size="70" />
+                                    </div>
+                                    {% endfor %} 
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" for="input-block_img{{ top_link_row }}">{{ text_img }}</label>
+                                 <div class="col-sm-10 them">
+                                    <a href="" id="thumb-block_img{{ top_link_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ top_link['image_href'] }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                    <input type="hidden" name="aridius_navmenu_top_links[{{ top_link_row }}][image]" value="{{ top_link['image'] }}" id="input-block_img{{ top_link_row }}" />
+                                 </div>
+                              </div>
+                              <label class="col-sm-2 control-label" >{{ text_color }}</label>
+                              <div class="ch_color input-group colorpicker-component" title="color">
+                                 <input type="text" name="aridius_navmenu_top_links[{{ top_link_row }}][color]" class="form-control input-lg" value="{{ top_link['color'] is defined ? top_link['color'] : '' }}"/>
+                                 <span class="input-group-addon"><i></i></span>
+                              </div>
+                              <label class="col-sm-2 control-label" >{{ text_color_text }}</label>
+                              <div class="ch_color input-group colorpicker-component" title="color">
+                                 <input type="text" name="aridius_navmenu_top_links[{{ top_link_row }}][color_text]" class="form-control input-lg" value="{{ top_link['color_text'] is defined ? top_link['color_text'] : '' }}"/>
+                                 <span class="input-group-addon"><i></i></span>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" for="input-aridius_navmenu_top_links{{ top_link_row }}">{{ text_show_popup }}</label>
+                                 <div class="col-sm-10 them">
+                                    <select name="aridius_navmenu_top_links[{{ top_link_row }}][show_popup]" id="input-aridius_navmenu_top_links{{ top_link_row }}" class="form-control">
+                                       {% if (top_link['show_popup']) %} 
+                                       <option value="1" selected="selected">{{ text_enabled }}</option>
+                                       <option value="0">{{ text_disabled }}</option>
+                                       {% else %} 
+                                       <option value="1">{{ text_enabled }}</option>
+                                       <option value="0" selected="selected">{{ text_disabled }}</option>
+                                       {% endif %} 
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" >{{ text_title_popup }}</label>
+                                 <div class="col-sm-10 them">
+                                    {% for language in languages %} 
+                                    <div class="input-group">
+                                       <span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>
+                                       <input type="text" class="form-control" name="aridius_navmenu_top_links[{{ top_link_row }}][title_popup][{{ language['language_id'] }}]" value="{{ top_link['title_popup'][language['language_id']] is defined ? top_link['title_popup'][language['language_id']] : '' }}" size="70" />
+                                    </div>
+                                    {% endfor %} 
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" >{{ text_popup_description }}</label>
+                                 <div class="col-sm-10 them">
+                                    {% for language in languages %} 
+                                    <div class="input-group">
+                                       <span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>
+                                       <textarea class="form-control custom-control summernote" cols="3" name="aridius_navmenu_top_links[{{ top_link_row }}][description_popup][{{ language['language_id'] }}]" id="description_popup-{{ top_link_row }}-{{ language['language_id'] }}">{{ top_link['description_popup'][language['language_id']] is defined ? top_link['description_popup'][language['language_id']] : '' }}     </textarea>
+                                    </div>
+                                    {% endfor %} 
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label" >{{ text_sort }}</label>
+                                 <div class="col-sm-10 them">
+                                    <input type="text" class="form-control" name="aridius_navmenu_top_links[{{ top_link_row }}][sort]" value="{{ top_link['sort'] is defined ? top_link['sort'] : '' }}" />
+                                 </div>
+                              </div>
+                           </div>
+                           {% set top_link_row = top_link_row + 1 %} 
+                        </div>
+                        {% endfor %} 
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                  <div class="col-sm-10 them">
+                     <select name="status" id="input-status" class="form-control">
+                        {% if (status) %} 
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %} 
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                     </select>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script type="text/javascript"><!--
+   $('#top_link li:first-child a').tab('show');
+   //-->
+</script>
+<script type="text/javascript"><!--
+   var top_link_row = {{ top_link_row }};
+   function addtop_link() {
+   group_row = 0;
+   html  = '<div class="tab-pane" id="tab-top_link-' + top_link_row + '">';
+   html += '<div class="tab-content">';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_menu }}</label>';
+   html += '<div class="col-sm-10">';
+   {% for language in languages %} 
+   html += '<div class="input-group">';
+   html += '<span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>';
+   html += '<input type="text" class="form-control" name="aridius_navmenu_top_links[' + top_link_row + '][title][{{ language['language_id'] }}]" size="70" />';
+   html += '</div>';
+   {% endfor %} 
+   html += '</div>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_link }}</label>';
+   html += '<div class="col-sm-10">';
+   {% for language in languages %} 
+   html += '<div class="input-group">';
+   html += '<span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>';
+   html += '<input type="text" class="form-control" name="aridius_navmenu_top_links[' + top_link_row + '][link][{{ language['language_id'] }}]" size="70" />';
+   html += '</div>';
+   {% endfor %} 
+   html += '</div>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" for="input-block_img' + top_link_row + '">{{ text_img }}</label>';
+   html += '<div class="col-sm-10"><a href="" id="thumb-block_img' + top_link_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" /></a>';
+   html += '<input type="hidden" name="aridius_navmenu_top_links[' + top_link_row + '][image]" value="" id="input-block_img' + top_link_row + '" />';
+   html += '</div>';
+   html += '</div>';
+   html += '<label class="col-sm-2 control-label" >{{ text_color }}</label>';
+   html += '<div class="ch_color input-group colorpicker-component " title="color">';
+   html += '<input type="text" name="aridius_navmenu_top_links[' + top_link_row + '][color]" class="form-control" value="#FF4157" />';
+   html += '<span class="input-group-addon"><i></i></span>';
+   html += '</div>';
+   html += '<label class="col-sm-2 control-label" >{{ text_color_text }}</label>';
+   html += '<div class="ch_color input-group colorpicker-component " title="color">';
+   html += '<input type="text" name="aridius_navmenu_top_links[' + top_link_row + '][color_text]" class="form-control" value="#000000" />';
+   html += '<span class="input-group-addon"><i></i></span>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_show_popup }}</label>';
+   html += '<div class="col-sm-10">';
+   html += '<select name="aridius_navmenu_top_links[' + top_link_row + '][show_popup]" id="input-aridius_navmenu_top_links[' + top_link_row + ']" class="form-control">';
+   html += '<option value="1">{{ text_enabled }}</option>';
+   html += '<option value="0" selected="selected">{{ text_disabled }}</option>';
+   html += '</select>';
+   html += '</div>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_title_popup }}</label>';
+   html += '<div class="col-sm-10">';
+   {% for language in languages %} 
+   html += '<div class="input-group">';
+   html += '<span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>';
+   html += '<input type="text" class="form-control" name="aridius_navmenu_top_links[' + top_link_row + '][title_popup][{{ language['language_id'] }}]" size="70" />';
+   html += '</div>';
+   {% endfor %} 
+   html += '</div>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_popup_description }}</label>';
+   html += '<div class="col-sm-10">';
+   {% for language in languages %} 
+   html += '<div class="input-group">';
+   html += '<span class="input-group-addon"><img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" /></span>';
+   html += '<textarea name="aridius_navmenu_top_links[' + top_link_row + '][description_popup][{{ language['language_id'] }}]" id="description_popup-' + top_link_row + '-{{ language['language_id'] }}" class="summernote-' + top_link_row + ' form-control"></textarea>';
+   html += '</div>';
+   {% endfor %} 
+   html += '</div>';
+   html += '</div>';
+   html += '<div class="form-group">';
+   html += '<label class="col-sm-2 control-label" >{{ text_sort }}</label>';
+   html += '<div class="col-sm-10">';
+   html += '<input type="text" class="form-control" name="aridius_navmenu_top_links[' + top_link_row + '][sort]" />';
+   html += '</div>';
+   html += '</div>';
+   html += '</div>';
+   html += '</div>';
+   $('.tab-content.first7').append(html);
+   $('#top_link-add').before('<li><a href="#tab-top_link-' + top_link_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-top_link-' + top_link_row + '\\\']\').parent().remove(); $(\'#tab-top_link-' + top_link_row + '\').remove(); $(\'#top_link a:first\').tab(\'show\');"></i> {{ tab_top_link }} ' + top_link_row + '</a></li>');
+ 
+   $('.summernote-' + top_link_row ).summernote({
+   height: 150,   //set editable area's height
+
+   $('#top_link a[href=\'#tab-top_link-' + top_link_row + '\']').tab('show');
+   top_link_row++;
+   $('.ch_color').colorpicker();
+   }
+   //-->
+</script>
+
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+
+ 
+<script type="text/javascript"><!--
+   function apply() {
+   $('#form-aridius_navmenu').append('<input type="hidden" id="apply" name="apply" value="1" />');
+   $('#form-aridius_navmenu').submit();
+   }
+   //-->
+</script>
+{{ footer }} 
