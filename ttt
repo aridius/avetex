@@ -1,0 +1,537 @@
+<div class="title-module">{{ name_pr }}</div>
+{% if (list != 1) %} 
+{% if (colleft != 1) %} 
+<div id="products_{{ module_id }}">
+   {% if (carusel != '1') %} 
+   <div class="swipe_col2 flex_height_row row">
+      {% else %} 
+      <div id="products_carusel{{ module_id }}" class="swiper-container">
+         <div class="swiper-wrapper">
+            {% endif %} 
+            {% for product in products %} 
+            {% if (carusel != '0') %} 
+            <div class="swiper-slide product-layout_carusel">
+               {% endif %} 
+               <div class=" product-layout nth {% if (carusel != '1') %}col-xs-6 col-sm-4 col-md-3 col-lg-five catb{% endif %}">
+                  <div class="add_pr gtile-i-wrap caption">
+                     <div class="product-thumb">
+                        {% if (deluxe_lazy) %} 
+                        <div class="image"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                        {% else %} 
+                        <div class="image"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                        {% endif %} 
+                        <div class="additional-links ">
+                           <ul>
+                              {% if (wish) %} 
+                              <li class = "additional-action">
+                                 <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
+                                 <i class="fa fa-heart"></i>
+                                 </a>
+                              </li>
+                              {% endif %} 
+                              {% if (comp) %} 
+                              <li class = "additional-action">
+                                 <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
+                                 <i class="fa fa-fw fa-balance-scale"></i>
+                                 </a>
+                              </li>
+                              {% endif %} 
+                              {% if (quickview) %} 
+                              <li class = "additional-action">
+                                 <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
+                                 <i class="fa fa-search"></i>
+                                 </a>
+                              </li>
+                              {% endif %} 
+                           </ul>
+                        </div>
+               <div class="positionsticker">
+                  <!-- special -->
+                  {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
+                  {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                  {% endif %}
+                  <!-- special END -->
+                  <!-- new -->
+                  {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                  {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                  {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                  {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                  <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                  {% endif %}
+                  <!-- new END -->
+                  <!-- top -->
+                  {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                  <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                  {% endif %}
+                  <!-- top END -->
+                  {% if (product['stickers2']) %}
+                  {% for sticker2 in product['stickers2'] %}
+                  <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                  {% endfor %}
+                  {% endif %}
+               </div>
+                        {% if (rat) %} 
+                        <div class="rating">
+                           {% set i = 1 %}{% for i in i..5 %} 
+                           {% if (product['rating'] < i) %} 
+                           <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                           {% else %} 
+                           <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                           {% endif %} 
+                           {% endfor %} 
+                           <span class="reviews_qt">
+                           <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                           </span>
+                        </div>
+                        {% endif %} 
+               <div class="product-name">
+                  <a href="{{ product['href'] }}">
+                  {% if (product['name'])|length < deluxe_limit_symbolst %}
+                  {{ product['name'] }}
+                  {% else %}
+                  {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                  {% endif %}
+                  </a>
+               </div>
+                        <div class="box_flex2">
+                           {% if (product['price']) %} 
+                           <p class="price">
+                              {% if (not product['special']) %} 
+                              {{ product['price'] }} 
+                              {% else %} 
+                              <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %}<span class="stickers-special">-{{ percent }}%</span>{% endif %}<span class="price-new">{{ product['special'] }}</span>
+                              {% endif %} 
+                              {% if (product['tax']) %} 
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %} 
+                           </p>
+                           {% endif %} 
+                           <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf {% endif %}cart">
+                              {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% else %} 
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                          <span class="cart_open">{{ button_cart }}</span>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% endif %} 
+                           </div>
+                        </div>
+                        {% if (product['quantity'] > 0 ) %} 
+                        {% if (deluxe_forder != 1) %} 
+                        <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
+                           <svg class ="w_clock">
+                              <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
+                           </svg>
+                           <span>{{ text_fastorder }}</span>
+                        </a>
+                        {% endif %} 
+                        {% endif %} 
+                        {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                        <div class="status_st">
+                           {{ text_stockst }} 
+                        </div>
+                        {% endif %} 
+                     </div>
+                  </div>
+                  {% if (carusel != '0') %} 
+               </div>
+               {% endif %} 
+            </div>
+            {% endfor %} 
+ 
+         </div>
+         {% if (carusel != '1') %} 
+         <div class="swipe_col2h center_more">
+            <div id="load_more_{{ module_id }}" class="gridcount bestseller{{ module_id }}"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ text_load_more }}</span></div>
+         </div>
+         {% endif %} 
+         {% if (carusel != '1') %} 
+      </div>
+      {% else %} 
+	        {% if (carusel != '0') %} 
+            {% if (navigation) %} 
+            <div class="#products_carusel{{ module_id }} swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#products_carusel{{ module_id }} swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+            {% endif %}
+   </div>
+</div>
+{% endif %} 
+{% if (carusel != '1') %} 
+<script>
+   var module_id_{{ module_id }} = 1;
+   var pr_all_{{ module_id }} = {{ product_total }};
+   var pr_last_{{ module_id }} = {{ last_page }};
+   var pr_limit_{{ module_id }} = {{ limit }};
+   if (pr_limit_{{ module_id }} >= pr_all_{{ module_id }} ) {
+   $('#load_more_{{ module_id }}').hide();
+   }
+   $('#load_more_{{ module_id }}').click(function() {
+   module_id_{{ module_id }}++;
+   $.ajax({
+   url:'index.php?route=extension/module/aridius_products/loadMore',
+   type: 'post',
+   data: 'page=' +  module_id_{{ module_id }} + '&module_id={{ module_id }}&setting={{ setting }}',
+   dataType: 'html',
+   beforeSend: function() {
+   $('#load_more_{{ module_id }} .gridcount_load').addClass("fa-spinner");
+   },
+   complete: function() {
+   $('#load_more_{{ module_id }} .gridcount_load').removeClass("fa-spinner");
+   },
+   success:function (data) {
+   $('#products_{{ module_id }} .swipe_col2').append($(data).find('.product-layout '));
+   if (module_id_{{ module_id }} == pr_last_{{ module_id }}) {
+   $('#load_more_{{ module_id }}').hide();
+   }
+   }
+   });
+   });
+</script>
+<script>
+   (function() {
+   var onResizeProducts = function(event) {
+   if (this.innerWidth <= 992) {
+   $("#load_more_{{ module_id }}").click();
+   $(window).unbind('resize', onResizeProducts);
+   }
+   };
+   $(window).bind('resize', onResizeProducts);
+   })();
+</script>
+{% else %} 
+<script><!--
+   $(document).ready(function () {
+   var ocSwiper = new Swiper('#products_carusel{{ module_id }}.swiper-container', {
+   // Enable lazy loading
+   lazy: {
+   loadPrevNext: true,
+   loadPrevNextAmount: 5,
+   },
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   spaceBetween: 15,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: 4,
+   },
+   1600: {
+   slidesPerView: 4,
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#products_carusel{{ module_id }} .swiper-button-next',
+   prevEl: '#products_carusel{{ module_id }} .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% if (stophover and autoplay_on) %} 
+   $("#products_carusel{{ module_id }}.swiper-container").hover(function() {
+   ocSwiper.autoplay.stop();
+   }, function() {
+   ocSwiper.autoplay.start();
+   });
+   {% endif %} 
+   });
+   -->
+</script>
+{% endif %} 
+{% else %} 
+<div class="row">
+   <div class ="veiwed-grid">
+      {% for product in products %} 
+      <div class="product-layout_carusel col-xs-12 catb">
+         <div class="gtile-i-wrap">
+            <div class="item_best caption">
+               <div class="product-thumb">
+                  <div class="box_veiwed">
+                     {% if (deluxe_lazy) %} 
+                     <div class="image"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% else %} 
+                     <div class="image"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% endif %} 
+                     <div class="box_flex flex_r">
+               <div class="positionsticker">
+                  <!-- special -->
+                  {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
+                  {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                  {% endif %}
+                  <!-- special END -->
+                  <!-- new -->
+                  {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                  {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                  {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                  {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                  <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                  {% endif %}
+                  <!-- new END -->
+                  <!-- top -->
+                  {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                  <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                  {% endif %}
+                  <!-- top END -->
+                  {% if (product['stickers2']) %}
+                  {% for sticker2 in product['stickers2'] %}
+                  <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                  {% endfor %}
+                  {% endif %}
+               </div>
+               <div class="product-name">
+                  <a href="{{ product['href'] }}">
+                  {% if (product['name'])|length < deluxe_limit_symbolst %}
+                  {{ product['name'] }}
+                  {% else %}
+                  {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                  {% endif %}
+                  </a>
+               </div>
+                        <div class="box_flex2">
+                           {% if (product['price']) %} 
+                           <p class="price">
+                              {% if (not product['special']) %} 
+                              {{ product['price'] }} 
+                              {% else %} 
+                              <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %}<span class="stickers-special">-{{ percent }}%</span>{% endif %}<span class="price-new">{{ product['special'] }}</span>
+                              {% endif %} 
+                              {% if (product['tax']) %} 
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %} 
+                           </p>
+                           {% endif %} 
+                           <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                              {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% else %} 
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% endif %} 
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endfor %} 
+   </div>
+</div>
+{% endif %} 
+{% else %} 
+<div id ="veiwed-grid_{{ module_id }}">
+   <div class="fixf swipe_col1 flex_height_row row">
+      {% for product in products %}
+      <div class="product-layout col-xs-12 col-sm-6 col-md-6 col-xl-3 catb">
+         <div class="gtile-i-wrap">
+            <div class="item_best caption">
+               <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                  <div class="box_veiwed">
+                     {% if (deluxe_lazy) %}
+                     <div class="image"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% else %}
+                     <div class="image"><a href="{{ product['href'] }}"><img data-src ="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive" width="{{ width }}" height="{{ height }}" /></a></div>
+                     {% endif %}
+                     <div class="box_flex flex_r">
+                        <div class="positionsticker">
+                           <!-- special -->
+                           {% if (deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
+                           {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                           {% endif %}
+                           <!-- special END -->
+                           <!-- new -->
+                           {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                           {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                           {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                           {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                           <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                           {% endif %}
+                           <!-- new END -->
+                           <!-- top -->
+                           {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                           <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                           {% endif %}
+                           <!-- top END -->
+                           {% if (product['stickers2']) %}
+                           {% for sticker2 in product['stickers2'] %}
+                           <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                           {% endfor %}
+                           {% endif %}
+                        </div>
+                        <div class="product-name">
+                           <a href="{{ product['href'] }}">
+                           {% if (product['name'])|length < deluxe_limit_symbolst %}
+                           {{ product['name'] }}
+                           {% else %}
+                           {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                           {% endif %}
+                           </a>
+                        </div>
+						{% if (rat) %}
+                        <div class="rating pleft">
+                           {% set i = 1 %}{% for i in i..5 %}
+                           {% if (product['rating'] < i) %}
+                           <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                           {% else %}
+                           <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                           {% endif %}
+                           {% endfor %}
+                           <span class="reviews_qt">
+                           <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                           </span>
+                        </div>
+                        {% endif %}
+                        <div class="box_flex2">
+                           {% if (product['price']) %}
+                           <p class="price">
+                              {% if (not product['special']) %}
+                              {{ product['price'] }}
+                              {% else %}
+                              <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %} <span class="stickers-special">-{{ percent }}%</span> {% endif %}<span class="price-new">{{ product['special'] }}</span>
+                              {% endif %}
+                              {% if (product['tax']) %}
+                              <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                              {% endif %}
+                           </p>
+                           {% endif %}
+                           <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                              {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% else %}
+                              <div class="snav snav_cart en">
+                                 <ul>
+                                    <li>
+                                       <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                          <svg>
+                                             <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                          </svg>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+            <div class="swipe_col2h center_more">
+            <div id="load_more2_{{ module_id }}" class="gridcount bestseller{{ module_id }}"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ text_load_more }}</span></div>
+            </div>
+</div>
+<script>
+   var module_id_{{ module_id }} = 1;
+   var pr_all_{{ module_id }} = {{ product_total }};
+   var pr_last_{{ module_id }} = {{ last_page }};
+   var pr_limit_{{ module_id }} = {{ limit }};
+   if (pr_limit_{{ module_id }} >= pr_all_{{ module_id }} ) {
+   $('#load_more2_{{ module_id }}').hide();
+   }
+   $('#load_more2_{{ module_id }}').click(function() {
+   module_id_{{ module_id }}++;
+   $.ajax({
+   url:'index.php?route=extension/module/aridius_products/loadMore',
+   type: 'post',
+   data: 'page=' +  module_id_{{ module_id }} + '&module_id={{ module_id }}&setting={{ setting }}',
+   dataType: 'html',
+   beforeSend: function() {
+   $('#load_more2_{{ module_id }} .gridcount_load').addClass("fa-spinner");
+   },
+   complete: function() {
+   $('#load_more2_{{ module_id }} .gridcount_load').removeClass("fa-spinner");
+   },
+   success:function (data) {
+   $('#veiwed-grid_{{ module_id }} .swipe_col1').append($(data).find('.product-layout '));
+   if (module_id_{{ module_id }} == pr_last_{{ module_id }}) {
+   $('#load_more2_{{ module_id }}').hide();
+   }
+   }
+   });
+   });
+</script>
+<script>
+   (function() {
+   var onResizeProducts = function(event) {
+   if (this.innerWidth <= 992) {
+   $("#load_more2_{{ module_id }}").click();
+   $(window).unbind('resize', onResizeProducts);
+   }
+   };
+   $(window).bind('resize', onResizeProducts);
+   })();
+</script>
+{% endif %} 
+
+
+
+
+
+
+
+
+
