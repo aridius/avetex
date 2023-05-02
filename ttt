@@ -3,7 +3,7 @@
 ssssssssss
 777777777777
 
-<div class="title-module7777">{{ name_pr }}</div>
+<div class="title-module333">{{ name_pr }}</div>
 {% if (list != 1) %} 
 {% if (colleft != 1) %} 
 <div id="products_{{ module_id }}">
