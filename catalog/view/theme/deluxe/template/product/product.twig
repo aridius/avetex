@@ -29,7 +29,7 @@
             {% endfor %}
          </ul>
       </div>
-      <h1 class="pr_h1" itemprop="name">{{ heading_title }}</h1>
+     
       {% if (deluxe_st_cart != 1 ) %}
       <div class="st_cart">
          <div class="price_bot col-xs-3 col-sm-3 col-md-3">
@@ -307,6 +307,22 @@
                   <!-- main box -->
                   <div class="box-prinfo col-xs-12 col-sm-5 col-md-5 col-lg-6">
                      {% endif %}
+					    {% if (deluxe_product_stock != 1 ) %}
+                        <div class="pr_rew">{{ quantity > 0 ? '<i class="fa fa-check-square-o" aria-hidden="true"></i><span class = "rewardin">'~ stock ~'</span>' : '<span class = "rewardoff">'~ stock ~'</span>' }}</div>
+                        {% endif %}
+					  <h1 class="pr_h1" itemprop="name">{{ heading_title }}</h1>
+					      {% if (deluxe_product_kod_tovara != 1) %}
+                        <div><span>{{ text_model }}</span>&nbsp;&nbsp;<span itemprop="model">{{ model }}</span></div>
+                        {% endif %}
+					          {% if (sku) %}
+                        <div>
+                           <meta itemprop="sku" content="{{ sku }}">
+                        </div>
+                        {% else %}
+                        <div>
+                           <meta itemprop="sku" content="{{ model }}">
+                        </div>
+                        {% endif %}
                      {% if (review_status and deluxe_rating_pr != 1) %}
                      <div class="linetoppr">
                         <div class="rating">
@@ -332,9 +348,7 @@
                      </div>
                      {% endif %}
                      <ul class="list-unstyled taxp2">
-                        {% if (deluxe_product_stock != 1 ) %}
-                        <li class="pr_rew">{{ quantity > 0 ? '<i class="fa fa-check-square-o" aria-hidden="true"></i><span class = "rewardin">'~ stock ~'</span>' : '<span class = "rewardoff">'~ stock ~'</span>' }}</li>
-                        {% endif %}
+                     
                         {% if (manufacturer) %}
                         {% if (deluxe_product_man_img != 1) %}
                         <li><a href="{{ manufacturers }}">
@@ -353,23 +367,13 @@
                         </li>
                         {% endif %}
                         {% endif %}
-                        {% if (sku) %}
-                        <li>
-                           <meta itemprop="sku" content="{{ sku }}">
-                        </li>
-                        {% else %}
-                        <li>
-                           <meta itemprop="sku" content="{{ model }}">
-                        </li>
-                        {% endif %}
+                
                         {% if (mpn) %}
                         <li>
                            <meta itemprop="mpn" content="{{ mpn }}">
                         </li>
                         {% endif %}
-                        {% if (deluxe_product_kod_tovara != 1) %}
-                        <li><span>{{ text_model }}</span>&nbsp;&nbsp;<span itemprop="model">{{ model }}</span></li>
-                        {% endif %}
+                    
                         {% if (reward) %}
                         <li><span>{{ text_reward }}</span>&nbsp;&nbsp;{{ reward }}</li>
                         {% endif %}
@@ -467,6 +471,60 @@
                      <br />
                      {% endif %}
                      <div id="product">
+					                       {% if (price) %}
+                        <div class="pr_price">
+                           <span itemprop="offers" itemscope itemtype = "http://schema.org/Offer">
+                              <meta itemprop="price" content="{{sh_price}}" />
+                              <meta itemprop="priceCurrency" content="{{ sh_currency }}" />
+                              <link itemprop = "availability" href = "https://schema.org/{{ quantity>0 ? "InStock" : "OutOfStock" }}" />
+                              {% if (special and special_date_end > special_date_start) %}
+                              <meta itemprop="priceValidUntil" content="{{ special_date_end }}" />
+                              {% endif %}
+                              <link itemprop="url" href="{{ hrefs }}" />
+                           </span>
+                           <div class="line-product">
+                              {% if (not special) %}
+                              <span class="price-new price">{{ price }}</span>
+							  {% if (aridiusundersell_status) %}
+                              <div class="clearfix visible-sm"></div>
+                              <span class="undersell_pr undersell_pr_sale">
+                              <a id="undersell-order">{{ buttonundersell_title }}</a>
+                              </span>
+                              {% endif %}
+                              {% else %}
+                              <span class="price-old">{{ price }}</span>
+                              <br />
+                              <span class="price-new">{{ special }}</span>
+							  {% if (deluxe_show_saving != 1) %}
+                              <div class="popup-left-corner"><span class="popup3"> - {{ saving_product }}%</span>&nbsp;&nbsp; {{ text_saving }} <span class="autocalc-saving-price"></span> </div>
+                              {% endif %}
+                              {% endif %}
+                              {% if (tax or points or discounts) %}
+                              <ul class="list-unstyled taxpd">
+                                 {% if (tax) %}
+                                 <li>{{ text_tax }} {{ tax }}</li>
+                                 {% endif %}
+							  {% if (aridiusundersell_status) %}
+                              <div class="clearfix visible-sm"></div>
+                              <span class="undersell_pr undersell_pr_sale">
+                              <a id="undersell-order">{{ buttonundersell_title }}</a>
+                              </span>
+                              {% endif %}
+                                 {% if (points) %}
+                                 <li>{{ text_points }} {{ points }}</li>
+                                 {% endif %}
+				            {% if discounts %}
+										  <br />
+										    <i class="fa fa-info"></i> {{ text_discount2 }}</span>
+            {% for discount in discounts %}
+            <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
+            {% endfor %}
+            {% endif %}
+                              </ul>
+                              {% endif %}
+                           </div>
+                        </div>
+                        {% endif %}
                         {% if (options) %}
                         {% for option in options %}
                         {% if (option['type'] == 'select') %}
@@ -608,60 +666,7 @@
                            </div>
                         </div>
                         {% endif %}
-                        {% if (price) %}
-                        <div class="pr_price">
-                           <span itemprop="offers" itemscope itemtype = "http://schema.org/Offer">
-                              <meta itemprop="price" content="{{sh_price}}" />
-                              <meta itemprop="priceCurrency" content="{{ sh_currency }}" />
-                              <link itemprop = "availability" href = "https://schema.org/{{ quantity>0 ? "InStock" : "OutOfStock" }}" />
-                              {% if (special and special_date_end > special_date_start) %}
-                              <meta itemprop="priceValidUntil" content="{{ special_date_end }}" />
-                              {% endif %}
-                              <link itemprop="url" href="{{ hrefs }}" />
-                           </span>
-                           <div class="line-product">
-                              {% if (not special) %}
-                              <span class="price-new price">{{ price }}</span>
-							  {% if (aridiusundersell_status) %}
-                              <div class="clearfix visible-sm"></div>
-                              <span class="undersell_pr undersell_pr_sale">
-                              <a id="undersell-order">{{ buttonundersell_title }}</a>
-                              </span>
-                              {% endif %}
-                              {% else %}
-                              <span class="price-old">{{ price }}</span>
-                              <br />
-                              <span class="price-new">{{ special }}</span>
-							  {% if (deluxe_show_saving != 1) %}
-                              <div class="popup-left-corner"><span class="popup3"> - {{ saving_product }}%</span>&nbsp;&nbsp; {{ text_saving }} <span class="autocalc-saving-price"></span> </div>
-                              {% endif %}
-                              {% endif %}
-                              {% if (tax or points or discounts) %}
-                              <ul class="list-unstyled taxpd">
-                                 {% if (tax) %}
-                                 <li>{{ text_tax }} {{ tax }}</li>
-                                 {% endif %}
-							  {% if (aridiusundersell_status) %}
-                              <div class="clearfix visible-sm"></div>
-                              <span class="undersell_pr undersell_pr_sale">
-                              <a id="undersell-order">{{ buttonundersell_title }}</a>
-                              </span>
-                              {% endif %}
-                                 {% if (points) %}
-                                 <li>{{ text_points }} {{ points }}</li>
-                                 {% endif %}
-				            {% if discounts %}
-										  <br />
-										    <i class="fa fa-info"></i> {{ text_discount2 }}</span>
-            {% for discount in discounts %}
-            <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
-            {% endfor %}
-            {% endif %}
-                              </ul>
-                              {% endif %}
-                           </div>
-                        </div>
-                        {% endif %}
+  
                         {% if (recurrings) %}
                         <hr>
                         <div class="title-module">{{ text_payment_recurring }}</div>
@@ -2309,4 +2314,5 @@
 	}
 })()
 //--></script>
+<style>body{background-color: #F5F5F5!important;}</style>
 {{ footer }}

@@ -3,7 +3,6 @@
 
 .htaccess
 .htaccess.txt
-admin/config.php
 /system/engine
 /system/helper
 /system/library
@@ -14,3 +13,5 @@ config.php
 index.php
 php.ini
 robots.txt
+admin/config.php
+admin/config.php
