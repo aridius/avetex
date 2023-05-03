@@ -28,7 +28,7 @@
 
          <div class="namelink_v2">
             {% if (not category['children']) %}
-            {{ category['name'] }}
+      <a href="{{ category['href'] }}">{{ category['name'] }}</a>
             {% else %}
             <a href="{{ category['href'] }}">{{ category['name'] }}</a>
             {% endif %}
