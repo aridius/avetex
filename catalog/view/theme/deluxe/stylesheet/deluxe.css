@@ -12,6 +12,52 @@
        column-gap: 30px;
 }
 
+.cat2g {
+	
+	justify-content: center;
+}
+
+.product-layout.hghgf {
+    color: #333;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.menu-categories .product-layout {
+    padding: 0 1.1rem;
+    height: 3rem;
+    background-color: #eaeaea;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	margin-right: 7px
+}
+
+
+.menu-categories a {
+    padding: 0 1.1rem;
+    height: 3rem;
+    background-color: #eaeaea;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+.product-thumb {
+    text-align: left;
+}
+
+.additional-action, .additional-action22 {
+    text-align: center;
+}
+
+
 .gallery-sidebar {
   overflow: auto;
   padding-right: 20px;
@@ -510,6 +556,29 @@ div#tab-description img {
   align-items: end;
 }
 @media (max-width: 767px) {
+	
+	
+	.swipe_col2.flex_height_row .product-layout {
+    flex: 0 0 45%;
+    max-width: 45%;
+}
+
+	.menu-categories .product-layout {
+    flex: 0 0 25%!important;
+    max-width: 35%!important;
+}
+
+
+
+
+
+	
+	.swipe_col2.flex_height_row .product-layout {
+    flex: 0 0 45%;
+    max-width: 45%;
+}
+	
+	
   .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
     content: 'next';
     font-size: 16px !important;
@@ -2447,7 +2516,7 @@ transition: .3s ease;
 }
 
 .product-name {
-  text-align: center;
+    text-align: left;
   display: inline-block;
 }
 .product-name a {
@@ -3286,10 +3355,7 @@ border-color: #c6cdd3;
 .tmb-wrap-table div {
 border-bottom: 2px solid transparent;
 }
-.footer_border {
 
-padding: 0 200px;
-}
 .mail_envelope {
 display: inline-block;
 }
@@ -5524,6 +5590,69 @@ max-width: 100%;
 }
 @media (max-width: 991px) {	
 
+.footer-title {
+font-size: 12px;
+}
+.footer-name_mail {
+
+    margin-top: 0;
+}
+.footer-columns__bottom {
+
+    margin-top: 1.1rem;
+
+}
+.fix_rowm {
+    margin-bottom: 12px!important;
+}
+
+.additional-action {
+	top: 0!important;
+    right: 0!important;
+    width: 3rem !important;
+    height: 3rem !important;
+    line-height: 43px!important;
+
+}
+
+
+.additional-action22 {
+    width: 3rem !important;
+    height: 3rem !important;
+    line-height: 31px!important;
+}
+
+
+
+.additionalc button {
+
+    padding: 8px 10px!important;
+}
+
+.price-new, .price {
+      font-size: 1.3rem!important;
+    font-weight: 700!important;
+    margin-top: auto;
+}
+
+.price-new {
+
+    display: inline-block!important;
+}
+.price-new {
+    display: inline-block!important;
+    left: 5px;
+    position: relative;
+}
+
+.rating .fa-stack {
+    font-size: 5px;
+}
+.mmp {
+display: none;	
+	
+}
+
 
 a.tips_all {
     position: absolute;
@@ -5535,7 +5664,7 @@ a.tips_all {
 
 .ls_hp_title {
 
-    margin-top: 0!important;
+
     margin-bottom: 1rem!important;
 }
 
@@ -5608,6 +5737,39 @@ overflow: auto;
 justify-content: normal;
 
 }
+
+
+
+.swipe_col2.flex_height_row {
+    cursor: pointer;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* white-space: nowrap; */
+    display: flex;
+    overflow: auto;
+    justify-content: normal;
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    align-items: stretch;
+    flex-shrink: 0;
+    white-space: normal;
+    cursor: pointer;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    white-space: nowrap;
+    display: flex;
+    overflow: auto;
+    justify-content: normal;
+    flex-wrap: nowrap!important;
+}
+
+
+
+
+
+
+
 .catwall::-webkit-scrollbar, .ico_wall_flex::-webkit-scrollbar, #news_carusel .flex_height_row::-webkit-scrollbar, .swipe_col2.flex_height_row::-webkit-scrollbar, .swipe_col1.flex_height_row::-webkit-scrollbar, .swipe_col1.flex_height_row1::-webkit-scrollbar {
 width: 0px;
 background: transparent;
@@ -5620,6 +5782,20 @@ align-items: stretch;
 flex-shrink: 0;
 
 }
+
+
+.menu-categories .product-layout.hghgf {
+display: flex;
+display: -webkit-flex;
+display: -ms-flexbox;
+align-items: center;
+flex-shrink: 0;
+
+}
+
+
+
+
 .ico_wall_flex .fix_rowm, .swipe_col1.flex_height_row .product-layout, .swipe_col1.flex_height_row1 .product-layout_ban  {
 display: flex;
 display: -webkit-flex;
@@ -8651,9 +8827,7 @@ float: none;
 .mail_envelope .fa {
 display: none;
 }
-.footer-title {
-font-size: 10px;
-}
+
 .prise_spec_clone{
 font-weight: 400;
 font-size: 12px;
@@ -9336,6 +9510,25 @@ float: left;
 }
 }
 @media (min-width: 992px) {
+	
+	
+	.menu-categories {
+		display: none;
+		
+	}
+	
+	
+	
+	
+	.footer_border {
+
+padding: 0 200px;
+}
+	.mmp2 {
+display: none;	
+	
+}
+	
 	
 	
 	a.tips_all {

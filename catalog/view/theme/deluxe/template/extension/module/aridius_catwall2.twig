@@ -1,9 +1,14 @@
-<div class="title-module">{{ heading_title }}</div>
+
+<div class="ls_tips_title ls_bestSellers_title">
+            <h2 class="ls_hp_title">{{ heading_title }}</h2>
+            <!-- <a class="tips_all" href="222" data-uw-rm-brl="false">View More</a> -->
+        </div>
+
 
 <div class="row catwall">
    {% for category in categories %}
    <div class="fix_rowm col-lg-2 col-md-3 col-sm-4 col-xs-6">
-      <div class="product-layoutwa_v2 {% if (category['children']) %}no_children{% endif %}">
+      <div class="product-layoutwa_v2 cat2g {% if (category['children']) %}no_children{% endif %}">
          {% if (not category['children']) %}
          <a href="{{ category['href'] }}">
             {% endif %}
