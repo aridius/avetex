@@ -1,5 +1,5 @@
 <?php
-$_['text_select']           = ' --- None --- ';
+$_['text_select']           = ' --- Please Select --- ';
 $_['date_format_short2']    = 'Y-m-d';
 $_['text_footer_contacts']  = 'Our Location';
 $_['text_footer_aboutus']   = 'About Us';
@@ -59,7 +59,7 @@ $_['text_account_set']      = 'Dashboard';
 $_['text_info_set']         = 'Information';	
 $_['text_home']             = 'Home';	
 $_['text_cart']             = 'Cart';
-$_['text_saving']           = 'You save';
+$_['text_saving']           = 'Your save:';
 $_['tab_images']            = 'Pics';
 $_['pr_load_more']          = 'Load More';
 $_['text_maximum']          = 'Maximum quantity of goods in stock';

@@ -279,7 +279,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['thumb'] = '';
 			}
-
+			
 			$data['images'] = array();
 
 			$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);

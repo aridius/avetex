@@ -2182,9 +2182,7 @@ letter-spacing: 1px;
 line-height: 13px;
 text-align: center;
 }
-#menu_height, .dropdown-submenu > .dropdown-menu2, .image-additional img, .colm1.bgm.dropdown-menu, .panel-heading, .panel-default, .block_desc_all, .product-layoutwa_v2, .gtile-i-wrap, .block_ico, .product-layout_rew, .desc-cat_top, #image-additional2 .swiper-slide img, .dropdown-menu, .product-card, .col_second, .pr_nav, .modal-content, .bannerp_caption, .combo-set2, .well, .accountv, [id*='text-popup'] {
-border-radius: 8px!important;
-}
+
 .bgm.dropdown-menu {
 border-radius: 0!important;
 }
@@ -2256,9 +2254,7 @@ padding-right: 0;
 padding-left: 0;
 }
 .pr_rew {
-background: #f1f1f1;
 display: inline-block;
-padding: 0 7px;
 border-radius: 8px;
 margin-bottom: 5px;
 }
@@ -2663,7 +2659,9 @@ padding: 15px;
 margin-bottom: 30px;
 }
 .review_profile.review_profile {
-font-size: 13px;
+font-size: 14px;
+    text-decoration: revert;
+	    margin-left: 5px;
 }
 .review_main .fa-reply{
 rotate: 180deg!important;
@@ -3269,7 +3267,6 @@ box-shadow: 0 1px 5px rgba(0,0,0,.1);
 .product-card{
 display: flex;
 flex-wrap: wrap;
-box-shadow: 0 1px 5px rgba(0,0,0,.1);
 margin: 0 0 30px;
 }
 .product-layoutnews .caption .product-description {
@@ -3804,7 +3801,6 @@ border-bottom: 1px solid #ebebeb;
 margin-top:25px;
 }
 .stp {
-background:#fff;
 padding: 15px;
 }
 .bag_quickview {
@@ -4070,7 +4066,8 @@ color: #323232;
 font-size: 15px;
 }
 .pr_h1 {
-margin-top: 2px;
+margin-top: 0px;
+margin-bottom: 5px;
 }
 .top-menu_h2 header	{
 position: relative;
@@ -4081,7 +4078,9 @@ border-bottom: 1px solid #EAEAE9;
 border-bottom: none;
 }
 .breadcrumb {
-margin-bottom: 2px;
+margin-bottom: 10px;
+    margin-top: 5px;
+}
 }
 .message_description {
 position: absolute;
@@ -4157,9 +4156,7 @@ margin-top: 15px;
 }
 .pr_h1 {
 font-size: 24px;
-font-weight: 400;
-margin-bottom: 20px;
-margin-top: 5px;
+font-weight: 600;
 }
 .product-name{
 margin-bottom: 0.8rem;
@@ -4572,7 +4569,8 @@ background: #F04343;
 padding: 0 5px;
 }
 .box-prinfo {
-padding: 5px 15px 15px 15px;
+padding: 25px 35px;
+    background-color: #fff;
 }
 .box-prinfo .pr_price .price-new {
 font-size: 24px;
@@ -6208,8 +6206,9 @@ border-radius: 12px;
 margin-bottom: 20px;
 }
 #product label, #product_quickw label{
-margin-bottom: 10px;
-font-size: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
 }
 .options-prheight{
 display: block;
@@ -6433,6 +6432,10 @@ margin-bottom: 30px;
 .breadcrumb > li > a{
 color: #777;
 font-size: 14px;
+font-weight: 600;
+}
+.breadcrumb > li > span span{
+font-weight: 600;
 }
 .opacityhv:hover{
 opacity: 0.8;
@@ -6712,15 +6715,12 @@ margin: 0 8px 0 0;
 text-align:left;
 }
 .box-prinfo .cart{
-text-align:left;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+	
 }
-.box-prinfo .btn-cart {
-font-size: 14px;
-font-weight: 600;
-}
-.box-prinfo .btn-cart {
-padding: 7px 13px 17px 13px;
-}
+
 .col_second .btn-cart, .arcart_popup #fastorder__cart, .arcart_popup .btn-cart {
 padding: 4px 10px 14px 10px!important;
 }
@@ -7037,7 +7037,8 @@ top: 0;
 text-align: left;
 }
 .linetoppr {
-margin-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 25px;
 }
 hr {
 border-top: 1px solid #f0f0f7;
@@ -7090,23 +7091,26 @@ border-radius: 0 22px 22px 0;
 }
 .pull-left1{
 display: inline-block;
-margin-right: 15px;
+height: 100%;
+position:relative;
 }
 #aridius_cart .pull-left1{
 margin-right: 0;
 }
 .form-group .input-quantity {
-background: #ececec none repeat scroll 0 0 !important;
-border: 0 none;
-border-radius: 0;
+border: 1px solid #ccc;
 box-shadow: none;
 color: #2f2f2f;
 display: inline-block;
-height: 34px;
+height: 50px;
 margin: 0;
 padding: 0;
 text-align: center;
-width: 60px !important;
+width: 85px !important;
+	
+    font-size: 19px;
+    font-weight: 600;
+    border-radius: 8px!important;
 }
 #product_st .form-group .input-quantity, .product_stp .form-group .input-quantity {
 background: #ececec none repeat scroll 0 0 !important;
@@ -9775,9 +9779,7 @@ float: left;
 }
 }
 @media (min-width: 1200px) {
-.box-prinfo .cart .btn-cart.product {
-width: 193px;
-}	
+
 .product_specification_item {
 display: flex;
 position: static;

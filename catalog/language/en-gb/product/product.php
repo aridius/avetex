@@ -30,6 +30,17 @@ $_['text_week']                = 'week';
 $_['text_semi_month']          = 'half-month';
 $_['text_month']               = 'month';
 $_['text_year']                = 'year';
+$_['text_new']                = 'Your price:';
+$_['text_old']                = 'Ex Tax:';
+$_['text_options']                = 'Available Options';
+$_['text_share']                = 'Share';
+$_['text_req']                = 'Request more information';
+$_['text_det']                = 'Product Details';
+$_['text_det_v']                = 'View All';
+$_['text_vi_lar']                = 'Large View';
+
+
+
 
 // Entry
 $_['entry_qty']                = 'Qty';
