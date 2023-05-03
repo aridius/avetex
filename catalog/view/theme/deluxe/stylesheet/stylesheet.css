@@ -722,7 +722,7 @@ background-color: #ceb478;
 .stpf {
 padding:0!important;
 }
-.price-old, .price-save, .price-new {
+#product .price-old,#product .price-save,#product .price-new {
 	width:100%;
 	font-size: 18px!important;
     margin-top: 5px!important;
@@ -731,14 +731,14 @@ padding:0!important;
 	border-bottom: 1px solid #e5e5e5;
 	text-decoration: auto;
 }
-.price-old, .price-save {
+#product .price-old,#product .price-save {
 color:#000!important;
 }
-.price-olds, .autocalc-saving-price, .price-news {
+#product .price-olds,#product .autocalc-saving-price, .price-news {
 	float:right;
 	font-weight: 600;
 }
-.price-new, .price-news {
+#product .price-new,#product .price-news {
 	color: #b9170f!important;
 }
 .name_options {
