@@ -1511,8 +1511,8 @@
    gallery.data('lightGallery').destroy(true);
    });
    gallery.one('onAfterOpen.lg',function(){
-   $(".lg-toolbar").append("<div class='cartpop'><div class='prise_spec_clone'></div><div class='prise_clone'></div><div class='prise_clone2'></div>{% if (quantity <= 0 and aridiusinstock_status ) %}<button type='button' class=' btn-instock' onclick=\"instock.add('{{ product_id }}');\" data-product-id='{{ product_id }}'>{{ button_instock }}</button>{% else %}<button type='button' id='button-cart' class=' btn-cart'><i class='fa fa-shopping-cart hidden-xs'></i> {{ button_cart }}</button> {% if (deluxe_forder != 1) %}<button type='button' class='btn-cart btn-cart__fastorder' onclick=\"fastOrder('{{ product_id }}');\" ><i class='fa fa-clock-o'></i> <span class='hidden-xs'>{{ text_fastorder }}</span></button>{% endif %}{% endif %}</div>");
-   $(".lg-toolbar").append("<div class='cartpop2'>{{ heading_title }}</div>");
+   //$(".lg-toolbar").append("<div class='cartpop'><div class='prise_spec_clone'></div><div class='prise_clone'></div><div class='prise_clone2'></div>{% if (quantity <= 0 and aridiusinstock_status ) %}<button type='button' class=' btn-instock' onclick=\"instock.add('{{ product_id }}');\" data-product-id='{{ product_id }}'>{{ button_instock }}</button>{% else %}<button type='button' id='button-cart' class=' btn-cart'><i class='fa fa-shopping-cart hidden-xs'></i> {{ button_cart }}</button> {% if (deluxe_forder != 1) %}<button type='button' class='btn-cart btn-cart__fastorder' onclick=\"fastOrder('{{ product_id }}');\" ><i class='fa fa-clock-o'></i> <span class='hidden-xs'>{{ text_fastorder }}</span></button>{% endif %}{% endif %}</div>");
+   //$(".lg-toolbar").append("<div class='cartpop2'>{{ heading_title }}</div>");
    {% if (special) %}
    $('.box-prinfo .autocalc-product-special').clone().appendTo('.prise_spec_clone');
    $('.box-prinfo .autocalc-product-price').clone().appendTo('.prise_clone');

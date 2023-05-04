@@ -71,7 +71,7 @@ $(document).ready(function() {
 		if (cols == 2) {
 			$('#content .product-list').attr('class', 'cat_heightflex product-layout product-layout_cat product-grid col-lg-6 col-md-6 col-sm-12 col-xs-6');
 		} else if (cols == 1) {
-			$('#content .product-list').attr('class', 'cat_heightflex product-layout product-layout_cat product-grid col-xl-3 col-lg-4 col-md-6 col-sm-4 col-xs-6');
+			$('#content .product-list').attr('class', 'cat_heightflex product-layout product-layout_cat product-grid col-xl-4 col-lg-4 col-md-6 col-sm-4 col-xs-6');
 		} else {
 			$('#content .product-list').attr('class', 'cat_heightflex product-layout product-layout_cat product-grid col-lg-five col-md-3 col-sm-4 col-xs-6');
 		}
