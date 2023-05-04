@@ -28,31 +28,31 @@
 </div>
 
 
-<div class="row">
+
 
 {% if (categories and deluxe_categories_2lvshow != 1) %}
-<div class="category2lv-center">
-   <div class="row ico_wall appedbl">
+
+<div class="row fds catwall">
       {% for category in categories %}
-      <div class="fix_rowm  catb col-xs-6 col-sm-4 col-md-4 col-lg-3">
-         <div class="cat_add">
-            {% if (deluxe_categories_2lv != 1 and (category['thumb'] is not empty)) %}
-            {% if (deluxe_lazy) %}
-            <a class="catpr" href="{{ category['href'] }}"><img src="{{ category['thumb'] }}" alt="{{ category['name'] }}" class="img-responsive opacityhv" width="{{ deluxe_categories_2lv_width }}" height="{{ deluxe_categories_2lv_height }}" /></a>
-            {% else %}
-            <a class="catpr" href="{{ category['href'] }}"><img data-src="{{ category['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ category['name'] }}" class="lazyload img-responsive opacityhv" width="{{ deluxe_categories_2lv_width }}" height="{{ deluxe_categories_2lv_height }}" /></a>
-            {% endif %}
-            {% endif %}
-            <a class="catpr2" href="{{ category['href'] }}">{{ category['name'] }}</a>
+   <div class="fix_rowm col-lg-2 col-md-3 col-sm-4 col-xs-6">
+      <div class="product-layoutwa_v2 ">
+	  <a href="{{ category['href'] }}">
+	     <div class="product-thumb_v2">
+         <div class="image_v2"><img src="{{ category['thumb'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="img-responsive" width="{{ deluxe_categories_2lv_width }}" height="{{ deluxe_categories_2lv_height }}" /></div>
+                
+			<div class="clearfix">	  </div>
+				<a class="image_v2" href="{{ category['href'] }}">{{ category['name'] }}</a>
          </div>
+		 </a>
+		   </div>
       </div>
       {% endfor %}
    </div>
-</div>
+
 {% endif %}
 
 
-</div>
+
 
 </div>
 
@@ -68,7 +68,7 @@
 
 
 <div class="clearfix">	</div>
-<div class="row">
+<div class="rowgd">
 
 
 
@@ -366,7 +366,13 @@
 {% if (deluxe_showmore != 1) %}
 <div id="load_more" style="display:none;">
    <div class="row text-center">
-      <a href="#" class="load_more"> <i class="pr_spinner"></i> {{ pr_load_more }}</a>
+      <a href="#" class="load_more"> <i class="pr_spinner"></i> {{ pr_load_more }}
+	  
+	  <svg aria-hidden="true" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5525 0.977678C13.6417 1.06696 13.6864 1.16964 13.6864 1.28571C13.6864 1.40179 13.6417 1.50446 13.5525 1.59375L7.31138 7.83482C7.2221 7.92411 7.11942 7.96875 7.00335 7.96875C6.88728 7.96875 6.7846 7.92411 6.69531 7.83482L0.454241 1.59375C0.364955 1.50446 0.320313 1.40179 0.320313 1.28571C0.320313 1.16964 0.364955 1.06696 0.454241 0.977678L1.12388 0.308035C1.21317 0.21875 1.31585 0.174107 1.43192 0.174107C1.54799 0.174107 1.65067 0.21875 1.73996 0.308035L7.00335 5.57143L12.2667 0.308035C12.356 0.21875 12.4587 0.174107 12.5748 0.174107C12.6908 0.174107 12.7935 0.21875 12.8828 0.308035L13.5525 0.977678Z" fill="#686868"></path>
+    </svg>
+	  
+	  </a>
    </div>
 </div>
 {% endif %}
