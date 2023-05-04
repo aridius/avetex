@@ -810,7 +810,7 @@ border: 1px solid #9a3100;
     margin-top: 8px;
 }
 .request-more a {
-	color: #9a3100;
+	color: #9a3100!important;
     font-size: 14px;
     border-bottom: 1px solid #9a3100;
     text-decoration: none !important;
