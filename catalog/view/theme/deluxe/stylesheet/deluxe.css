@@ -102,7 +102,7 @@ border-radius: 6px!important;
 }
 
 #input-limit, #input-sort{
-
+cursor:pointer;
 min-width: 100%;
 padding-left: 1.7rem;
 padding-right: 1.7rem;
