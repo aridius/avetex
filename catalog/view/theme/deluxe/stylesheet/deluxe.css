@@ -17,7 +17,25 @@
   display: none!important;	
 	
 }
+.sort2, .sort1 {
 
+  width: 197px;
+}
+
+#input-limit, #input-sort{
+font-size: 1.5rem;
+min-width: 100%;
+padding-left: 1.7rem;
+padding-right: 1.7rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-weight: 400;
+background: #eaeaea;
+border-radius: 6px;
+border: 0;
+min-height: 3.6rem;
+}
 
 
 
@@ -40,7 +58,7 @@
 
 .page-sort-component {
   width: 435px;
-  justify-content: space-between;
+  justify-content: right;
 }
 
 .product-list-component__top {
@@ -8111,11 +8129,11 @@ text-transform: initial;
 }
 .sort1 {
 display: inline-block;
-width: 65%;
+
 }
 .sort2 {
 display: inline-block;
-width: 33%;
+
 }
 .box_spec .rating{
 margin-top: 12px;
@@ -8540,12 +8558,12 @@ text-transform: initial;
 }
 .sort1 {
 display: inline-block;
-width: 42%;
+
 margin-right: 21px;
 }
 .sort2 {
 display: inline-block;
-width: 18%;
+
 }
 .sort3 {
 display: inline-block;
@@ -8712,12 +8730,12 @@ text-transform: initial;
 }
 .sort1 {
 display: inline-block;
-width: 43%;
+
 margin-right: 15px;
 }
 .sort2 {
 display: inline-block;
-width: 20%;
+
 }
 .sort3 {
 display: inline-block;
@@ -9135,12 +9153,12 @@ text-transform: initial;
 }
 .sort1 {
 display: inline-block;
-width: 42%;
+
 margin-right: 27px;
 }
 .sort2 {
 display: inline-block;
-width: 18%;
+
 }
 .sort3 {
 display: inline-block;
@@ -9280,12 +9298,12 @@ text-transform: initial;
 }
 .sort1 {
 display: inline-block;
-width: 31%;
+
 margin-right: 27px;
 }
 .sort2 {
 display: inline-block;
-width: 12%;
+
 }
 .sort3 {
 display: inline-block;

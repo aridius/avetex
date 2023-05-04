@@ -89,9 +89,9 @@
             <select id="input-limit" class="form-control" onchange="location = this.value;">
                {% for limits in limits %}
                {% if (limits['value'] == limit) %}
-               <option value="{{ limits['href'] }}" selected="selected">{{ limits['text'] }}</option>
+               <option value="{{ limits['href'] }}" selected="selected">View {{ limits['text'] }} Per Page</option>
                {% else %}
-               <option value="{{ limits['href'] }}">{{ limits['text'] }}</option>
+               <option value="{{ limits['href'] }}">View {{ limits['text'] }} Per Page</option>
                {% endif %}
                {% endfor %}
             </select>
