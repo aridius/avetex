@@ -2441,6 +2441,14 @@ margin-bottom: 5px;
 color: #74A378;
 padding-right: 2px;
 }
+.pr_rew_p {
+border-radius: 8px;
+margin-bottom: 5px;
+}
+.pr_rew_p i{
+color: #74A378;
+padding-right: 2px;
+}
 
 [id*='veiwed-grid_'] .rating {
 margin-top: 12px!important;
