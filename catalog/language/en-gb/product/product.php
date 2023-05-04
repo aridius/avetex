@@ -38,6 +38,8 @@ $_['text_req']                = 'Request more information';
 $_['text_det']                = 'Product Details';
 $_['text_det_v']                = 'View All';
 $_['text_vi_lar']                = 'Large View';
+$_['text_main_price']                = 'Price';
+
 
 
 
@@ -52,8 +54,8 @@ $_['entry_bad']                = 'Bad';
 
 // Tabs
 $_['tab_description']          = 'Description';
-$_['tab_attribute']            = 'Specification';
-$_['tab_review']               = 'Reviews (%s)';
+$_['tab_attribute']            = 'Product Details';
+$_['tab_review']               = 'Customer Reviews (%s)';
 
 // Error
 $_['error_name']               = 'Warning: Review Name must be between 3 and 25 characters!';

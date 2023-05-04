@@ -871,6 +871,54 @@ border:none;
 	font-size: 6em!important;
     color: #333;
 }
+.title_product {
+	font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 28px;
+    margin-top: 30px;
+}
+.content_attribute, .rating_main, #review_text {
+background-color: #fff;
+    padding: 40px!important;
+	margin-top: 1.2rem;
+}
+.content_attribute .attribute__category {
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    font-size: 18px;
+}
+.content_attribute .attribute__wrapper+.attribute__category {
+    margin-top: 40px;
+}
+.content_attribute .attribute__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+.content_attribute .attribute__cell {
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 1px 0 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 1px 1px 0 0 #e5e5e5, inset 1px 0 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5;
+    color: #686868;
+    transition: .3s;
+}
+.content_attribute .attribute__cell {
+    flex-basis: 50%;
+    widows: 50%;
+}
+.content_attribute .attribute__cell:nth-child(4n+1), .content_attribute .attribute__cell:nth-child(4n+2) {
+    background-color: #f5f5f5;
+}
+.content_attribute .attribute__cell>:first-child {
+    font-weight: 700;
+}
+.content_attribute .attribute__cell>* {
+    flex-basis: 50%;
+    min-width: 0;
+    widows: 50%;
+    padding: 0.8rem 1.4rem;
+    align-self: stretch;
+}
 
 @media (min-width: 768px) {
 .addimg_index {

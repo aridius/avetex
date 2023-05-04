@@ -471,7 +471,7 @@
                            </span>
                            <div class="line-product">
                               {% if (not special) %}
-                              <span class="price-new price">{{ price }}</span>
+                             <div class="price-old">{{ text_main_price }}<span class="price-olds">{{ price }}</span></div>
 							  {% if (aridiusundersell_status) %}
                               <div class="clearfix visible-sm"></div>
                               <span class="undersell_pr undersell_pr_sale">
@@ -680,7 +680,7 @@
                               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
                               {% endif %}
                               {% endfor %}
-                              <a class="review_profile" style="padding-bottom: 4px;" href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a>
+                              <a class="review_profile" style="padding-bottom: 4px;" href="" onclick="return false;">{{ reviews }}</a>
                               {% if (rating) %}
                               <span itemprop="aggregateRating" itemscope itemtype = "http://schema.org/AggregateRating">
                                  <meta itemprop='ratingValue' content='{{ rating }}' />
@@ -702,7 +702,8 @@
                            <div class="pull-left1">
                               <!-- <button type="button" class="minus items-count"><i class="fa fa-minus">&nbsp;</i></button> -->
 							  <label class="control-label qty_lable" for="input-quantity">Qty</label>
-                              <input type="text" name="quantity" value="{{ minimum }}" data-toggle="tooltip" title="{{ entry_qty }}" size="2" class="input-quantity form-control prqv" />
+                             
+							  <select aria-label="Quantity" name="quantity" data-uw-rm-form="nfx" wz_dt_ref="true" class="input-quantity form-control prqv"> <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
                               <!-- <button type="button" class="plus items-count2"><i class="fa fa-plus">&nbsp;</i></button> -->
                               <input type="hidden" name="product_id" value="{{ product_id }}" />
                            </div>
@@ -767,7 +768,7 @@
                            </table>
 						{% if (break_art_n > 2) %}
 						<div class="text-center more_button_art">
-							<a href="javascript:void(0)" class="visible-link blue-text font-18" data-uw-rm-brl="exc">
+							<a href="javascript:void(0)" class="view_click visible-link blue-text font-18" data-uw-rm-brl="exc">
 								<strong>{{ text_det_v }}</strong>
 							</a>
 						</div>
@@ -802,73 +803,258 @@
             </div>
          </div>
          <div class="clearfix"></div>
+		 
          <div class="row rowprf">
-            {% if (deluxe_product_sticky_menu == 0) %}
-            <div class="ch_col col-xs-12 col-sm-12 col-md-9 col-lg-9">
-               {% else %}
-               <div class="ch_col col-xs-12">
-                  {% endif %}
-                  <div class="pr_nav">
-                     <div id="nav_pr">
-                        <ul class="nav nav-tabs">
-                           <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
-                           {% if (attribute_groups) %}
-                           <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
-                           {% endif %}
-                           {% if (review_status) %}
-                           <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
-                           {% endif %}
-                           {% if (deluxe_relpr_tab == 1 and products) %}
-                           <li><a href="#tab-relpr" data-toggle="tab">{{ text_related2 }}</a></li>
-                           {% endif %}
-                           {% if (custom_tabs) %}
-                           {% for key,custom_tab in custom_tabs %}
-                           {% if (custom_tab['title']) %}
-                           <li><a href="#tab-custom-{{ key }}" data-toggle="tab">{{ custom_tab['title'] }}</a></li>
-                           {% endif %}
-                           {% endfor %}
-                           {% endif %}
-                           <!-- theme_tabs -->
-                           {% if (theme_tabs ) %}
+		  <div class="col-xs-12 col-sm-12">
+		  {% if (description) %}
+		 <div class="title_product">{{ tab_description }}</div>
+		  <div>{{ description }}</div>
+		   {% endif %}
+		     {% if (theme_tabs ) %}
                            {% for key, theme_tab  in theme_tabs %}
                            {% if (theme_tab.title[language_id]) %}
-                           <li>
-                              <a class="to-ancor" href="#tab-add-{{ key }}" data-toggle="tab">
-                              {{ theme_tab.title[language_id] }}
-                              </a>
-                           </li>
+                           <div class="title_product">{{ theme_tab.title[language_id] }}</div>
+						    <div>{{ (theme_tab['description']) }}</div>
                            {% endif %}
                            {% endfor %}
                            {% endif %}
-                           <!-- theme_tabs -->
-                        </ul>
-                     </div>
-                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-description" itemprop="description">{{ description }}</div>
-                        {% if (attribute_groups) %}
-                        <div class="tab-pane" id="tab-specification">
-                           <table class="product_specification">
-                              {% for attribute_group in attribute_groups %}
-                              <thead>
-                                 <tr>
-                                    <td class="attribute_group_name" colspan="2"><strong>{{ attribute_group['name'] }}</strong></td>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 {% for attribute in attribute_group['attribute'] %}
-                                 <tr class="product_specification_item">
-                                    <td class ="product_specification_title"><span>{{ attribute['name'] }}</span></td>
-									<td class="ftr-item__doter"></td>
-                                    <td class ="product_specification_value">{{ attribute['text'] }}</td>
-                                 </tr>
+						   {% if (deluxe_relpr_tab == 1 and products) %}
+			<div class="title_product">{{ text_related2 }}</div>
+		  <div id="relpr">
+                           <div id="prrelated" class="swiper-container">
+                              <div class="swiper-wrapper">
+                                 {% for product in products %}
+                                 <div class="swiper-slide product-layout_carusel">
+                                    <div class="gtile-i-wrap caption">
+                                       <div class="product-thumb">
+                                          <div class="image"><a href="{{ product['href'] }}"><img data-src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="swiper-lazy img-responsive" width="200" height="200" /></a></div>
+                                          <div class="swiper-lazy-preloader"></div>
+                                          <div class="additional-links ">
+                                             <ul>
+                                                {% if (deluxe_wishpr) %}
+                                                <li class = "additional-action">
+                                                   <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
+                                                   <i class="fa fa-heart"></i>
+                                                   </a>
+                                                </li>
+                                                {% endif %}
+                                                {% if (deluxe_comppr) %}
+                                                <li class = "additional-action">
+                                                   <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
+                                                   <i class="fa fa-fw fa-balance-scale"></i>
+                                                   </a>
+                                                </li>
+                                                {% endif %}
+                                                {% if (deluxe_quickviewpr) %}
+                                                <li class = "additional-action">
+                                                   <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
+                                                   <i class="fa fa-search"></i>
+                                                   </a>
+                                                </li>
+                                                {% endif %}
+                                             </ul>
+                                          </div>
+                                          <div class="positionsticker">
+                                             <!-- special -->
+                                             {% if (theme_deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
+                                             {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
+                                             {% endif %}
+                                             <!-- special END -->
+                                             <!-- new -->
+                                             {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+                                             {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+                                             {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                                             {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
+                                             <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
+                                             {% endif %}
+                                             <!-- new END -->
+                                             <!-- top -->
+                                             {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
+                                             <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
+                                             {% endif %}
+                                             <!-- top END -->
+                                             {% if (product['stickers2']) %}
+                                             {% for sticker2 in product['stickers2'] %}
+                                             <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+                                             {% endfor %}
+                                             {% endif %}
+                                          </div>
+                                          {% if (deluxe_ratpr) %}
+                                          <div class="rating">
+                                             {% set i = 1 %}{% for i in i..5 %}
+                                             {% if (product['rating'] < i) %}
+                                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                             {% else %}
+                                             <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                             {% endif %}
+                                             {% endfor %}
+                                             <span class="reviews_qt">
+                                             <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
+                                             </span>
+                                          </div>
+                                          {% endif %}
+                                          <div class="product-name">
+                                             <a href="{{ product['href'] }}">
+                                             {% if (product['name'])|length < deluxe_limit_symbolst %}
+                                             {{ product['name'] }}
+                                             {% else %}
+                                             {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
+                                             {% endif %}
+                                             </a>
+                                          </div>
+                                          <div class="box_flex2">
+                                             {% if (product['price']) %}
+                                             <p class="price">
+                                                {% if (not product['special']) %}
+                                                {{ product['price'] }}
+                                                {% else %}
+                                                <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %} <span class="stickers-special">-{{ percent }}%</span> {% endif %}<span class="price-new">{{ product['special'] }}</span>
+                                                {% endif %}
+                                                {% if (product['tax']) %}
+                                                <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                                {% endif %}
+                                             </p>
+                                             {% endif %}
+                                             <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
+                                                {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                                                <div class="snav snav_cart en">
+                                                   <ul>
+                                                      <li>
+                                                         <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
+                                                            <svg>
+                                                               <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                                            </svg>
+                                                         </a>
+                                                      </li>
+                                                   </ul>
+                                                </div>
+                                                {% else %}
+                                                <div class="snav snav_cart en">
+                                                   <ul>
+                                                      <li>
+                                                         <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
+                                                            <svg>
+                                                               <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
+                                                            </svg>
+                                                            <span class="cart_open">{{ button_cart }}</span>
+                                                         </a>
+                                                      </li>
+                                                   </ul>
+                                                </div>
+                                                {% endif %}
+                                             </div>
+                                          </div>
+                                          {% if (product['quantity'] > 0 ) %}
+                                          {% if (deluxe_forder != 1) %}
+                                          <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
+                                             <svg class ="w_clock">
+                                                <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
+                                             </svg>
+                                             <span>{{ text_fastorder }}</span>
+                                          </a>
+                                          {% endif %}
+                                          {% endif %}
+                                          {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
+                                          <div class="status_st">
+                                             {{ text_stockst }}
+                                          </div>
+                                          {% endif %}
+                                       </div>
+                                    </div>
+                                 </div>
                                  {% endfor %}
-                              </tbody>
-                              {% endfor %}
-                           </table>
-                        </div>
-                        {% endif %}
-                        {% if (review_status) %}
-                        <div class="tab-pane" id="tab-review">
+                              </div>
+                              {% if (deluxe_relnavigation) %}
+                              <div class="#prrelated swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+                              <div class="#prrelated swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+                              {% endif %}
+                           </div>
+                           <script>
+                              
+                              var ocSwiper = new Swiper('#prrelated.swiper-container', {
+                              // Enable lazy loading
+                              lazy: {
+                              loadPrevNext: true,
+                              loadPrevNextAmount: 5,
+                              },
+                              slidesPerView: {{ deluxe_relitems }},
+                              mode: 'horizontal',
+                              pagination: false,
+                              spaceBetween: 20,
+                              speed: {{ deluxe_relrew_speed }},
+                              {% if (deluxe_relautoplay_on) %}
+                              autoplay: {delay: {{ deluxe_relautoplay }}},
+                              autoplayDisableOnInteraction: true,
+                              {% endif %}
+                              breakpoints: {
+                              768: {
+                              slidesPerView: 2,
+                              },
+                              992: {
+                              slidesPerView: 3,
+                              },
+                              1200: {
+                              slidesPerView: 3,
+                              },
+                              1600: {
+                              slidesPerView: 4,
+                              }
+                              },
+                              {% if (deluxe_relnavigation) %}
+                              navigation: {
+                              nextEl: '#prrelated .swiper-button-next',
+                              prevEl: '#prrelated .swiper-button-prev',
+                              },
+                              {% endif %}
+                              });
+                              {% if (deluxe_relstophover and deluxe_relautoplay_on) %}
+                              $("#prrelated.swiper-container").hover(function() {
+                              ocSwiper.autoplay.stop();
+                              }, function() {
+                              ocSwiper.autoplay.start();
+                              });
+                              {% endif %}
+                          
+                           </script></div>
+		  {% endif %}
+		   {% if (attribute_groups) %}
+		 <div class="title_product">{{ tab_attribute }}</div>
+		    
+
+			 <div class="content_attribute">
+			{% for attribute_group in attribute_groups %}
+            <div class="attribute__category">{{ attribute_group['name'] }}</div> <div class="attribute__wrapper">
+			{% for attribute in attribute_group['attribute'] %}
+                <div class="attribute__cell">
+                    <div>{{ attribute['name'] }}</div>
+                    <div>{{ attribute['text'] }}</div>
+                </div>
+				{% endfor %}
+            </div>
+			{% endfor %}
+			</div>
+
+		   {% endif %}
+		  
+		  
+		  
+		  
+		  
+		  
+		  </div> </div> 
+		  
+	
+            <div class="clearfix"></div>
+            <div class="col-xs-12">
+               <div class="col_first">
+                  {{ content_bottom }}
+               </div>
+            </div>
+			{% if (review_status) %}
+			<div class = "col-xs-12 col-sm-12">
+			 <div class="title_product">{{ tab_review }}</div>
+		                          
+                        <div id="tab-review">
                            <form class="form-horizontal qa-form" id="form-review" style="display: none;">
                               <div id="review_text">
                                  {% if (review_guest) %}
@@ -1038,513 +1224,8 @@
                               {% endif %}
                            </div>
                         </div>
-                        {% endif %}
-                        {% if (deluxe_relpr_tab == 1 and products) %}
-                        <div class="tab-pane" id="tab-relpr">
-                           <div id="prrelated" class="swiper-container">
-                              <div class="swiper-wrapper">
-                                 {% for product in products %}
-                                 <div class="swiper-slide product-layout_carusel">
-                                    <div class="gtile-i-wrap caption">
-                                       <div class="product-thumb">
-                                          <div class="image"><a href="{{ product['href'] }}"><img data-src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="swiper-lazy img-responsive" width="200" height="200" /></a></div>
-                                          <div class="swiper-lazy-preloader"></div>
-                                          <div class="additional-links ">
-                                             <ul>
-                                                {% if (deluxe_wishpr) %}
-                                                <li class = "additional-action">
-                                                   <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
-                                                   <i class="fa fa-heart"></i>
-                                                   </a>
-                                                </li>
-                                                {% endif %}
-                                                {% if (deluxe_comppr) %}
-                                                <li class = "additional-action">
-                                                   <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
-                                                   <i class="fa fa-fw fa-balance-scale"></i>
-                                                   </a>
-                                                </li>
-                                                {% endif %}
-                                                {% if (deluxe_quickviewpr) %}
-                                                <li class = "additional-action">
-                                                   <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
-                                                   <i class="fa fa-search"></i>
-                                                   </a>
-                                                </li>
-                                                {% endif %}
-                                             </ul>
-                                          </div>
-                                          <div class="positionsticker">
-                                             <!-- special -->
-                                             {% if (theme_deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
-                                             {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
-                                             {% endif %}
-                                             <!-- special END -->
-                                             <!-- new -->
-                                             {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
-                                             {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
-                                             {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
-                                             {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
-                                             <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
-                                             {% endif %}
-                                             <!-- new END -->
-                                             <!-- top -->
-                                             {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
-                                             <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
-                                             {% endif %}
-                                             <!-- top END -->
-                                             {% if (product['stickers2']) %}
-                                             {% for sticker2 in product['stickers2'] %}
-                                             <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
-                                             {% endfor %}
-                                             {% endif %}
-                                          </div>
-                                          {% if (deluxe_ratpr) %}
-                                          <div class="rating">
-                                             {% set i = 1 %}{% for i in i..5 %}
-                                             {% if (product['rating'] < i) %}
-                                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                             {% else %}
-                                             <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                             {% endif %}
-                                             {% endfor %}
-                                             <span class="reviews_qt">
-                                             <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
-                                             </span>
-                                          </div>
-                                          {% endif %}
-                                          <div class="product-name">
-                                             <a href="{{ product['href'] }}">
-                                             {% if (product['name'])|length < deluxe_limit_symbolst %}
-                                             {{ product['name'] }}
-                                             {% else %}
-                                             {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
-                                             {% endif %}
-                                             </a>
-                                          </div>
-                                          <div class="box_flex2">
-                                             {% if (product['price']) %}
-                                             <p class="price">
-                                                {% if (not product['special']) %}
-                                                {{ product['price'] }}
-                                                {% else %}
-                                                <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %} <span class="stickers-special">-{{ percent }}%</span> {% endif %}<span class="price-new">{{ product['special'] }}</span>
-                                                {% endif %}
-                                                {% if (product['tax']) %}
-                                                <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
-                                                {% endif %}
-                                             </p>
-                                             {% endif %}
-                                             <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
-                                                {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
-                                                <div class="snav snav_cart en">
-                                                   <ul>
-                                                      <li>
-                                                         <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
-                                                            <svg>
-                                                               <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
-                                                            </svg>
-                                                         </a>
-                                                      </li>
-                                                   </ul>
-                                                </div>
-                                                {% else %}
-                                                <div class="snav snav_cart en">
-                                                   <ul>
-                                                      <li>
-                                                         <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
-                                                            <svg>
-                                                               <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
-                                                            </svg>
-                                                            <span class="cart_open">{{ button_cart }}</span>
-                                                         </a>
-                                                      </li>
-                                                   </ul>
-                                                </div>
-                                                {% endif %}
-                                             </div>
-                                          </div>
-                                          {% if (product['quantity'] > 0 ) %}
-                                          {% if (deluxe_forder != 1) %}
-                                          <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
-                                             <svg class ="w_clock">
-                                                <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
-                                             </svg>
-                                             <span>{{ text_fastorder }}</span>
-                                          </a>
-                                          {% endif %}
-                                          {% endif %}
-                                          {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
-                                          <div class="status_st">
-                                             {{ text_stockst }}
-                                          </div>
-                                          {% endif %}
-                                       </div>
-                                    </div>
-                                 </div>
-                                 {% endfor %}
-                              </div>
-                              {% if (deluxe_relnavigation) %}
-                              <div class="#prrelated swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
-                              <div class="#prrelated swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
-                              {% endif %}
-                           </div>
-                           <script>
-                              $('#nav_pr a[href="#tab-relpr"]').on('shown.bs.tab', function (e) {
-                              var ocSwiper = new Swiper('#prrelated.swiper-container', {
-                              // Enable lazy loading
-                              lazy: {
-                              loadPrevNext: true,
-                              loadPrevNextAmount: 5,
-                              },
-                              slidesPerView: {{ deluxe_relitems }},
-                              mode: 'horizontal',
-                              pagination: false,
-                              spaceBetween: 20,
-                              speed: {{ deluxe_relrew_speed }},
-                              {% if (deluxe_relautoplay_on) %}
-                              autoplay: {delay: {{ deluxe_relautoplay }}},
-                              autoplayDisableOnInteraction: true,
-                              {% endif %}
-                              breakpoints: {
-                              768: {
-                              slidesPerView: 2,
-                              },
-                              992: {
-                              slidesPerView: 3,
-                              },
-                              1200: {
-                              slidesPerView: 3,
-                              },
-                              1600: {
-                              slidesPerView: 4,
-                              }
-                              },
-                              {% if (deluxe_relnavigation) %}
-                              navigation: {
-                              nextEl: '#prrelated .swiper-button-next',
-                              prevEl: '#prrelated .swiper-button-prev',
-                              },
-                              {% endif %}
-                              });
-                              {% if (deluxe_relstophover and deluxe_relautoplay_on) %}
-                              $("#prrelated.swiper-container").hover(function() {
-                              ocSwiper.autoplay.stop();
-                              }, function() {
-                              ocSwiper.autoplay.start();
-                              });
-                              {% endif %}
-                              });
-                           </script>
-                        </div>
-                        {% endif %}
-                        <!-- custom_tabs -->
-                        {% if (custom_tabs) %}
-                        {% for key,custom_tab in custom_tabs %}
-                        {% if (custom_tab['title']) %}
-                        <div class="tab-pane" id="tab-custom-{{ key}}">{{ custom_tab['description'] }}</div>
-                        {% endif %}
-                        {% endfor %}
-                        {% endif %}
-                        <!-- custom_tabs -->
-                        <!-- theme__tabs -->
-                        {% if (theme_tabs ) %}
-                        {% for key, theme_tab  in theme_tabs %}
-                        {% if (theme_tab.description) %}
-                        <div class="tab-pane" id="tab-add-{{ key }}">{{ (theme_tab['description']) }}</div>
-                        {% endif %}
-                        {% endfor %}
-                        {% endif %}
-                     </div>
-                  </div>
-               </div>
-               {% if (deluxe_product_sticky_menu == 0) %}
-               <div class="hidden-xs hidden-sm col-md-3 col-lg-3" id="sticky_item">
-                  <div class="col_second">
-                     <div class="col_second_name">
-                        {{ heading_title }}
-                     </div>
-                     {% if (deluxe_img_colleft != 1) %}
-                     <div class="container_fix">
-                        <img class="main-image imgfix img-responsive" src="{{ thumb_clone }}" title="{{ heading_title }}" alt="{{ heading_title }}">
-                     </div>
-                     {% endif %}
-                     {% if (price) %}
-                     <div class="pr_price">
-                        <div class="line-product">
-                           {% if (not special) %}
-                           <span class="price-new price">{{ price }}</span>
-                           {% else %}
-                           <span class="price-old">{{ price }}</span><span class="price-new">{{ special }}</span>
-                           {% endif %}
-                        </div>
-                     </div>
-                     {% endif %}
-                     <div id="product_st">
-                        {% if (recurrings) %}
-                        <hr>
-                        <div class="title-module">{{ text_payment_recurring }}</div>
-                        <div class="form-group required">
-                           <select name="recurring_id" class="form-control">
-                              <option value="">{{ text_select }}</option>
-                              {% for recurring in recurrings %}
-                              <option value="{{ recurring['recurring_id'] }}">{{ recurring['name'] }}</option>
-                              {% endfor %}
-                           </select>
-                           <div class="help-block" id="recurring-description_st"></div>
-                        </div>
-                        {% endif %}
-                        <div class="form-group">
-                           <div class="pull-left1">
-                              <button type="button" class="minus items-count"><i class="fa fa-minus">&nbsp;</i></button>
-                              <input type="text" name="quantity" value="{{ minimum }}" data-toggle="tooltip" title="{{ entry_qty }}" size="2" class="input-quantity form-control prqv2" />
-                              <button type="button" class="plus items-count2"><i class="fa fa-plus">&nbsp;</i></button>
-                              <input type="hidden" name="product_id" value="{{ product_id }}" />
-                           </div>
-                           <span class="clearfix_wc">
-                           {% if (deluxe_wishlist_cat != 1) %}
-                           <button type="button" data-toggle="tooltip" class="btn-wishlist" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
-                           {% endif %}
-                           {% if (deluxe_compare_cat != 1) %}
-                           <button type="button" data-toggle="tooltip" class="btn-compare" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-balance-scale"></i></button>
-                           {% endif %}
-                           </span>
-                           <div id="pr_alert_danger2"></div>
-                           <div class="cart" >
-                              {% if (quantity <= 0 and aridiusinstock_status ) %}
-                              <button type="button" class="btn-instock" onclick="instock.add('{{ product_id }}');" data-product-id="{{ product_id }}">{{ button_instock }}</button>
-                              {% else %}
-                              <button type="button" id="button-cart_st" class="btn-cart product">
-                                 <svg class ="w_clock_pr2">
-                                    <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="22" height="22" />
-                                 </svg>
-                                 {{ button_cart }}
-                              </button>
-                              {% if (deluxe_forder != 1) %}
-                              <button type="button" class="btn-cart btn-cart__fastorder" onclick="fastOrder('{{ product_id }}');" >
-                                 <svg class ="w_clock_pr">
-                                    <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
-                                 </svg>
-                                 {{ text_fastorder }}
-                              </button>
-                              {% endif %}
-                              {% endif %}
-                           </div>
-                        </div>
-                     </div>
-                     <div class="clearfix"></div>
-                     {% if (minimum > 1) %}
-                     <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
-                     {% endif %}
-                  </div>
-               </div>
-               {% endif %}
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-xs-12">
-               <div class="col_first">
-                  {% if (deluxe_relpr_tab != 1 and products) %}
-                  <div class="title-module">{{ text_related2 }}</div>
-                  <div id="prrelated" class="swiper-container">
-                     <div class="swiper-wrapper">
-                        {% for product in products %}
-                        <div class="swiper-slide product-layout_carusel">
-                           <div class="gtile-i-wrap caption">
-                              <div class="product-thumb">
-                                 <div class="image"><a href="{{ product['href'] }}"><img data-src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="swiper-lazy img-responsive" width="200" height="200" /></a></div>
-                                 <div class="swiper-lazy-preloader"></div>
-                                 <div class="additional-links ">
-                                    <ul>
-                                       {% if (deluxe_wishpr) %}
-                                       <li class = "additional-action">
-                                          <a onclick="wishlist.add('{{ product['product_id'] }}');" title="{{ button_wishlist }}">
-                                          <i class="fa fa-heart"></i>
-                                          </a>
-                                       </li>
-                                       {% endif %}
-                                       {% if (deluxe_comppr) %}
-                                       <li class = "additional-action">
-                                          <a onclick="compare.add('{{ product['product_id'] }}');" title="{{ button_compare }}">
-                                          <i class="fa fa-fw fa-balance-scale"></i>
-                                          </a>
-                                       </li>
-                                       {% endif %}
-                                       {% if (deluxe_quickviewpr) %}
-                                       <li class = "additional-action">
-                                          <a onclick="quickview_open('{{ product['product_id'] }}');" title="{{ text_quickview }}">
-                                          <i class="fa fa-search"></i>
-                                          </a>
-                                       </li>
-                                       {% endif %}
-                                    </ul>
-                                 </div>
-                                 <div class="positionsticker">
-                                    <!-- special -->
-                                    {% if (theme_deluxe_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %}
-                                    {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %}
-                                    {% endif %}
-                                    <!-- special END -->
-                                    <!-- new -->
-                                    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
-                                    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
-                                    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
-                                    {% if (deluxe_sticker_new_product_auto != 1 and days < deluxe_sticker_product_new_day) %}
-                                    <div class="stickers-new">{{ deluxe_name_sticker_product_new[language_id] }}</div>
-                                    {% endif %}
-                                    <!-- new END -->
-                                    <!-- top -->
-                                    {% if (deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 1 and product['rating'] == deluxe_sticker_product_top_rating or deluxe_sticker_top_product_auto != 1 and deluxe_sticker_product_top_ratinr == 2 and product['viewed'] > deluxe_sticker_product_top_viewed ) %}
-                                    <div class="stickers-top">{{ deluxe_name_sticker_product_top[language_id] }}</div>
-                                    {% endif %}
-                                    <!-- top END -->
-                                    {% if (product['stickers2']) %}
-                                    {% for sticker2 in product['stickers2'] %}
-                                    <div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
-                                    {% endfor %}
-                                    {% endif %}
-                                 </div>
-                                 {% if (deluxe_ratpr) %}
-                                 <div class="rating">
-                                    {% set i = 1 %}{% for i in i..5 %}
-                                    {% if (product['rating'] < i) %}
-                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    {% else %}
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <span class="reviews_qt">
-                                    <a onclick="location='{{ product['href'] }}#tab-review'"><i class="fa fa-commenting-o" aria-hidden="true"></i> {{ product['reviews'] }}</a>
-                                    </span>
-                                 </div>
-                                 {% endif %}
-                                 <div class="product-name">
-                                    <a href="{{ product['href'] }}">
-                                    {% if (product['name'])|length < deluxe_limit_symbolst %}
-                                    {{ product['name'] }}
-                                    {% else %}
-                                    {{ (product['name']|slice(0, deluxe_limit_symbolst))~"..." }}
-                                    {% endif %}
-                                    </a>
-                                 </div>
-                                 <div class="box_flex2">
-                                    {% if (product['price']) %}
-                                    <p class="price">
-                                       {% if (not product['special']) %}
-                                       {{ product['price'] }}
-                                       {% else %}
-                                       <span class="price-old">{{ product['price'] }}</span>{% if (deluxe_sticker_sale_product_auto != 1) %} <span class="stickers-special">-{{ percent }}%</span> {% endif %}<span class="price-new">{{ product['special'] }}</span>
-                                       {% endif %}
-                                       {% if (product['tax']) %}
-                                       <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
-                                       {% endif %}
-                                    </p>
-                                    {% endif %}
-                                    <div class="{% if (product['quantity'] <= 0 and aridiusinstock_status ) %}instockf{% endif %} cart">
-                                       {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
-                                       <div class="snav snav_cart en">
-                                          <ul>
-                                             <li>
-                                                <a onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}" data-toggle="tooltip" title="{{ button_instock }}" >
-                                                   <svg>
-                                                      <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
-                                                   </svg>
-                                                </a>
-                                             </li>
-                                          </ul>
-                                       </div>
-                                       {% else %}
-                                       <div class="snav snav_cart en">
-                                          <ul>
-                                             <li>
-                                                <a onclick="cart.add('{{ product['product_id'] }}', $(this).parent().parent().find('.quantity_input').val());">
-                                                   <svg>
-                                                      <use xlink:href="catalog/view/theme/deluxe/image/cart.svg#shop_cart" x="0" y="0" width="25" height="25" />
-                                                   </svg>
-                                                   <span class="cart_open">{{ button_cart }}</span>
-                                                </a>
-                                             </li>
-                                          </ul>
-                                       </div>
-                                       {% endif %}
-                                    </div>
-                                 </div>
-                                 {% if (product['quantity'] > 0 ) %}
-                                 {% if (deluxe_forder != 1) %}
-                                 <a class="labelst2 fastorder2" onclick="fastOrder('{{ product['product_id'] }}');">
-                                    <svg class ="w_clock">
-                                       <use xlink:href="catalog/view/theme/deluxe/image/clock.svg#shop_clock" x="0" y="0" width="22" height="22" />
-                                    </svg>
-                                    <span>{{ text_fastorder }}</span>
-                                 </a>
-                                 {% endif %}
-                                 {% endif %}
-                                 {% if (product['quantity'] <= 0 and aridiusinstock_status ) %}
-                                 <div class="status_st">
-                                    {{ text_stockst }}
-                                 </div>
-                                 {% endif %}
-                              </div>
-                           </div>
-                        </div>
-                        {% endfor %}
-                     </div>
-                     {% if (deluxe_relnavigation) %}
-                     <div class="#prrelated swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
-                     <div class="#prrelated swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
-                     {% endif %}
-                  </div>
-                  <script>
-                     $(document).ready(function () {
-                     var ocSwiper = new Swiper('#prrelated.swiper-container', {
-                     // Enable lazy loading
-                     lazy: {
-                     loadPrevNext: true,
-                     loadPrevNextAmount: 5,
-                     },
-                     slidesPerView: {{ deluxe_relitems }},
-                     mode: 'horizontal',
-                     pagination: false,
-                     spaceBetween: 20,
-                     speed: {{ deluxe_relrew_speed }},
-                     {% if (deluxe_relautoplay_on) %}
-                     autoplay: {delay: {{ deluxe_relautoplay }}},
-                     autoplayDisableOnInteraction: true,
-                     {% endif %}
-                     breakpoints: {
-                     768: {
-                     slidesPerView: 2,
-                     },
-                     992: {
-                     slidesPerView: 3,
-                     },
-                     1200: {
-                     slidesPerView: 3,
-                     },
-                     1600: {
-                     slidesPerView: 4,
-                     }
-                     },
-                     {% if (deluxe_relnavigation) %}
-                     navigation: {
-                     nextEl: '#prrelated .swiper-button-next',
-                     prevEl: '#prrelated .swiper-button-prev',
-                     },
-                     {% endif %}
-                     });
-                     {% if (deluxe_relstophover and deluxe_relautoplay_on) %}
-                     $("#prrelated.swiper-container").hover(function() {
-                     ocSwiper.autoplay.stop();
-                     }, function() {
-                     ocSwiper.autoplay.start();
-                     });
-                     {% endif %}
-                     });
-                  </script>
-                  <div class="clearfix"></div>
-                  {% endif %}
-                  {{ content_bottom }}
-               </div>
-            </div>
+			</div>
+			{% endif %}
          </div>
          {% if (deluxe_top_links9 ) %}
          <div class = "rowpri ico_wall_flex">
@@ -2070,15 +1751,15 @@
 <!--go to review  -->
 <script><!--
    $(".review_profile").click(function (){
-   var tabTop = $(".nav-tabs").offset().top - 170;
+   var tabTop = $("#tab-review").offset().top - 170;
    $("html, body").animate({ scrollTop:tabTop }, 800);
    });
    //-->
 </script>
 <!--go to attribute  -->
 <script><!--
-   $(".specification_profile").click(function (){
-   var tabTop = $(".nav-tabs").offset().top - 170;
+   $(".view_click").click(function (){
+   var tabTop = $(".content_attribute").offset().top - 170;
    $("html, body").animate({ scrollTop:tabTop }, 800);
    });
    //-->
