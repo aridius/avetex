@@ -1391,6 +1391,10 @@
    el: '.main_img.swiper-pagination',
    clickable: true,
    },
+    navigation: {
+   nextEl: '.main_img_v2.swiper-button-next',
+   prevEl: '.main_img_v2.swiper-button-prev',
+   },
    on: {
    
 
@@ -1532,7 +1536,7 @@
    {% endif %}
    });
    };
-   $(".demo-gallery").on("click", function(e){
+   $(".demo-gallery .swiper-wrapper, .gallery-control-buttons__btn").on("click", function(e){
    $('.right_fixed').css({display: 'none'});
    e.preventDefault();
    showPSWP();
