@@ -10082,7 +10082,8 @@ overflow-x: hidden;
 .style2lv {
 font-weight: 600;
 font-size: 1.6rem;
-line-height: 2.8rem;
+margin-top: 15px;
+
 display: block;
 }
 .colm1 .style2lv {
