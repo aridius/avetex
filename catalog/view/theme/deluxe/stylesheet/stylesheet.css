@@ -1165,5 +1165,35 @@ list-style-type: none;
 .main_img_button_z .gallery-control-buttons__btn {
 width: 150px;
 }
+#setclone {
+	margin-top: 0px!important;
+}
+#top {
+display:block!important;
+height: 30px;
+}
+#top-links {
+	display:none!important;
+}
+#top .pull-left {
+	margin: 0 auto;
+}
+.order_logo {
+	padding-left: 0px;
+	text-align:left!important;
+	right: 15px;
+}
+.top-header, #logo {
+	padding: 0!important;
+}
+#top-menu {
+	border-top: none!important;
+}
+.sing_mob {
+	padding-right: 20px;
+}
+.order_setclone {
+	padding-right: 0px!important;
+}
 }
 
