@@ -31,8 +31,16 @@ margin: 0 !important;
 
 
 
-
-
+#menu .fa-chevron-right {
+  font-size: 1rem;
+  margin-left: .5rem;
+  position: relative;
+  top: 0;
+  font-weight: 400;
+}
+.style2lv:hover {
+  text-decoration: underline !important;
+}
 
 .pagination > li > a:hover{
 
@@ -10073,7 +10081,9 @@ overflow-x: hidden;
 }
 .style2lv {
 font-weight: 600;
-font-size: 14px;
+font-size: 1.6rem;
+line-height: 2.8rem;
+display: block;
 }
 .colm1 .style2lv {
 font-weight: 400!important;
