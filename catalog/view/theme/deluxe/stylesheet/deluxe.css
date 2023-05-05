@@ -23,6 +23,17 @@ border: .2rem solid #F5F5F5!important;
 
 
 
+.dropdown-menu{
+  border-top: 1px solid #333!important;
+padding: 0 !important;
+margin: 0 !important;
+}
+
+
+
+
+
+
 .pagination > li > a:hover{
 
   background-color: #EAEAEA!important;	
@@ -35,6 +46,12 @@ border-radius: 6px!important;
 
 }
 
+
+
+#top-menu {
+  border-bottom: 1px solid #d5d5d5;
+  border-top: 1px solid #d5d5d5;
+}
 
 
 .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
@@ -53,8 +70,10 @@ border-radius: 6px!important;
   padding: 1px 11px;
 
 }
+ .dropdown-inner .menu_main_photos a {
 
-
+  padding: 0!important;
+}
 
 
 .load_more {
@@ -6801,16 +6820,15 @@ width: 170px;
 float: right;
 }
 .main-foto-back {
-background: linear-gradient(270deg,rgba(255,255,255,0),rgba(255,255,255,1));
 height: 100%;
 position: absolute;
-width: 55%;
-top: -5px;
+
 }
 .image_main {
 float: right;
 position: relative;
-top: -5px;
+top: 0;
+bottom: 0;
 }
 .btn-send {
 border: none;
@@ -10226,8 +10244,8 @@ z-index: 1050;
 display: none;
 float: left;
 min-width: 145px;
-padding: 10px 0 8px 0!important;
-margin: 2px 0 0;
+padding: 0!important;
+margin: 0!important;
 font-size: 15px;
 list-style: none;
 box-shadow:none;
@@ -10303,7 +10321,7 @@ position: static;
 margin-bottom: 30px;
 }
 #menu.menulogo .nav>li>a {
-padding: 7px 12px;
+padding: 0 12px;
 }
 .block_desc_all {
 margin: 40px 0 0 0;
