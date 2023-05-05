@@ -1101,6 +1101,9 @@ position: relative;
 .top-header {
 	padding-bottom:10px;
 }
+#top .nobackground .pull-left a:hover {
+color:#fff!important;
+}
 @media (min-width: 768px) {
 	#shareModal.modal .modal-dialog .modal-content {
 	    min-width: 470px;
@@ -1195,5 +1198,6 @@ height: 30px;
 .order_setclone {
 	padding-right: 0px!important;
 }
+
 }
 
