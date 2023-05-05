@@ -2068,11 +2068,13 @@
 </div>
 <script>
 
-   setTimeout(function(){ 	
-       $("#shareModal").modal('show');
-   // save date open popup modal in LocalStorage
-       localStorage.setItem("dateModalShow", currentDate);
-   },1000);	
+   $(".share-popup").on( "click", function() {
+		$("body").css('overflow','hidden');
+		$("#shareModal").modal('show');
+	});
+	$('#shareModal').on('hidden.bs.modal', function () {
+		$("body").css('overflow','auto');
+	})
  
 </script>
 {{ footer }}
