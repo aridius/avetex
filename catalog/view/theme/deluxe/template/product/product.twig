@@ -30,27 +30,7 @@
          </ul>
       </div>
      
-      {% if (deluxe_st_cart != 1 ) %}
-      <div class="st_cart">
-         <div class="price_bot col-xs-3 col-sm-3 col-md-3">
-            {% if (not special) %}
-            <span class="price-new price">{{ price }}</span>
-            {% else %}
-            <span class="price-old">{{ price }}</span><span class="price-new">{{ special }}</span>
-            {% endif %}
-         </div>
-         <div class="cart_bot col-xs-9 col-sm-9 col-md-9">
-            {% if (quantity <= 0 and aridiusinstock_status ) %}
-            <button type="button" class="btn-instock" onclick="instock.add('{{ product_id }}');" data-product-id="{{ product_id }}">{{ button_instock }}</button>
-            {% else %}
-            <button type="button" id="button-cart_st2" class="btn-cart product"><i class="fa fa-shopping-cart hidden-xs"></i> {{ button_cart }}</button>
-            {% if (deluxe_forder != 1) %}
-            <button type="button" class="btn-cart btn-cart__fastorder" onclick="fastOrder('{{ product_id }}');" >{{ text_fastorder }}</button>
-            {% endif %}
-            {% endif %}
-         </div>
-      </div>
-      {% endif %}
+
    </div>
 </div>
 {% if (column_left) %}
