@@ -68,16 +68,7 @@
                   <div class="aridiusundersell_erroremail"></div>
                </div>
                {% endif %}
-               {% if (not aridiusundersell_linkshow == '1') %}
-               <div class="form-group {% if (not aridiusundersell_linkvalid) %}required{% endif %}">
-                  <label class="control-label" for="input-link">{{ enter_link }}</label>
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
-                     <input name="aridiusundersell_link" placeholder="{{ aridiusundersell_placeholderlink[language_id] }}" class="form-control"  type="text">
-                  </div>
-                  <div class="aridiusundersell_errorlink"></div>
-               </div>
-               {% endif %}
+
                {% if (not aridiusundersell_commentshow == '1') %}
                <div class="form-group">
                   <label class="control-label" for="input-firstname">{{ enter_comment }}</label>

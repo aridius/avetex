@@ -153,30 +153,15 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 			$data['module_aridiusundersell_commentshow'] = $this->config->get('module_aridiusundersell_commentshow');
 		}
 		
-		if (isset($this->request->post['module_aridiusundersell_linkshow'])) {
-			$data['module_aridiusundersell_linkshow'] = $this->request->post['module_aridiusundersell_linkshow'];
-		} else {
-			$data['module_aridiusundersell_linkshow'] = $this->config->get('module_aridiusundersell_linkshow');
-		}
 		
-		if (isset($this->request->post['module_aridiusundersell_linkvalid'])) {
-			$data['module_aridiusundersell_linkvalid'] = $this->request->post['module_aridiusundersell_linkvalid'];
-		} else {
-			$data['module_aridiusundersell_linkvalid'] = $this->config->get('module_aridiusundersell_linkvalid');
-		}
-		
+	
 		if (isset($this->request->post['module_aridiusundersell_placeholdercomment'])) {
 			$data['module_aridiusundersell_placeholdercomment'] = $this->request->post['module_aridiusundersell_placeholdercomment'];
 		} else {
 			$data['module_aridiusundersell_placeholdercomment'] = $this->config->get('module_aridiusundersell_placeholdercomment');
 		}
 		
-		if (isset($this->request->post['module_aridiusundersell_placeholderlink'])) {
-			$data['module_aridiusundersell_placeholderlink'] = $this->request->post['module_aridiusundersell_placeholderlink'];
-		} else {
-			$data['module_aridiusundersell_placeholderlink'] = $this->config->get('module_aridiusundersell_placeholderlink');
-		}
-		
+	
 		if (isset($this->request->post['module_aridiusundersell_description'])) {
 			$data['module_aridiusundersell_description'] = $this->request->post['module_aridiusundersell_description'];
 		} else {

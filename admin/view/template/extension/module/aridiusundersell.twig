@@ -386,74 +386,7 @@
                            </div>
                            <hr>
                            <hr>
-                           <div class="form-group">
-                              <label class="col-sm-2 control-label">{{ text_linkshow }}</label>
-                              <div class="col-sm-10 them">
-                                 <label class="radio-inline">
-                                 {% if (module_aridiusundersell_linkshow) %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkshow" value="0"/>
-                                 <span class="im_option">{{ text_yes }}</span>
-                                 {% else %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkshow" value="0"
-                                    checked="checked"/>
-                                 <span class="im_option">{{ text_yes }}</span>
-                                 {% endif %} 
-                                 </label>
-                                 <label class="radio-inline">
-                                 {% if (not module_aridiusundersell_linkshow) %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkshow" value="1"/>
-                                 <span class="im_option">{{ text_no }}</span>
-                                 {% else %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkshow" value="1"
-                                    checked="checked"/>
-                                 <span class="im_option">{{ text_no }}</span>
-                                 {% endif %} 
-                                 </label>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label class="col-sm-2 control-label">{{ text_linkvalid }}</label>
-                              <div class="col-sm-10 them">
-                                 <label class="radio-inline">
-                                 {% if (module_aridiusundersell_linkvalid) %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkvalid" value="0"/>
-                                 <span class="im_option">{{ text_yes }}</span>
-                                 {% else %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkvalid" value="0"
-                                    checked="checked"/>
-                                 <span class="im_option">{{ text_yes }}</span>
-                                 {% endif %} 
-                                 </label>
-                                 <label class="radio-inline">
-                                 {% if (not module_aridiusundersell_linkvalid) %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkvalid" value="1"/>
-                                 <span class="im_option">{{ text_no }}</span>
-                                 {% else %} 
-                                 <input class="options_none" type="radio" name="module_aridiusundersell_linkvalid" value="1"
-                                    checked="checked"/>
-                                 <span class="im_option">{{ text_no }}</span>
-                                 {% endif %} 
-                                 </label>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label class="col-sm-2 control-label">{{ text_placeholderlink }}</label>
-                              <div class="col-sm-10 them">
-                                 {% for language in languages %} 
-                                 <div class="input-group">
-                                    <span class="input-group-addon">
-                                    <img src="language/{{ language['code'] }}/{{ language['code'] }}.png" title="{{ language['name'] }}" />
-                                    </span>
-                                    <input name="module_aridiusundersell_placeholderlink[{{ language['language_id'] }}]"
-                                       value="{{ module_aridiusundersell_placeholderlink[language['language_id']] }}"
-                                       class="form-control"/>
-                                 </div>
-                                 {% endfor %} 
-                              </div>
-                           </div>
-                           <hr>
-                           <hr>
-                           <div class="form-group">
+                                <div class="form-group">
                               <label class="col-sm-2 control-label"
                                  for="input-limit">{{ entry_status }}</label>
                               <div class="col-sm-10 them">
