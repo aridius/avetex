@@ -102,8 +102,7 @@ font-size: 14px;
 line-height: 14px;
 }
 #top-links {
-top: 7px;
-padding-left: 3px;
+margin-left: auto;
 position: relative;
 }
 #top-links a + a {
@@ -1091,7 +1090,17 @@ position: relative;
     border-top: 0;
 	text-align: right;
 }
-
+#top .nobackground {
+	display: flex;
+    height: 100%;
+    align-items: center;
+}
+#top .nobackground .pull-left a {
+	color: #fff;
+}
+.top-header {
+	padding-bottom:10px;
+}
 @media (min-width: 768px) {
 	#shareModal.modal .modal-dialog .modal-content {
 	    min-width: 470px;
