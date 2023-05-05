@@ -1142,4 +1142,28 @@ list-style-type: none;
 	margin-bottom: 10px;
 }
 }
+@media (max-width: 767px) {
+.product-card .gallary-wrapper {
+	margin-right: -30px;
+    margin-left: -30px;
+	background-color: #fff;
+	    margin-bottom: 20px;
+    padding-bottom: 15px;
+}
+.backmob {
+	background-color: #fff;
+}
+.gallery-control-buttons__btn {
+	margin: 0 auto;
+}
+.main_img.swiper-pagination {
+	bottom:60px!important;
+}
+.main_img_button_z .gallery-control-buttons__btn span {
+    display: block;
+}
+.main_img_button_z .gallery-control-buttons__btn {
+width: 150px;
+}
+}
 
