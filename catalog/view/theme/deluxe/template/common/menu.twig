@@ -9,7 +9,7 @@
                <div id="menu_clone_h">
                   <ul class="nav navbar-nav">
                      <li class="dropdown hidev seevmenu_clmm {% if (class == 'common-home' and deluxe_seevmenu_menu_open != 1) %} open {% endif %} ">
-                        <a class="with-child dropdown-toggle" {% if (deluxe_link_menucatalog is not empty) %} href="{{ deluxe_link_menucatalog }}" {% endif %} {% if (deluxe_seevmenu_menu_open_cl == 0) %} data-toggle="dropdown" {% endif %} data-delay="1" data-close-others="false">
+                        <a class="dfgt with-child dropdown-toggle" {% if (deluxe_link_menucatalog is not empty) %} href="{{ deluxe_link_menucatalog }}" {% endif %} {% if (deluxe_seevmenu_menu_open_cl == 0) %} data-toggle="dropdown" {% endif %} data-delay="1" data-close-others="false">
                         <svg class ="vmenu">
                            <use xlink:href="catalog/view/theme/deluxe/image/vmenu.svg#vmenu" x="0" y="0"/>
                         </svg>
@@ -131,8 +131,8 @@
                      {% if (category['top']) %}
                      {% if (category['children']) %}
                      <li class="{% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}dropdown menu-large" {% if (category['column'] == 1 and deluxe_col1_menu != 1) %}{% else %}style='position:static;'{% endif %}>
-                     <a class="with-child dropdown-toggle" href="{{ category['href'] }}" data-hover="dropdown" data-delay="1" data-close-others="false"> {% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}<span class="fa fa-angle-down menu"></span></a>
-                     <div class="{% if (category['column'] == 1 and deluxe_col1_menu != 1) %}colm1{% endif %} bgm dropdown-menu megamenu row backgnone {% if (category['column'] == 1 and deluxe_col1_menu != 1) %}dropdown_top{% endif %}">
+                     <a class="dfgt with-child dropdown-toggle" href="{{ category['href'] }}" data-hover="dropdown" data-delay="1" data-close-others="false"> {% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}<span class="fa fa-angle-down menu"></span></a>
+                     <div class="{% if (category['column'] == 1 and deluxe_col1_menu != 1) %}colm1{% endif %} bgm dropdown-menu megamenu row  {% if (category['column'] == 1 and deluxe_col1_menu != 1) %}dropdown_top{% endif %}">
                         {% if ((category['column'] == 1 and deluxe_col1_menu != 1) or (category['column'] == 2 and deluxe_col1_menu != 2)) %}
                         <div class="container">
                            {% else %}
@@ -147,6 +147,8 @@
                                  </div>
                                  {% endif %}
                                  {% for child in category['children'] %}
+								 
+								 
                                  <ul class="list-unstyled" style="width: {% if (category['image_main'] and deluxe_main_photos_menu != 1) %}{{ 82/category['column']-1 }}{% else %} {{ 100/category['column']-1 }}{% endif %}%">
                                     {% if (child['children_lv3'] is defined and child['children_lv3']) %}
                                     <li class="with-child">
@@ -172,10 +174,11 @@
                                        {% if (not child['image_menu_ico2']) %}
                                        {% if (deluxe_photos_menu != 1 and (child['image2'] is not empty)) %}<span><a href="{{ child['href'] }}"><img class="opacityhv img-responsive" src="{{ child['image2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a></span>{% endif %}
                                        {% endif %}
-                                       <a href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" width="24" height="24" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %} {{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
+                                       <a class="with-childgg dropdown-togglegg" href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" width="24" height="24" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %} {{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
                                     </li>
                                     {% endif %}
                                  </ul>
+								 
                                  {% endfor %}
                               </div>
                            </div>
@@ -186,7 +189,7 @@
                         <div class="clearfix"></div>
                         </li>
                         {% else %}
-                        <li class="no-child {% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}"><a href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a></li>
+                        <li class="no-child {% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}"><a class="with-childgg dropdown-togglegg" href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" width="24" height="24" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a></li>
                         {% endif %}
                         {% endif %}
                         {% endfor %}
@@ -205,7 +208,7 @@
                      <!--other link-->
                      {% if (deluxe_main_link_menu[language_id]) %}
                      <li class="dropdown">
-                        <a class="with-child dropdown-toggle" href="{{ deluxe_main_link_href_menu[language_id] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{{ deluxe_main_link_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
+                        <a class="dfgt with-child dropdown-toggle" href="{{ deluxe_main_link_href_menu[language_id] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{{ deluxe_main_link_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
                         <div class="dropdown-menu">
                            <div class="dropdown-inner1 children-category">
                               <ul class="list-unstyled">
@@ -226,7 +229,7 @@
                      {% if (deluxe_info_menu != 1) %}
                      {% if (informations) %}
                      <li class="dropdown">
-                        <a class="with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false">{{ text_information }}<span class="fa fa-angle-down menu"></span></a>
+                        <a class="dfgt with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false">{{ text_information }}<span class="fa fa-angle-down menu"></span></a>
                         <div class="dropdown-menu">
                            <div class="dropdown-inner1 children-category">
                               <ul class="list-unstyled">
