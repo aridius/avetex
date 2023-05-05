@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                = 'Aridius (Deluxe) &nbsp;<strong style = "color: #4174CD;">Found a better price</strong>';
+$_['heading_title']                = 'Aridius (Deluxe) &nbsp;<strong style = "color: #4174CD;">Request more information</strong>';
 
 // Text
 $_['text_description']             = 'Display Description';

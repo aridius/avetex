@@ -1,14 +1,13 @@
 <?php
 // Heading
-$_['heading_title']          = '&#8690;Did you find a better price?';
-$_['buttonundersell_title']  = 'Did you find a better price?';
+$_['heading_title']          = 'Request more information';
+$_['buttonundersell_title']  = 'Request more information';
 $_['text_order']             = 'Better price message #%s';
 $_['text_subject']           = '%s - %s Better price message #%s';
 $_['text_firstname']         = 'Name: %s';
 $_['text_contact']           = 'Telephone: %s';
 $_['text_email']             = 'Email: %s';
 $_['text_comment']           = 'Comment: %s';
-$_['text_link']              = 'Link: %s';
 $_['text_product']           = 'Product: <a href="%s">%s</a>';
 $_['text_product_option']    = 'Options: %s';
 $_['text_quantity']          = 'Qty: %s';

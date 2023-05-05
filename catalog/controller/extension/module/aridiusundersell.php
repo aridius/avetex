@@ -32,16 +32,16 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 		$data['aridiusundersell_placeholdertell'] = $this->config->get('module_aridiusundersell_placeholdertell');
 		$data['aridiusundersell_placeholderfirstname'] = $this->config->get('module_aridiusundersell_placeholderfirstname');
 		$data['aridiusundersell_placeholderemail'] = $this->config->get('module_aridiusundersell_placeholderemail');
-		$data['aridiusundersell_placeholderlink'] = $this->config->get('module_aridiusundersell_placeholderlink');
+		
 		$data['aridiusundersell_placeholdercomment'] = $this->config->get('module_aridiusundersell_placeholdercomment');
 		$data['aridiusundersell_placeholdercomment'] = $this->config->get('module_aridiusundersell_placeholdercomment');
 		$data['aridiusundersell_mask'] = $this->config->get('module_aridiusundersell_mask');
 		$data['aridiusundersell_emailvalid'] = $this->config->get('module_aridiusundersell_emailvalid');
-		$data['aridiusundersell_linkvalid'] = $this->config->get('module_aridiusundersell_linkvalid');
+		
 		$data['aridiusundersell_firstnamevalid'] = $this->config->get('module_aridiusundersell_firstnamevalid');
 		$data['aridiusundersell_firstnameshow'] = $this->config->get('module_aridiusundersell_firstnameshow');
 		$data['aridiusundersell_emailshow'] = $this->config->get('module_aridiusundersell_emailshow');
-		$data['aridiusundersell_linkshow'] = $this->config->get('module_aridiusundersell_linkshow');
+		
 		$data['aridiusundersell_commentshow'] = $this->config->get('module_aridiusundersell_commentshow');
 
 		$data['aridiusundersell_imgw'] = $this->config->get('module_aridiusundersell_imgw');		
@@ -97,7 +97,7 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 		$firstname = (empty($this->request->post['aridiusundersell_firstname']) ? '' : $this->request->post['aridiusundersell_firstname']);
 		$email = (empty($this->request->post['aridiusundersell_email']) ? '' : $this->request->post['aridiusundersell_email']);
 		$comment = (empty($this->request->post['aridiusundersell_comment']) ? '' : $this->request->post['aridiusundersell_comment']);
-		$link = (empty($this->request->post['aridiusundersell_link']) ? '' : $this->request->post['aridiusundersell_link']);
+		
 
 		$product_id = $this->request->post['product_id'];
 
@@ -108,9 +108,7 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 			$aridiusundersell_firstnameshow = $this->config->get('module_aridiusundersell_firstnameshow');
 			$aridiusundersell_emailshow = $this->config->get('module_aridiusundersell_emailshow');
 			$aridiusundersell_quantity = $this->config->get('module_aridiusundersell_quantity');
-			$aridiusundersell_linkvalid = $this->config->get('module_aridiusundersell_linkvalid');
-			$aridiusundersell_linkshow = $this->config->get('module_aridiusundersell_linkshow');
-
+			
 			$this->load->model('catalog/product');
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			$quantity_formated = $this->request->post['quantity'];
@@ -127,9 +125,7 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 			if ( (!$aridiusundersell_firstnameshow == '1') && (!$aridiusundersell_firstnamevalid == '1') && (utf8_strlen($firstname) < 1) || (utf8_strlen($firstname) > 3200) ) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
-			if ( (!$aridiusundersell_linkshow == '1') && (!$aridiusundersell_linkvalid == '1') && (utf8_strlen($link) < 1) || (utf8_strlen($link) > 3200) ) {
-				$json['error']['link'] = $this->language->get('error_link');
-			}
+	
 
 			if ((!$aridiusundersell_emailshow == '1') && (!$aridiusundersell_emailvalid == '1') && ((utf8_strlen($email) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)))) {
 
@@ -187,7 +183,7 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 				'firstname' => $firstname,
 				'email' => $email,
 				'comment' => $comment,
-				'link' => $link,
+				
 				'product_id' => $product_id,
 				'quantity' => $quantity,
 				'product_name' => $product_info['name'],
@@ -209,9 +205,7 @@ class ControllerExtensionModuleAridiusundersell extends Controller {
 				if($email){
 					$email_text .= sprintf($this->language->get('text_email'), html_entity_decode($email), ENT_QUOTES, 'UTF-8') . "\n <br>";
 				}
-				if($link){
-					$email_text .= sprintf($this->language->get('text_link'), html_entity_decode($link), ENT_QUOTES, 'UTF-8') . "\n <br>";
-				}
+		
 				if($comment){
 					$email_text .= sprintf($this->language->get('text_comment'), html_entity_decode($comment), ENT_QUOTES, 'UTF-8') . "\n <br>";
 				}

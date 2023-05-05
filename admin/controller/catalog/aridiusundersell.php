@@ -281,7 +281,7 @@ class ControllerCatalogAridiusundersell extends Controller {
 					'order_id' => $result['order_id'],
 					'contact' => $result['contact'],
                     'firstname' => $result['firstname'],
-                    'link' => $result['link'],					
+                    				
                     'comment' => $result['comment'],
 					'email' => $result['email'],
                     'comment_manager' => $result['comment_manager'],					
