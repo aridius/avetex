@@ -802,20 +802,35 @@
 		 
          <div class="row rowprf">
 		  <div class="col-xs-12 col-sm-12">
+		  <ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" class="title_product" href="#description">{{ tab_description }}</a></li>
+				 {% if (theme_tabs ) %}
+                           {% for key, theme_tab  in theme_tabs %}
+                           {% if (theme_tab.title[language_id]) %}
+						   <li><a data-toggle="tab" class="title_product" href="#tab_them{{ key }}">{{ theme_tab.title[language_id] }}</a></li>
+                           {% endif %}
+                           {% endfor %}
+                           {% endif %}
+			</ul>
+		  
+			<div class="tab-content">
 		  {% if (description) %}
-		 <div class="title_product">{{ tab_description }}</div>
-		  <div>{{ description }}</div>
+		  <div id="description" class="tab-pane fade in active">{{ description }}</div>
 		   {% endif %}
 		     {% if (theme_tabs ) %}
                            {% for key, theme_tab  in theme_tabs %}
                            {% if (theme_tab.title[language_id]) %}
-                           <div class="title_product">{{ theme_tab.title[language_id] }}</div>
-						    <div>{{ (theme_tab['description']) }}</div>
+						    <div id="tab_them{{ key }}" class="tab-pane fade">{{ (theme_tab['description']) }}</div>
                            {% endif %}
                            {% endfor %}
                            {% endif %}
+						   
+						   
+			</div>		   
+						   
 						   {% if (deluxe_relpr_tab == 1 and products) %}
 			<div class="title_product">{{ text_related2 }}</div>
+				
 		  <div id="relpr">
                            <div id="prrelated" class="swiper-container">
                               <div class="swiper-wrapper">
