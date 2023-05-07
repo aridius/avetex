@@ -222,12 +222,7 @@
                <div class="item_cat caption">
                   <div class="{% if (deluxe_rating_cat != 1) %}raiting_thumb{% endif %} product-thumb">
 
-
-                     {% if (deluxe_lazy) %}
-                     <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></a></div>
-                     {% else %}
-                     <div class="image"><a href="{{ product['href'] }}"><img data-src="{{ product['thumb'] }}" src="catalog/view/theme/deluxe/js/aridius/loader.svg" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="lazyload img-responsive cat_main_img{{ product['product_id'] }}" width="{{ deluxe_image_product_width }}" height="{{ deluxe_image_product_height }}" /></a></div>
-                     {% endif %}
+                     <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" {% if (product['img_hover']) %} {% for img_hover in product['img_hover'] %}  onmouseover="this.src='{{ img_hover }}'" {% endfor %} onmouseout="this.src='{{ product['thumb'] }}'" {% endif %} class="img-responsive cat_main_img{{ product['product_id'] }}" /></a></div>
               
 		                        <div class="additional-links ">
                            <ul>

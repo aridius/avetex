@@ -1035,6 +1035,29 @@
 					$data['products'][] = array(
       ]]></search>
       <add position="before"><![CDATA[
+	  
+	  
+	  
+	  
+	  
+	               
+					  $results_img = $this->model_catalog_product->getProductImages($result['product_id']);
+					  $img_hover = array();
+					  foreach ($results_img as $result_img) {
+						if ($result_img['image']) {
+							$imgage_hover = $this->model_tool_image->resize($result_img['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+						} else {
+							$imgage_hover = false;
+						}
+						$img_hover[1] = $imgage_hover;
+						break;
+					  }		  
+	        
+	  
+	  
+	  
+	  
+	  
 	                $deluxe_img_additional = $this->config->get('theme_deluxe_img_additional');
 					$deluxe_img_additional_q = $this->config->get('theme_deluxe_img_additional_q');
 	                if ($deluxe_img_additional !=1) {
@@ -1124,6 +1147,7 @@
 					$data['products'][] = array(
       ]]></search>
       <add position="after"><![CDATA[
+	    'img_hover' => $img_hover,
 	                'reviews' => $result['reviews'],
 	                'img_hover' => $img_hover,
 					'price_no_format' => $result['price'],
