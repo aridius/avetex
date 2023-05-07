@@ -758,7 +758,7 @@
 					if ($category['image']) {
 					$image_main = $this->model_tool_image->resize($category['image'],$this->config->get('theme_deluxe_photos_width_image_main'), $this->config->get('theme_deluxe_photos_height_image_main'));
 					} else {		
-					$image_main = '';
+					$image_main = $this->model_tool_image->resize('placeholder.png',$this->config->get('theme_deluxe_photos_width_image_main'), $this->config->get('theme_deluxe_photos_height_image_main'));
 					};
 
 					if ($category['image_menu_ico']) {

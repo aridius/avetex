@@ -1,260 +1,53 @@
-<div class="row block_mheader">
-   <div class="btn-mobmenu_flex">
-      <div class="col-xs-6">
-         {% if (deluxe_mob_logo != 1) %}
-         <div class="mmune_logo">
-            {% if (logo) %}
-            {% if (location_mmenu == 'common-home') %}
-            <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
-            {% else %}
-            <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
-            {% endif %}
-            {% else %}
-            <h1><a href="{{ home }}">{{ name }}</a></h1>
-            {% endif %}
-         </div>
-         {% endif %}
-      </div>
-	  {% if languages|length > 1 %}
-      <div class="col-xs-6 lang_right">
-         {% for language in languages %}
-         {% if (language['code'] == language_code) %}
-         <button class="active btn_cur_lang btn-link language-select language-click" type="button" data-codelan="{{ language['code'] }}">{{ language['name'] }}</button>
-         {% else %}
-         <button class="btn_cur_lang btn-link language-select language-click" type="button" data-codelan="{{ language['code'] }}">{{ language['name'] }}</button>
-         {% endif %}
-         {% endfor %}
-      </div>
-	  {% endif %}
-   </div>
-   <div class="col-xs-12">
-   {% if currencies|length > 1 %}
-      <div class="currency_form" >
-         {% for currency in currencies %}
-         {% if (currency['code'] == currency_code) %}
-         <button class="active btn_cur_lang currency-select btn-link currency-push currency-click" type="button" data-code="{{ currency['code'] }}">{{ currency['code'] }}</button>
-         {% else %}
-         <button class="currency-select btn_cur_lang currency-select btn-link currency-push currency-click" type="button" data-code="{{ currency['code'] }}">{{ currency['code'] }}</button>
-         {% endif %}
-         {% endfor %}
-      </div>
-	  {% endif %}
-      {% if (logged) %}
-      <div class="mcostumer_name">
-         <a href="{{ account }}">
-            <div class="mobile_review_avatar">{{ firstmame_cost2 }}</div>
-            {{ firstmame_cost }} {{ lastname_cost }}
-         </a>
-      </div>
-      <div class="mcostumer_mail">
-         {{ email_cost }}
-      </div>
-      {% else %}
-      <a href="{{ register }}"><i class="fa fa-user"></i> {{ text_register }}</a>
-      <span>|<span>
-      <a href="{{ login }}">{{ text_login }}</a>
-      {% endif %}
-   </div>
+
+		
+<div class="menu-component__header-top">
+
+
+<a href="#" onclick="return false;" id="closemenu" class="closemenu x" data-uw-rm-brl="false" data-uw-rm-kbnav="click">×</a> 
+
+
+<div class="menu-component__header-top-links"><a href="/help" class="help-link" data-uw-rm-brl="false"><span class="help-link--icon"></span>
+                            Help
+                        </a> 
+						<a href="{{ wishlist }}" id="wishlist-total" class="liked-link"><i class="fa fa-heart"></i> <span class="sr-only">Liked</span> <span class="liked-link__circle">{{ text_wishlist }}</span></a></div></div>
+
+
+
+  <!-- <li><a href="{{ wishlist }}" id="wishlist-total"><i class="fa fa-heart"></i> {{ text_wishlist }}</a></li> -->
+
+
+<div class="button-row">
+<a href="/track-delivery" data-uw-rm-brl="false">Track Order</a> 
+<a href="/delivery" data-uw-rm-brl="false">Delivery Options</a> 
+<a href="/company/financing?sitecode=lsachl0d1" data-uw-rm-brl="false">Financing</a>
 </div>
-{% if (deluxe_mob_home != 1 and location_mmenu != 'common-home') %}
-<ul class="nav navbar-nav">
-   <li class = "home_mob"><a href="{{ base }}">{{ text_home }}</a></li>
-</ul>
-{% endif %}
-{% if (deluxe_mobcat_group != 1) %}
-<button type="button" class="navbar-toggle menu_up collapsed" data-toggle="collapse" data-target="#navbar_mmenu"><span class="cat_mob"><i class="fa fa-bars"></i> {{ text_category }}</span><i class="fammenu fa fa-plus"></i></button>
-{% endif %}
-<span class="clearfix"></span>
-<div {% if (deluxe_mobcat_group != 1) %} class="navbar-collapse collapse" {% endif %} id="navbar_mmenu">
-<div id="menu" class="navbar">
-   <div class="menu_mob_plus">
-      <div class="hidem">
-         <ul class="nav navbar-nav">
-            {% for category in categories %}
-            {% if (category['children']) %}
-            <li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-            <li class="{% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %} dropdown">
-               <a class="with-child dropdown-toggle" href="{{ category['href'] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{% if (category['image_menu_icol']) %}<span class="menumob_icon_svg"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}<span class="fa fa-angle-down menu"></span></a>
-               <div class="dropdown-menu">
-                  <div class="dropdown-inner children-category">
-                     {% for child in category['children'] %}
-                     <ul class="list-unstyled">
-                        {% if (child['children_lv3'] is defined and child['children_lv3']) %}
-                        <li class="with-child" >
-                           <a href="{{ child['href'] }}"><span class="style2lv">{{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
-                        </li>
-                        {% if (deluxe_3lv_menu != 1) %}
-                        {% for child_lv3 in child['children_lv3'] %}
-                        <li class="children_lv3"><a href="{{ child_lv3['href'] }}">&nbsp;&nbsp;- {{ child_lv3['name'] }}</a></li>
-                        {% endfor %}
-                        {% endif %}
-                        {% else %}
-                        <li><a href="{{ child['href'] }}"><span class="style2lv">{{ child['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a></li>
-                        {% endif %}
-                     </ul>
-                     {% endfor %}
-                  </div>
-               </div>
-            </li>
-            {% else %}
-            <li class="with-child_nc"><a href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menumob_icon_svg"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %} {{ category['name'] }}{% if (deluxe_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ deluxe_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ deluxe_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ deluxe_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a></li>
-            {% endif %}
-            {% endfor %}
-         </ul>
-      </div>
-      <ul class="nav navbar-nav">
-         <!--other link-->
-         {% if (deluxe_main_link_menu[language_id]) %}
-         <li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-         <li class="dropdown">
-            <a class="with-child dropdown-toggle" href="{{ deluxe_main_link_href_menu[language_id] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{{ deluxe_main_link_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
-            <div class="dropdown-menu">
-               <div class="dropdown-inner1 children-category">
-                  <ul class="list-unstyled">
-                     {% if (deluxe_top_links4 ) %}
-                     {% for deluxe_top_link4 in deluxe_top_links4 %}
-                     <li>
-                        <a {% if (deluxe_top_link4['link_top'][language_id]) %} href="{{ deluxe_top_link4['link_top'][language_id] }}"{% endif %} title="{{ deluxe_top_link4['title'][language_id] }}">{% if (deluxe_top_link4['faicons_top']) %} <i class="{{ deluxe_top_link4['faicons_top'] }}"></i>{% endif %}{% if (deluxe_top_link4['title']) %} {{ deluxe_top_link4['title'][language_id] }}{% endif %}</a>
-                     </li>
-                     {% endfor %}
-                     {% endif %}
-                  </ul>
-               </div>
-            </div>
-         </li>
-         {% endif %}
-         <!--other link END-->
-      </ul>
-   </div>
-</div>
-</div>
-<div class="mm_other">
-{% if (deluxe_mob_cart != 1) %}
-<div class="cart_open_mmenu"><i class="fa fa-shopping-cart"></i> {{ text_cart }} </div>
-<script>
-   $(".cart_open_mmenu").click(function(){slideout.close();$.magnificPopup.open({removalDelay:500,fixedContentPos:!0,items:{src:"index.php?route=common/aridius_cart/info"},type:"ajax",mainClass:"mfp-fade"})});
-</script>
-{% endif %}
-{% if (deluxe_mob_account != 1) %}
-<div class="menu_mob_plus">
-   <ul class="nav navbar-nav">
-      {% if (logged) %}
-      <li><a href="{{ account }}"><i class="fa fa-user"></i> {{ text_account }}</a></li>
-      {% endif %}
-      <li><a href="{{ wishlist }}" id="wishlist-total"><i class="fa fa-heart"></i> {{ text_wishlist }}</a></li>
-      <li><a href="{{ compare }}" id="compare-total"><i class="fa fa-exchange"></i> {{ text_compare }}</a></li>
-      <!--informations-->
-      {% if (deluxe_info_menu != 1) %}
-      {% if (informations) %}
-      <li>
-         <hr>
-      </li>
-      {% for information in informations %}
-      <li><a href="{{ information['href'] }}">{{ information['title'] }}</a></li>
-      {% endfor %}
-      {% endif %}
-      {% endif %}
-      <!--informations END-->
-   </ul>
-</div>
-{% endif %}
-<div class="menu_mob_plus">
-   <ul class="nav navbar-nav">
-      <!--add menu link-->
-      {% if (deluxe_top_links8 ) %}
-      {% for deluxe_top_link8 in deluxe_top_links8 %}
-      <li>
-         <a {% if (deluxe_top_link8['link_top'][language_id]) %} href="{{ deluxe_top_link8['link_top'][language_id] }}"{% endif %}>{% if (deluxe_top_link8['faicons_top']) %} <i class="{{ deluxe_top_link8['faicons_top'] }}"></i> {% endif %}{% if (deluxe_top_link8['title']) %}{{ deluxe_top_link8['title'][language_id] }}{% endif %}</a>
-      </li>
-      {% endfor %}
-      {% endif %}
-      <!--add menu link-->
-	              {% if (deluxe_top_links6 ) %}
-                  {% for deluxe_top_link6 in deluxe_top_links6 %}
-                  <li>
-                     <a {% if (deluxe_top_link6['link_top'][language_id]) %} href="{{ deluxe_top_link6['link_top'][language_id] }}"{% endif %} title="{{ deluxe_top_link6['title'][language_id] }}">{% if (deluxe_top_link6['faicons_top']) %} <i class="{{ deluxe_top_link6['faicons_top'] }}"></i>{% endif %}{% if (deluxe_top_link6['title']) %} {{ deluxe_top_link6['title'][language_id] }}{% endif %}</a>
-                  </li>
-                  {% endfor %}
-                  {% endif %}
-   </ul>
-</div>
+
+
+
+
+
+		
+<div class="menu-component__body">
 <ul class="list-unstyled">
-   {% if (theme_tells and deluxe_mob_tell != 1) %}
-   <li>
-      <hr>
-   </li>
-   {% if (theme_tells ) %}
-   {% for theme_tell in theme_tells %}
-   <li class = "tell_mmenu">
-      <a {% if (theme_tell['title']) %} href="tel:{{ theme_tell['title2'] }}"{% endif %} >{% if (theme_tell['image']) %}<span class="svg_tell"><img src="{{ theme_tell['image'] }}" alt="phone"></span>{% endif %}<span class="title_tell">{{ theme_tell['title'] }}</span></a>
-   </li>
-   {% endfor %}
-   {% endif %}
-   {% endif %}
-   <li class = "tell_mmenu">
-      <a href="tel:{{ deluxe_telephone_mainheader2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheader[language_id] }}</span></a>
-   </li>
-   <li class = "tell_mmenu">
-      <a href="tel:{{ deluxe_telephone_mainheader2n2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheadern2[language_id] }}</span></a>
-   </li>
-   {% if (deluxe_work_time is not empty and deluxe_mob_work != 1) %}
-   <li class = "work_time_mmenu ">
-      {{ deluxe_work_time }} {% if (deluxe_work_time1 is not empty) %}{{ deluxe_work_time1 }}{% endif %}  {% if (deluxe_work_time2 is not empty) %}{{ deluxe_work_time2 }}{% endif %}
-   </li>
-   {% endif %}
-   {% if (deluxe_mail_header[language_id] and deluxe_mob_mail != 1) %}
-   <li class = "mail_mmenu"><a onClick="javascript:window.open('mailto:{{ deluxe_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ deluxe_mail_header[language_id] }}</a></li>
-   {% endif %}
-   {% if (deluxe_address and deluxe_mob_address != 1 ) %}
-   <li class = "address_mmenu">
-      {{ deluxe_address }}
-   </li>
-   {% endif %}
+            {% for category in categories %}
+            {% if (category['children']) %}		
+<li><a href="{{ category['href'] }}"><img width="58" height="47" alt="" role="presentation" src="{{ category['image_main'] }}" class="img-responsive">
+                              {{ category['name'] }}
+                            </a></li>
+		    {% endif %}
+		  {% endfor %}
+		  
 </ul>
-</div>
-<script>
-   $(document).ready(function(){
-   $('.currency-click').on('click', function() {
-   var code_currency = $(this).attr("data-code");
-   $(".currency-call[name='" + code_currency + "']").trigger('click');
-   });
-   $('.language-click').on('click', function() {
-   var code_languagen = $(this).attr("data-codelan");
-   $(".language-call[name='" + code_languagen + "']").trigger('click');
-   });
-   });
-</script>
-<script>
-   // mobile menu
-   $(document).ready(function(){
-   $('#menu .menu_mob_plus li').click(function(e) {
-   $(this).toggleClass("open").find('>ul').stop(true, true).slideToggle(3000)
-   .end().siblings().find('>ul').slideUp().parent().removeClass("open");
-   e.stopPropagation();
-   // Замена + на - во время открытия меню
-   $(this).prev().find('.fa-plus').toggle();
-   $(this).prev().find('.fa-minus').toggle();
-   });
-   $('#menu li a').click(function(e) {
-   e.stopPropagation();
-   });
-   // Раскрытие/скрытие пунктов меню 3го уровня
-   $('.children-category > ul > li').each(function(i, elem){
-   if( $(elem).hasClass('children_lv3') ) {
-   var ulElements = $(elem).parent().find('li');
-   if( $(ulElements[0]).find('a.plus-link').length == 0 ) {
-   $(ulElements[0]).append('<a href="#" class="plus-link"><i class="fa fa-plus" style="display: inline; "></i><i class="fa fa-minus" style="display: none;"></i></a>');
-   $(ulElements[0]).find('a.plus-link').click(function(e){
-   $(ulElements[0]).find('a.plus-link > .fa-plus').toggle();
-   $(ulElements[0]).find('a.plus-link > .fa-minus').toggle();
-   $(ulElements[0]).parent().find('.children_lv3').toggle();
-   return false;
-   });
-   }
-   }
-   });
-   $('.menu_up').click(function(e) {
-   $(".fammenu").toggleClass("fa-plus fa-minus");
-   });
-   });
-</script>
+</div>	
+		  
+		  
+		<script>
+		
+		
+		
+		$( "#closemenu" ).on( "click", function() {
+slideout.close();
+} );
+		
+		</script>
+		
