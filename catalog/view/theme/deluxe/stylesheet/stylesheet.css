@@ -1152,8 +1152,20 @@ position: relative;
     border-color: #333!important;
 
 }
-
-
+.outstock {
+	background-color: #9a3100!important;
+    color: #fff;
+    max-width: 200px;
+        margin: -25px auto 15px auto!important;
+    text-align: center;
+        padding: 10px 15px;
+    border-radius: 0 0 8px 8px!important;
+}
+.outstock .rewardoff {
+	    color: #fff!important;
+    font-size: 19px;
+    font-weight: 600;
+}
 
 
 @media (min-width: 768px) {
