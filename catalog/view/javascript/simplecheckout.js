@@ -1162,7 +1162,7 @@
                     usedBlocks.push($block.attr("id"));
                 }
 
-                copyFields($block.find("input,select,textarea").serializeArray());
+copyFields($block.find("input,select,textarea").serializeArray());
             });
 
             $(self.params.mainContainer + " .simplecheckout-step:not(:visible) .simplecheckout-block:not(#simplecheckout_payment_form)").each(function() {
@@ -1614,7 +1614,12 @@
 
             if (total) {
                 $.each(["#cart_total", "#cart-total", "#cart_menu .s_grand_total", "#cart .tb_items", "#cart .tb_total", "#menu_wrap #cart-total"], function(index, selector) {
-                    $(selector).html(total);
+                    $(selector).html('<span><span class = "cart-item"><span class ="cart-item-after">' + total + '</span></span></span>');
+						if (total != 0) {
+				$('#cart').addClass('cart_show');
+				} else {
+				$('#cart').removeClass('cart_show');
+				}
                 });
 
                 $("#weight").text(weight);
