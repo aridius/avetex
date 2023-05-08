@@ -6,7 +6,7 @@ $_['heading_title']            = 'Shopping Cart';
 $_['text_success']             = '<img class = "infoimg" src="%s"/> <span class = "infotext">Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!</span>';
 $_['text_remove']              = 'Success: You have modified your shopping cart!';
 $_['text_login']               = 'Attention: You must <a href="%s">login</a> or <a href="%s">create an account</a> to view prices!';
-$_['text_items']               = '<span class = "cart-item"><span class ="cart-item-after">%s</span></span><span class = "cart-price"> item(s) - %s</span>';
+$_['text_items']               = '%s';
 $_['text_points']              = 'Reward Points: %s';
 $_['text_next']                = 'What would you like to do next?';
 $_['text_next_choice']         = 'Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.';

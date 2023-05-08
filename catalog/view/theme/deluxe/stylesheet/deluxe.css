@@ -1403,7 +1403,7 @@ right: 5px;
 bottom: 5px;
 }
 .modal-open {
-overflow-y: scroll!important;
+overflow-y: none!important;
 }
 #textModal.modal {
 z-index: 2050;

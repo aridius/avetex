@@ -934,13 +934,17 @@ display: none;
                         <div class="mob_cart order_cart">
                            {{ cart }}
                         </div>
-                        <div class="mob_compare order_compare">
+                        <div class="mob_compare order_compare" id="wish_check">
                       
 						     <a href="{{ wishlist }}" data-toggle="tooltip" title="{{ text_wishlist_name }}">
                                <b class="fr2 cartphotos"> {{ deluxe_wl_img }}</b>
-                              <!-- <div class="mob_cart"> -->
-                                 <!-- <span class="cart-item_h"><span class ="cart-item-after_h"><span id="wishlist-total"> {{ text_wishlist }}</span></span></span> -->
-                              <!-- </div> -->
+							   <div id="wish_show">
+							   {% if (wishlist_show != 0) %}
+                              <div class="mob_cart wish_sh">
+                                 <span class="cart-item_h"><span class ="cart-item-after_h"><span id="wishlist-total"> {{ text_wishlist }}</span></span></span>
+                              </div>
+							  {% endif %}
+							   </div>
 							  <div class="">
                                {{ text_wish_head }}
                               </div>

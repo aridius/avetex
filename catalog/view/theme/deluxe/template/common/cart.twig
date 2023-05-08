@@ -1,6 +1,10 @@
-<div id="cart" class="btn-group btn-block cart_openp">
+{% if (text_items != 0) %}
+<div id="cart" class="btn-group btn-block cart_openp cart_show">
+	 {% else %}
+	 <div id="cart" class="btn-group btn-block cart_openp">
+ {% endif %}	
 <b id="frame2" class="cartphotos"> {{ deluxe_cart_img }} </b>
-<!-- <span><span id="cart-total">{{ text_items }}</span>&nbsp;<span class="caret"></span></span> -->
+<span><span id="cart-total"><span class = "cart-item"><span class ="cart-item-after">{{ text_items }}</span></span></span></span>
  <div class="hidden-xs">
      {{ text_cart_head }}
   </div>

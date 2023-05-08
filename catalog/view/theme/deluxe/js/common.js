@@ -128,15 +128,20 @@ var cart = {
 				});
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {
-						$('#cart button > span').html('<span> &nbsp;' + json['total'] + '&nbsp;<span class="caret"></span></span>');
+						$('#cart button > span').html('<span><span class = "cart-item"><span class ="cart-item-after">' + json['total'] + '</span></span></span>');
 					}, 100);
 	            $('#cart').load('index.php?route=common/cart/info #cart > *');
 	            $('#cart2').load('index.php?route=common/cart2/info #cart2 > *');
 				
 				
 	cart_header.load('index.php?route=common/cart/info #cart > *');
-	cart_scroll.load('index.php?route=common/cart/info #cart > *');		
-				
+	cart_scroll.load('index.php?route=common/cart/info #cart > *');	
+
+					if (json['total'] != 0) {
+				$('#cart').addClass('cart_show');
+				} else {
+				$('#cart').removeClass('cart_show');
+				}
 				
 				
 				$('#aridius_cart').load('index.php?route=common/aridius_cart/info #aridius_cart > *', function() {
@@ -262,7 +267,7 @@ var cart = {
 			success: function(json) {
 				// Need to set timeout otherwise it wont update the total
 				setTimeout(function () {
-					$('#cart button > span').html('<span> &nbsp;' + json['total'] + '&nbsp;<span class="caret"></span></span>');
+					$('#cart button > span').html('<span><span class = "cart-item"><span class ="cart-item-after">' + json['total'] + '</span></span></span>');
 				}, 100);
 				var now_location = String(document.location.pathname);
 				if ((now_location == '/cart/') || (now_location == '/checkout/') || (getURLVar('route') == 'checkout/cart') || (getURLVar('route') == 'checkout/checkout')) {
@@ -274,6 +279,12 @@ var cart = {
 				carousel_cart_related();
 				carousel_cart_viewed();
 			});
+				}
+				
+				if (json['total'] != 0) {
+				$('#cart').addClass('cart_show');
+				} else {
+				$('#cart').removeClass('cart_show');
 				}
 					$('#preloader_cart').remove();
 
@@ -404,8 +415,14 @@ var wishlist = {
                 $('.alert').remove();
                 if (json['success']) {
                     $("#wishlist").modal('show');
-                    $("#wishlist .modal-body p").html(json['success']);
+					$("#wishlist .modal-body p").html(json['success']);
+
+				if($('#wish_show div').is('.wish_sh')) {
                     $('#wishlist-total, #wishlist-total2, #wishlist-total3').html(json['total']);
+				} else {
+					$('#wish_show').html('<div class="mob_cart wish_sh"><span class="cart-item_h"><span class ="cart-item-after_h"><span id="wishlist-total">1</span></span></span></div>');
+				}
+
                 }
             },
 			error: function(xhr, ajaxOptions, thrownError) {

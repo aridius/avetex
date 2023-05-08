@@ -98,10 +98,10 @@
                         </div>
 						 </div>
                         {% endif %}
-                     {% if (thumb or images) %}
-                     <div class="col-xs-12 col-sm-10">
+                     {% if (options or images) %}
+                     <div class="col-xs-12 col-sm-10 main_plus">
 					 {% else %}
-					 <div class="col-xs-12 col-sm-12">
+					 <div class="col-xs-12 col-sm-12 main_one">
 					  {% endif %}
                         <div class="thumbnails demo-gallery swiper-container">
                            <div class="positionsticker">
@@ -129,7 +129,9 @@
                               {% endfor %}
                               {% endif %}
                            </div>
+						    {% if (options or images) %}
 						    <div class="main_img_v2 swiper-button-next hidden-xs"><i class="fa fa-chevron-right fa-5x"></i></div>
+							 {% endif %}
                            <ul class="swiper-wrapper">
                               {% if (thumb) %}
                               <li class="swiper-slide"><span class="thumbnail imglink gallery_img_main">
@@ -163,10 +165,10 @@
                               {% endfor %}
                               {% endif %}
                            </ul>
-						  
+						   {% if (options or images) %}
                            <div class="main_img_v2 swiper-button-prev hidden-xs"><i class="fa fa-chevron-left fa-5x"></i></div>
                            <div class="main_img swiper-pagination"></div>
-						   
+						    {% endif %}
 						   <div class="main_img_button_z">
 							<button class="gallery-control-buttons__btn">
                                 <svg aria-hidden="true" width="15" height="16" viewBox="0 0 15 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1853,10 +1855,15 @@
    removalDelay: 0,
    mainClass: 'my-mfp-zoom-in'
    });
-   $('#cart button > span').html('<span> &nbsp;' + json['total'] + '&nbsp;<span class="caret"></span></span>');
+   $('#cart button > span').html('<span><span class = "cart-item"><span class ="cart-item-after">' + json['total'] + '</span></span></span>');
    cart_header.load('index.php?route=common/cart/info #cart > *');
    cart_scroll.load('index.php?route=common/cart/info #cart > *');
    $('#cart2').load('index.php?route=common/cart2/info #cart2 > *');
+   		if (json['total'] != 0) {
+				$('#cart').addClass('cart_show');
+				} else {
+				$('#cart').removeClass('cart_show');
+				}
    $('#aridius_cart').load('index.php?route=common/aridius_cart/info #aridius_cart > *', function() {
    carousel();
    });
@@ -2086,9 +2093,11 @@
 
    $(".sh-pop").on( "click", function() {
 		$("body").css('overflow','hidden');
+		$("body").css('padding-right','17px');
 		$("#shareModal").modal('show');
 	});
 	$('#shareModal').on('hidden.bs.modal', function () {
+		$("body").css('padding-right','');
 		$("body").css('overflow','auto');
 	})
  
