@@ -1152,6 +1152,10 @@ position: relative;
     border-color: #333!important;
 
 }
+
+
+
+
 @media (min-width: 768px) {
 	#cart #cart-total .cart-item-after {
 
@@ -1298,4 +1302,22 @@ height: 30px;
 }
 
 }
-
+@media print {
+header, footer, .nav-tabs, .taxp2, #products_, .title_product, #shareModal, #top, .fix-header, .top-menu, .backmob, .swiper-button-prev, .swiper-button-next, .col_first, .title_product,#tab-review, .footercon_mail, .close, head, .addimg_index {
+    display: none!important;
+  }
+  .demo-gallery {
+  visibility: hidden !important;
+  width:500px;
+  height:500px;
+  margin-left:25%!important;
+  }
+  #main-image {
+  visibility: visible !important;
+	
+  }
+  .box-prinfo {
+  
+  }
+  
+}

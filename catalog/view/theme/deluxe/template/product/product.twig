@@ -7,7 +7,7 @@
 {% else %}
 {% set class = 'col-sm-12' %}
 {% endif %}
-<div id="cont" class="{{ class }}" itemscope itemtype="http://schema.org/Product">
+<div id="cont" class="{{ class }} print" itemscope itemtype="http://schema.org/Product">
 <div class="row backmob">
    <div class="col-xs-12">
       <div class="bread_scroll">
@@ -53,7 +53,7 @@
                   {% endif %}
                   {% if (deluxe_imageadd_vertical == 0) %}
                   {% if (thumb or images) %}
-				  <div id="fix_image">
+				  <div id="fix_image" >
                   <div class="gallary-wrapper">
                         {% if (options or images) %}
 						<div class="addimg_index col-sm-2 hidden-xs">
@@ -2083,10 +2083,11 @@
 <style>body{background-color: #F5F5F5!important}</style>
 <div id="shareModal" class="modal fade  come-from-modal right" data-backdrop = "false" >
 <div role="document" class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" data-dismiss="modal" aria-label="Close" class="close" data-uw-cer-popup-close="" tabindex="0"><span aria-hidden="true">×</span></button> <h2 id="mySocialShareModalLabel" class="shareModal-title">Share This Item</h2></div> <div class="modal-body">
-	<a id="shareViaEmail" href="#" class="shareModal-box" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-envelope"></i> Email</a>
-	<a id="shareCopy" href="#" data-clipboard-target="#shareURL" class="shareModal-box" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-files-o"></i> Copy Link</a>
-	<input id="shareURL" value="https://www.livingspaces.com/pdp-jaxon-grey-5-piece-round-extension-dining-set-wwood-chairs-202270" data-uw-rm-form="fx" tabindex="0"> <a id="sharePrint" href="#" class="shareModal-box hidden-xs" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-print"></i> Print</a>
-	<a id="pinterest" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.livingspaces.com%2fpdp-jaxon-grey-5-piece-round-extension-dining-set-wwood-chairs-202270&amp;media=https%3a%2f%2fwww.livingspaces.com%2fglobalassets%2fproductassets%2f200000-299999%2f200000-209999%2f202000-202999%2f202200-202299%2f202270%2f202270_0.jpg%3fw%3d1911%26h%3d1288%26mode%3dpad&amp;description=Jaxon+Grey+5+Piece+Round+Extension+Dining+Set+With+Wood+Chairs" target="_blank" class="shareModal-box" data-uw-rm-brl="false" aria-label="Pinterest - opens in new tab" data-uw-rm-ext-link="" uw-rm-external-link-id="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.livingspaces.com%2fpdp-jaxon-grey-5-piece-round-extension-dining-set-wwood-chairs-202270&amp;media=https%3a%2f%2fwww.livingspaces.com%2fglobalassets%2fproductassets%2f200000-299999%2f200000-209999%2f202000-202999%2f202200-202299%2f202270%2f202270_0.jpg%3fw%3d1911%26h%3d1288%26mode%3dpad&amp;description=jaxon+grey+5+piece+round+extension+dining+set+with+wood+chairs$pinterest" tabindex="0"><i aria-hidden="true" class="fa fa-pinterest-p"></i> Pinterest</a>
+	<a id="shareViaEmail" href="mailto:AvetexDev@gmail.com" class="shareModal-box" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-envelope"></i> Email</a>
+	<a id="shareCopy" href="javascript:void(0)" onclick="copyURL();return false;" data-clipboard-target="#shareURL" class="shareModal-box" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-files-o"></i> Copy Link</a>
+	<input id="shareURL" value="{{ share }}" data-uw-rm-form="fx" tabindex="0"> 
+	<a id="sharePrint" href="javascript:window.print()" class="shareModal-box hidden-xs" data-uw-rm-brl="false" tabindex="0"><i aria-hidden="true" class="fa fa-print"></i> Print</a>
+	<a id="pinterest" href="https://www.pinterest.com/avetexfurniture/" target="_blank" class="shareModal-box" data-uw-rm-brl="false" aria-label="Pinterest - opens in new tab" data-uw-rm-ext-link="" uw-rm-external-link-id="" tabindex="0"><i aria-hidden="true" class="fa fa-pinterest-p"></i> Pinterest</a>
 	<div class="modal-footer"></div></div></div></div>
 </div>
 <script>
@@ -2101,5 +2102,12 @@
 		$("body").css('overflow','auto');
 	})
  
+</script>
+<script>
+function copyURL() {
+  var copyText = document.getElementById("shareURL");
+  copyText.select();
+  document.execCommand("copy");
+}
 </script>
 {{ footer }}
