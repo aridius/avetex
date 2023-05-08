@@ -52,9 +52,9 @@
     
             <ul class="collapse all list-unstyled" id="information_f1">
               
-               <li><a href="">FAQ and Information</a></li>
-			   <li><a href="">Shipping Info</a></li>
-			   <li><a href="">Terms & Conditions</a></li>
+               <li><a href="faq">FAQ and Information +</a></li>
+			   <li><a href="services">Shipping Info</a></li>
+			   <li><a href="terms">Terms & Conditions +</a></li>
 			   <li><a href="">Privacy Policy</a></li>
 			   
 			   
@@ -68,10 +68,10 @@
        
             <ul class="collapse all list-unstyled" id="information_f2">
               
-               <li><a href="">Furniture Buying Guides</a></li>
-			   <li><a href="">Online Furniture Store</a></li>
-			   <li><a href="">Modern Furniture Blog</a></li>
-			   <li><a href="">Manufacturers We Carry</a></li>
+               <li><a href="furniture-buying-guide-tips">Furniture Buying Guides +</a></li>
+			   <li><a href="">Online Furniture Store </a></li>
+			   <li><a href="blog">Modern Furniture Blog +</a></li>
+			   <li><a href="brands">Manufacturers We Carry +</a></li>
 
             </ul>
          </div>
@@ -81,10 +81,10 @@
        
             <ul class="collapse all list-unstyled" id="information_f3">
               
-               <li><a href="">Financing</a></li>
-			   <li><a href="">International Shipping</a></li>
-			   <li><a href="">Extended Warranty</a></li>
-			   <li><a href="">SF Bay Area Delivery</a></li>
+               <li><a href="san-francisco-furniture-financing">Financing +</a></li>
+			   <li><a href="international-delivery">International Shipping </a></li>
+			   <li><a href="mfs-combo-mfs-5-year-furniture-protection-plan">Extended Warranty </a></li>
+			   <li><a href="sf-bay-area-free-furniture-delivery">SF Bay Area Delivery +</a></li>
 
             </ul>
          </div>
@@ -95,10 +95,10 @@
        
             <ul class="collapse all list-unstyled" id="information_f4">
               
-               <li><a href="">Login / Create Account</a></li>
-			   <li><a href="">Order Status</a></li>
-			   <li><a href="">My Cart</a></li>
-			   <li><a href="">Checkout</a></li>
+               <li><a href="login">Login / Create Account +</a></li>
+			   <li><a href="orderstatus">Order Status +</a></li>
+			   <li><a href="checkout/simplecheckout">My Cart +</a></li>
+			   <li><a href="checkout/simplecheckout">Checkout +</a></li>
 
             </ul>
          </div>
@@ -109,9 +109,9 @@
         
             <ul class="collapse all list-unstyled" id="information_f5">
               
-               <li><a href="">San Francisco Showroom</a></li>
-			   <li><a href="">About Us</a></li>
-			   <li><a href="">Contact Us</a></li>
+               <li><a href="showroom">San Francisco Showroom +</a></li>
+			   <li><a href="about_us">About Us +</a></li>
+			   <li><a href="contact-us">Contact Us +</a></li>
 			  
 
             </ul>
@@ -486,15 +486,15 @@
    s_left = '{{ currency['symbol_left'] }}';
    s_right = '{{ currency['symbol_right'] }}';
    n = n * {{ currency['value'] }};
-   i = parseInt(n = Math.abs(n).toFixed(c)) + '';
+   i = parseInt(n = Math.abs(n).toFixed(c))  '';
    j = ((j = i.length) > 3) ? j % 3 : 0;
-   return s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right;
+   return s_left  (j ? i.substr(0, j)  t : '')  i.substr(j).replace(/(\d{3})(?=\d)/g, "$1"  t)  (c ? d  Math.abs(n - i).toFixed(c).slice(2) : '')  s_right;
    }
 </script>
 <script>
    function quantity_info(product_id, maximum) {
    if(maximum >= 0) {
-   $('.product_stock_quantity'+product_id).html('<span class="alert_danger">{{ text_maximum }} '  + maximum + '</span>').show();
+   $('.product_stock_quantity'+product_id).html('<span class="alert_danger">{{ text_maximum }} '   maximum  '</span>').show();
    }
    }
 </script>
@@ -510,7 +510,7 @@
 <script>
    function change_img_opt(product_id, src) {
    if (src) {
-   $('.cat_main_img' + product_id).attr('src', src);
+   $('.cat_main_img'  product_id).attr('src', src);
    }
    }
 </script>

@@ -19,56 +19,29 @@
          <div class="box_contact_usp">
             <div class="col-xs-12 col-sm-4 contact_usp">
                <legend>{{ heading_title }}</legend>
-               <ul class="list-unstyled">
-                  {% if (theme_tells) %}
-                  {% for theme_tell in theme_tells %}
-                  <li class = "footer_tell">
-                     <a {% if (theme_tell['title']) %} href="tel:{{ theme_tell['title2'] }}"{% endif %} ><span class="svg_tell"><img src="{{ theme_tell['image'] }}" alt="phone"></span><span class="title_tell">{{ theme_tell['title'] }}</span></a>
-                  </li>
-                  {% endfor %}
-                  {% endif %}
-                  <li class = "footer_tell">
-                     <a href="tel:{{ deluxe_telephone_mainheader2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheader[language_id] }}</span></a>
-                     <a href="tel:{{ deluxe_telephone_mainheader2n2[language_id] }}"><span class="title_tell title_tell2">{{ deluxe_telephone_mainheadern2[language_id] }}</span></a>
-                  </li>
-                  {% if (deluxe_time_footer == '0') %}
-               </ul>
-               <div class="work_time_all fl2">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i>
-                  <ul class="list-unstyled">
-                     {% if (deluxe_work_time is not empty) %}
-                     <li class = "work_time work_timef ">
-                        {{ deluxe_work_time }}
-                     </li>
-                     {% endif %}
-                     {% if (deluxe_work_time1 is not empty) %}
-                     <li class = "work_time">
-                        {{ deluxe_work_time1 }}
-                     </li>
-                     {% endif %}
-                     {% if (deluxe_work_time2 is not empty) %}
-                     <li class = "work_time">
-                        {{ deluxe_work_time2 }}
-                     </li>
-                     {% endif %}
-                  </ul>
-               </div>
-               <ul class="list-unstyled">
-                  {% endif %}
-                  {% if (deluxe_mail_header[language_id] and deluxe_mail_footer == '0' ) %}
-                  <li class = "footer_mail"><i class="fa fa-envelope" aria-hidden="true"></i> <a onClick="javascript:window.open('mailto:{{ deluxe_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ deluxe_mail_header[language_id] }}</a></li>
-                  {% endif %}
-               </ul>
-               {% if (deluxe_address[language_id] and deluxe_address_footer == '0' ) %}
-               <div class="work_time_all fl">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <ul class="list-unstyled">
-                     <li class = "work_time adress">
-                        {{ deluxe_address }}
-                     </li>
-                  </ul>
-               </div>
-               {% endif %}
+
+
+<div class="cu-info">
+
+
+
+<div class="cu-header">Avetex Furniture</div>
+<div>6114 Geary Blvd.</div>
+<div>San Francisco, CA 94121</div>
+<div>(between 25th &amp; 26th Ave)</div>
+<div class="cu-phone">
+<div>Landline: 415.831.6529</div>
+<div>Landline: 415.599.0202</div>
+
+<div>Toll Free 888.228.3839</div>
+<div>Fax: 415.831.6539</div></div>
+<br>
+<br>
+<div class="cu-header">Business Hours<br></div>
+<div>Monday - Saturday 11am - 6pm</div>
+<div>Sunday - Closed</div>
+</div>
+
             </div>
             <div class="col-xs-12 col-sm-8 contact_usp2">
                <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
