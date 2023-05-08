@@ -300,7 +300,7 @@
                   <div class="box-prinfo col-xs-12 col-sm-5 col-md-5 col-lg-5">
                      {% endif %}
 					    {% if (deluxe_product_stock != 1 ) %}
-                        <div class="pr_rew_p">{{ quantity > 0 ? '<i class="fa fa-check-square-o" aria-hidden="true"></i><span class = "rewardin">'~ stock ~'</span>' : '<span class = "rewardoff">'~ stock ~'</span>' }}</div>
+                        <div class="pr_rew_p {{ quantity > 0 ? '' : 'outstock' }}">{{ quantity > 0 ? '<i class="fa fa-check-square-o" aria-hidden="true"></i><span class = "rewardin">'~ stock ~'</span>' : '<span class = "rewardoff">'~ stock ~'</span>' }}</div>
                         {% endif %}
 					  <h1 class="pr_h1" itemprop="name">{{ heading_title }}</h1>
 					      {% if (deluxe_product_kod_tovara != 1) %}
