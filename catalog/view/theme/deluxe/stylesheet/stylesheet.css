@@ -1114,6 +1114,33 @@ position: relative;
 .cart-item, .cart-item_h {
 	background:none!important;
 }
+#button-review, #tab-review .btn-cart, #aridius_cart .btn-cart {
+	border: none;
+    color: #333;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+}
+#button-review:hover, #tab-review .btn-cart:hover, #aridius_cart .btn-cart:hover {
+	border: none!important;
+    color: #333!important;
+    border-radius: 4px!important;
+    background-color: #e5e5e5!important;
+}
+#aridius_cart .btn-cart svg {
+    fill: #333!important;
+}
+.cart .snav {
+	 background-color: #f0f0f0!important;
+    border: none!important;
+    color: #333!important;
+    fill: #333!important;
+}
+.cart .snav:hover {
+	background-color: #e5e5e5!important;
+    border: none!important;
+    color: #333!important;
+    fill: #333!important;
+}
 
 @media (min-width: 768px) {
 	#cart #cart-total .cart-item-after {

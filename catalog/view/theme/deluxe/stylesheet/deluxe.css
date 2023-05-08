@@ -1963,17 +1963,16 @@ padding-right: 15px;
 margin-bottom: 1px;
 }
 .mfp-close{
-font-size: 18px!important;
-right: 15px!important;
-top: 15px!important;
-border-radius: 50%!important;
-border: 1px solid #ccc!important;
-text-decoration: none!important;
-color: #655e5e !important;
-height: 30px !important;
-cursor: pointer !important;
-line-height: 30px !important;
-width: 30px !important;
+font-size: 50px!important;
+    right: 15px!important;
+    top: 13px!important;
+
+    text-decoration: none!important;
+    color: #000!important;
+    height: 30px !important;
+    cursor: pointer !important;
+    line-height: 30px !important;
+    width: 30px !important;
 }
 .undersell .image_wrap{
 text-align: center;
@@ -1982,7 +1981,7 @@ text-align: center;
 color: #000;
 background: #fff;
 background-color: rgb(255, 255, 255);
-font-size: 19px;
+font-size: 24px;
 text-align: center;
 line-height: 50px;
 }
