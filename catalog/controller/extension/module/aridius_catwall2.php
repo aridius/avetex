@@ -82,7 +82,7 @@ class ControllerExtensionModuleAridiusCatWall2 extends Controller {
                 'name' => $category['name']. ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),				
 				
 				 'image' => $image,
-               				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
+               	'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $category['manufacturer_id'])
             );
 		       }
         }
