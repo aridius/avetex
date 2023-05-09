@@ -31,11 +31,7 @@
                   <a class="accountp" href="{{ password }}"><i class="fa fa-key"></i> {{ text_password }}</a>
                </div>
             </div>
-            <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
-               <div class="accountv">
-                  <a class="accountp" href="{{ address }}"><i class="fa fa-home"></i> {{ text_address }}</a>
-               </div>
-            </div>
+ 
             {% if (deluxe_wishlist_footer != 1) %} 
             <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
                <div class="accountv">
@@ -62,17 +58,11 @@
                   <a class="accountp" href="{{ order }}"><i class="fa fa-file"></i> {{ text_order }}</a>
                </div>
             </div>
-            {% if (deluxe_download_footer != 1) %} 
-            <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
-               <div class="accountv">
-                  <a class="accountp" href="{{ download }}"><i class="fa fa-download"></i> {{ text_download }}</a>
-               </div>
-            </div>
-            {% endif %} 
+
             {% if (reward) %} 
             <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
                <div class="accountv">
-                  <a class="accountp" class="accountp" href="{{ reward }}"><i class="fa fa-diamond"></i> {{ text_reward }}</a>
+				   <a class="accountp" class="accountp" href="{{ reward }}"><i class="fa fa-diamond"></i> {{ text_reward }}</a>
                </div>
             </div>
             {% endif %} 
@@ -83,16 +73,7 @@
                </div>
             </div>
             {% endif %} 
-            <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
-               <div class="accountv">
-                  <a class="accountp" href="{{ transaction }}"><i class="fa fa-credit-card"></i> {{ text_transaction }}</a>
-               </div>
-            </div>
-            <div class="accountv_rowm col-xs-6 col-sm-4 col-md-4 col-lg-3">
-               <div class="accountv">
-                  <a class="accountp" href="{{ recurring }}"><i class="fa fa-clock-o "></i> {{ text_recurring }}</a>
-               </div>
-            </div>
+
          </div>
          <div class="clearfix"></div>
          {% if (deluxe_newsletter_footer != 1) %} 

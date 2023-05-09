@@ -7,20 +7,18 @@
   <a href="{{ edit }}" class="list-group-item"><i class="fa fa-pencil"></i> {{ text_edit }}</a> <a href="{{ password }}" class="list-group-item"><i class="fa fa-key"></i> {{ text_password }}</a>
   {% endif %} 
   
-  <a href="{{ address }}" class="list-group-item"><i class="fa fa-home"></i> {{ text_address }}</a> 
+
   {% if (deluxe_wishlist_footer != 1) %}	
   <a href="{{ wishlist }}" class="list-group-item"><i class="fa fa-heart"></i> {{ text_wishlist }}</a> 
   {% endif %}	
   <a href="{{ order }}" class="list-group-item"><i class="fa fa-file"></i> {{ text_order }}</a> 
-  {% if (deluxe_download_footer != 1) %}	
-  <a href="{{ download }}" class="list-group-item"><i class="fa fa-download"></i> {{ text_download }}</a>
-  {% endif %}	
-  <a href="{{ recurring }}" class="list-group-item"><i class="fa fa-clock-o "></i> {{ text_recurring }}</a> 
+	
+
   <a href="{{ reward }}" class="list-group-item"><i class="fa fa-diamond"></i> {{ text_reward }}</a> 
   {% if (deluxe_return_footer != 1) %} 
   <a href="{{ return }}" class="list-group-item"><i class="fa fa-retweet"></i> {{ text_return }}</a>
   {% endif %}	
-  <a href="{{ transaction }}" class="list-group-item"><i class="fa fa-credit-card"></i> {{ text_transaction }}</a> 
+
   {% if (deluxe_newsletter_footer != 1) %} 
   <a href="{{ newsletter }}" class="list-group-item"><i class="fa fa-envelope"></i> {{ text_newsletter }}</a>
   {% endif %}	

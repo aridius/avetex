@@ -5,7 +5,7 @@ $_['heading_title'] = 'My Wish List';
 // Text
 $_['text_account']  = 'Account';
 $_['text_instock']  = 'In Stock';
-$_['text_wishlist'] = '<span class = "hide_twishlist">Wish List</span> %s';
+$_['text_wishlist'] = '%s';
 $_['text_login']    = 'You must <a href="%s">login</a> or <a href="%s">create an account</a> to save <a href="%s">%s</a> to your <a href="%s">wish list</a>!';
 $_['text_success']  = '<img class = "infoimg" src="%s"/> <span class = "infotext">Success: You have added <a href="%s">%s</a> to your <a href="%s">wish list</a>!</span>';
 $_['text_remove']   = 'Success: You have modified your wish list!';

@@ -418,7 +418,7 @@ var wishlist = {
 					$("#wishlist .modal-body p").html(json['success']);
 
 				if($('#wish_show div').is('.wish_sh')) {
-                    $('#wishlist-total, #wishlist-total2, #wishlist-total3').html(json['total']);
+                    $('#wishlist-total, #wishlist-total2, #wishlist-total3, #wish_log').html(json['total']);
 				} else {
 					$('#wish_show').html('<div class="mob_cart wish_sh"><span class="cart-item_h"><span class ="cart-item-after_h"><span id="wishlist-total">1</span></span></span></div>');
 				}
