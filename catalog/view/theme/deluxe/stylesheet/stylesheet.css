@@ -1166,7 +1166,37 @@ position: relative;
     font-size: 19px;
     font-weight: 600;
 }
-
+.pad-bottom-50 {
+	text-align: center;
+    font-size: 20px;
+}
+.row_form_track {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#track-delivery-search-form {
+	    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0 15px 0;
+    text-align: center;
+	    flex-direction: column;
+}
+#track-delivery-search-form label, #track-delivery-search-form input {
+	font-size: 20px;
+}
+.order_massege {
+	height: 40px;
+    margin-top: 15px;
+}
+.order_errorcheck, .order_succheck {
+	font-size:20px;
+}
+.order_errornumber, .order_erroremail {
+	height: 20px;
+	position:absolute;
+}
 
 @media (min-width: 768px) {
 	.order_wish .dropdown-menu {

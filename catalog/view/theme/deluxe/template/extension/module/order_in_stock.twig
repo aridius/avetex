@@ -1,0 +1,106 @@
+{{ header }}
+<div class="container">
+   <div class="row">
+      <div id="cont" class="col-sm-12">
+         {{ column_left }}
+         {% if (column_left and column_right) %}
+         {% set class = 'col-sm-6' %}
+         {% elseif (column_left or column_right) %}
+         {% set class = 'col-sm-9' %}
+         {% else %}
+         {% set class = 'col-sm-12' %}
+         {% endif %}
+         <div id="content" class="{{ class }}">
+			  <ul class="breadcrumb">
+               {% for i,breadcrumb in breadcrumbs %}
+               <li>{% if (breadcrumbs|length > i+1 ) %}<a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a>{% else %}{{ breadcrumb['text'] }}{% endif %}</li>
+               {% endfor %}
+            </ul>
+			  {{ content_top }}
+<div id="tracking-order" class="container track-delivery">
+	<div class="row marg-top-17 marg-bottom-40">
+	<div class="col-xs-12">
+	<h1 class="page-title">{{ heading_title }}</h1>
+	</div>
+	</div> 
+	<div class="row">
+	<div class="col-xs-12 pad-bottom-50">
+           {{ text_title }}
+        </div>
+		</div> 
+
+
+	<div class="row ">
+	<div class="col-xs-12 row_form_track">
+	<form id="track-delivery-search-form" class="search-container">
+	<div class="form-group relative-container form_err">
+	<input id="tracking-order-number" type="text" placeholder="{{ text_number }}" name="track_order_number" class="form-control material-input input-lg">
+	<div class="order_errornumber"></div>
+	</div> 
+	<div class="form-group relative-container form_err">
+	<input id="tracking-zipcode" type="tel" placeholder="{{ text_email }}" autocomplete="off" name="track_email"  class="form-control material-input input-lg">
+	<div class="order_erroremail"></div>
+	</div> 
+	</form>
+	<button id="track-order-submit-btn" type="submit" class="btn primary-button secondary-button btn-send btn-lg" >{{ bt_sub }}</button>
+	<div class="order_massege">
+	<span class="order_errorcheck"></span>
+	<span class="order_succheck"></span>
+	</div>
+	</div>
+	</div>
+	</div> 
+
+
+		</div>
+            {{ content_bottom }}
+         </div>
+         {{ column_right }}
+      </div>
+   </div>
+</div>
+<script>
+	$(document).ready(function() {
+	$(document).on("click touchstart", "#track-order-submit-btn", function (e) {
+	    $.ajax({
+			url: 'index.php?route=extension/module/order_in_stock/check',
+			type: 'post',
+			dataType: 'json',
+			data: $('#track-delivery-search-form').serialize(),			
+			success: function (data) {
+				if (data['error']) {
+					$('.aridiusundersell .error').remove();
+					if (data['error']['number']) {
+						$('.order_errornumber').html('<span class="text-danger">'+data['error']['number']+'</span>').show();
+					} else {
+						$('.order_errornumber').hide().empty();
+                    }
+					if (data['error']['email']) {
+						$('.order_erroremail').html('<span class="text-danger">'+data['error']['email']+'</span>').show();
+					} else {
+						$('.order_erroremail').hide().empty();
+                    }
+					if (data['error']['check']) {
+						$('.order_succheck').hide().empty();
+						$('.order_errorcheck').html('<i class="fa fa-exclamation-circle"></i>&nbsp;<span class="text-danger">'+data['error']['check']+'</span>').show();
+					} else {
+						$('.order_errorcheck').hide().empty();
+                    }
+		
+				}
+				if (data['success']) {
+					$('.order_errornumber').hide().empty();
+					$('.order_erroremail').hide().empty();
+					$('.order_errorcheck').hide().empty();
+					$('.order_succheck').html('<i class="fa fa-check-circle"></i>&nbsp;<span class="text-success">'+data['success']+'</span>').show();
+				} else {
+					$('.order_succheck').hide().empty();
+ 				}
+				
+			}
+		});
+	});
+	});
+</script>
+
+{{ footer }}
