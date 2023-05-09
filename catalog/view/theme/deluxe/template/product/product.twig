@@ -842,7 +842,7 @@
    <div class="swipe_col2 flex_height_row row">
 
             {% for product in products %} 
-
+{% if ( product['product_id']  > 0) %}
                <div class=" product-layout nth col-xs-6 col-sm-4 col-md-4 col-lg-3 catb">
                   <div class="add_pr gtile-i-wrap caption">
                      <div class="product-thumb">
@@ -871,7 +871,7 @@
 						
 						
 						
-						
+					
 						
 						
                <div class="product-name">
@@ -981,6 +981,7 @@
                   </div>
   
             </div>
+			 {% endif %} 
             {% endfor %} 
  
          </div>

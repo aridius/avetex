@@ -59,7 +59,7 @@
             <div class="row flex_height_row news_list">
              {% for article in articles %} 
                <!-- grid -->
-               <div class="cat_heightflex product-layout product-layout_cat product-grid col-xs-12 col-sm-6 col-md-4 col-lg-4" style="display: flex;">
+               <div class="cat_heightflex product-layout product-layout_cat product-grid col-xs-12 col-sm-6 col-md-4 col-lg-3" style="display: flex;">
                   <div class="gtile-i-wrap">
                      <div class="product-thumb gtile-i_news">
                         <div class="image image_news">
@@ -70,9 +70,9 @@
                                 <div class="item-title">
                                  <div class="product-namenews"><a href="{{ article['href'] }}">{{ article['name'] }}</a></div>
                               </div>
-                              <p class="newsdesc">{{ article['description'] }}</p>
+                            
                            </div>
-                           <p class="newsall btn_readmore"> <a href="{{ article['href'] }}"> {{ button_more }}    <i class="btn_readmore2 fa fa-long-arrow-right"></i></a></p>
+                           
                         </div>
                      </div>
                   </div>

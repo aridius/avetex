@@ -11,7 +11,7 @@
 	  ]]></search>
       <add position="before"><![CDATA[
 	if ($this->config->get('theme_deluxe_relpr_auto')) {  
-					$related_qt = 4; 
+					$related_qt = 5; 
 					
 					$num_related = $related_qt - count($product_data);
 					if($num_related > 0)
