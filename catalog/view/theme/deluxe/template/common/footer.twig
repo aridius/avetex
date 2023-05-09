@@ -52,10 +52,10 @@
     
             <ul class="collapse all list-unstyled" id="information_f1">
               
-               <li><a href="faq">FAQ and Information +</a></li>
-			   <li><a href="services">Shipping Info</a></li>
+               <li><a href="services">FAQ and Information +</a></li>
+			   <li><a href="shipping">Shipping Info +</a></li>
 			   <li><a href="terms">Terms & Conditions +</a></li>
-			   <li><a href="">Privacy Policy</a></li>
+			   <li><a href="privacy">Privacy Policy +</a></li>
 			   
 			   
 
@@ -97,8 +97,8 @@
               
                <li><a href="login">Login / Create Account +</a></li>
 			   <li><a href="orderstatus">Order Status +</a></li>
-			   <li><a href="checkout/simplecheckout">My Cart +</a></li>
-			   <li><a href="checkout/simplecheckout">Checkout +</a></li>
+			   <li><a href="shoppingcart">My Cart +</a></li>
+			   <li><a href="shoppingcart">Checkout +</a></li>
 
             </ul>
          </div>
@@ -110,8 +110,8 @@
             <ul class="collapse all list-unstyled" id="information_f5">
               
                <li><a href="showroom">San Francisco Showroom +</a></li>
-			   <li><a href="about_us">About Us +</a></li>
-			   <li><a href="contact-us">Contact Us +</a></li>
+			   <li><a href="aboutus">About Us +</a></li>
+			   <li><a href="contactus">Contact Us +</a></li>
 			  
 
             </ul>
@@ -479,42 +479,42 @@
    }
    });
    }
-   function price_format_cat(n){
-   c = {{ (currency['decimals'] is empty ? "0" : currency['decimals'] ) }};
-   d = '{{ currency['decimal_point'] }}';
-   t = '{{ currency['thousand_point'] }}';
-   s_left = '{{ currency['symbol_left'] }}';
-   s_right = '{{ currency['symbol_right'] }}';
-   n = n * {{ currency['value'] }};
-   i = parseInt(n = Math.abs(n).toFixed(c))  '';
-   j = ((j = i.length) > 3) ? j % 3 : 0;
-   return s_left  (j ? i.substr(0, j)  t : '')  i.substr(j).replace(/(\d{3})(?=\d)/g, "$1"  t)  (c ? d  Math.abs(n - i).toFixed(c).slice(2) : '')  s_right;
-   }
+   <!-- function price_format_cat(n){ -->
+   <!-- c = {{ (currency['decimals'] is empty ? "0" : currency['decimals'] ) }}; -->
+   <!-- d = '{{ currency['decimal_point'] }}'; -->
+   <!-- t = '{{ currency['thousand_point'] }}'; -->
+   <!-- s_left = '{{ currency['symbol_left'] }}'; -->
+   <!-- s_right = '{{ currency['symbol_right'] }}'; -->
+   <!-- n = n * {{ currency['value'] }}; -->
+   <!-- i = parseInt(n = Math.abs(n).toFixed(c))  ''; -->
+   <!-- j = ((j = i.length) > 3) ? j % 3 : 0; -->
+   <!-- return s_left  (j ? i.substr(0, j)  t : '')  i.substr(j).replace(/(\d{3})(?=\d)/g, "$1"  t)  (c ? d  Math.abs(n - i).toFixed(c).slice(2) : '')  s_right; -->
+   <!-- } -->
 </script>
-<script>
-   function quantity_info(product_id, maximum) {
-   if(maximum >= 0) {
-   $('.product_stock_quantity'+product_id).html('<span class="alert_danger">{{ text_maximum }} '   maximum  '</span>').show();
-   }
-   }
-</script>
-<script>
-   function hide_quantity(product_id, maximum) {
-   $('.product_stock_quantity'+product_id).hide();
-   }
-   function show_quantity(product_id, maximum) {
-   $('.product_stock_quantity'+product_id).show();
-   }
-</script>
-{% if (deluxe_options_mainimg_cat == 0) %}
-<script>
-   function change_img_opt(product_id, src) {
-   if (src) {
-   $('.cat_main_img'  product_id).attr('src', src);
-   }
-   }
-</script>
-{% endif %}
+<!-- <script> -->
+   <!-- function quantity_info(product_id, maximum) { -->
+   <!-- if(maximum >= 0) { -->
+   <!-- $('.product_stock_quantity'+product_id).html('<span class="alert_danger">{{ text_maximum }} '   maximum  '</span>').show(); -->
+   <!-- } -->
+   <!-- } -->
+<!-- </script> -->
+<!-- <script> -->
+   <!-- function hide_quantity(product_id, maximum) { -->
+   <!-- $('.product_stock_quantity'+product_id).hide(); -->
+   <!-- } -->
+   <!-- function show_quantity(product_id, maximum) { -->
+   <!-- $('.product_stock_quantity'+product_id).show(); -->
+   <!-- } -->
+<!-- </script> -->
+<!-- {% if (deluxe_options_mainimg_cat == 0) %} -->
+<!-- <script> -->
+   <!-- function change_img_opt(product_id, src) { -->
+   <!-- if (src) { -->
+   <!-- $('.cat_main_img'  product_id).attr('src', src); -->
+   <!-- } -->
+   <!-- } -->
+<!-- </script> -->
+<!-- {% endif %} -->
 {% if (config_stock) %}
 <input type="hidden" name="quantity_stock" value="1" />
 {% endif %}
