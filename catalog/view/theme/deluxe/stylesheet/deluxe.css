@@ -5081,6 +5081,7 @@ cursor: pointer;
 padding: 3px;
 max-width: 100%;
 margin-bottom: 10px;
+height: auto;
 }
 .swiper-container-vertical {
 }
@@ -9542,7 +9543,7 @@ margin-bottom: 15px;
 }
 @media (max-width: 369px) {
 .box-prinfo .btn-cart {
-font-size: 10px!important;
+font-size: 12px!important;
 }
 .combo-product-thumb i {
 display: none;
@@ -9620,7 +9621,7 @@ font-size: 11px;
 margin:0;
 }
 .btn-wishlist, .btn-compare {
-padding:0;
+
 width: 30px;
 height: 30px;
 }
@@ -9652,7 +9653,7 @@ font-size: 11px!important;
 padding: 4px 6px 14px 6px!important;
 }
 .box-prinfo .btn-cart {
-font-size: 13px;
+font-size: 16px;
 }
 .stickers-special {
 display: none;
