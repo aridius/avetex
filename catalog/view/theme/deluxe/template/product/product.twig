@@ -1031,7 +1031,7 @@
 		   <div class = "col-xs-12 col-sm-12">
 		 <div class="title_product">{{ tab_attribute }}</div>
 		    
-
+			<div class="cont_attribute">
 			 <div class="content_attribute">
 			{% for attribute_group in attribute_groups %}
             <div class="attribute__category">{{ attribute_group['name'] }}</div> <div class="attribute__wrapper">
@@ -1043,6 +1043,7 @@
 				{% endfor %}
             </div>
 			{% endfor %}
+			</div>
 			</div>
 		  </div>
 		   {% endif %}
