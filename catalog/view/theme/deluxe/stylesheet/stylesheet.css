@@ -1197,7 +1197,9 @@ position: relative;
 	height: 20px;
 	position:absolute;
 }
-
+.simplecheckout input[name="address_same"] {
+       margin-right: 5px;
+}
 @media (min-width: 768px) {
 	.order_wish .dropdown-menu {
 	left: -70px;
