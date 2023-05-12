@@ -24,7 +24,7 @@
                     <th class="image">{{ column_image }}</th>
                     <th class="name">{{ column_name }}</th>
                     <th class="model">{{ column_model }}</th>
-                    <th class="quantity">{{ column_quantity }}</th>
+                    <th class="quantity"></th>
                     <th class="price">{{ column_price }}</th>
                     <th class="total">{{ column_total }}</th>
                     <th class="remove"></th>
@@ -71,7 +71,9 @@
                             {% endif %}
                         </td>
                         <td class="model">{{ product['model'] }}</td>
-                        <td class="quantity">
+						 
+                        <td class="quantity ">
+						<div class="hqqqc">
                             <div class="input-group btn-block" style="max-width: 200px;">
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" data-onclick="decreaseProductQuantity" data-toggle="tooltip" type="submit">
@@ -88,7 +90,9 @@
                                     </button>
                                 </span>
                             </div>
+							 </div>
                         </td>
+						   
                         <td class="price">{{ product['price'] }}</td>
                         <td class="total">{{ product['total'] }}</td>
                         <td class="remove">
