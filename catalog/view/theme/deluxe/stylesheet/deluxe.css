@@ -632,8 +632,7 @@ border-radius: 6px!important;
 	
 }
 .sort2, .sort1 {
-
-  width: 197px;
+    margin-left: 10px;
 }
 
 #input-limit, #input-sort{
@@ -654,7 +653,7 @@ font-size: 1.5rem!important;
 font-weight: 400!important;	
 }
 .rowgd {
-margin-right: -25px;
+
 margin-left: 10px;
 }
 
@@ -676,15 +675,15 @@ margin-left: 10px;
 }
 
 .page-sort-component {
-  width: 435px;
+
   justify-content: right;
 }
 
 .product-list-component__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin: 0 0 3rem;
+  /* display: flex; */
+  /* align-items: flex-start; */
+  /* justify-content: space-between; */
+  /* margin: 0 0 3rem; */
   padding-top: 3rem;
 }
 .product-list-component .title, h1 {
@@ -694,34 +693,14 @@ margin-left: 10px;
   display: inline!important;
   line-height: 1.25!important;
 }
-.fixcat2 {
-	
-	margin-right: -3px!important;
-margin-left: 30px!important;
-}
 
 
-.fixcat1 {
+
+.fixcat1, .fixcat3, .col-sm-9.fixcat6 {
 	
 padding-right: 3px!important;
 padding-left: 3px!important;
 }
-
-
-
-.fixcat3 {
-	
-padding-right: 3px!important;
-padding-left: 3px!important;
-}
-
-
-.col-sm-9.fixcat6{
-	width: 78%;
-padding-right: 3px!important;
-padding-left: 3px!important;
-}
-
 
 
 .cat_heightflex.gtile-i-wrap{
@@ -729,10 +708,6 @@ padding-left: 3px!important;
 	border-radius:0!important;
 	margin-bottom: 6px;
 }
-
-
-
-
 
 .product-list-component__wrapper, .bbc {
   background-color: #f5f5f5;
@@ -1554,8 +1529,8 @@ border-style: solid;
 border-width: 10px 0 10px 20px;
 }
 [class*='product-category-'] #cont{
-display: inline-block;
-width: 100%;
+/* display: inline-block; */
+/* width: 100%; */
 }
 .mm_bt {
 width: 100%;
@@ -9497,9 +9472,7 @@ width: 72%;
 .ban_col.col-md-4 {
 width: 36%;
 }
-.fix_cleft.col-lg-3 {
-width: 28%;
-}
+
 #content.col-sm-9, .sm_bann.col-sm-9, #cont.col-md-9{
 width: 72%;
 }
@@ -9919,9 +9892,7 @@ display: -webkit-box;
 -webkit-box-orient: vertical;
 overflow: hidden;
 }
-.fix_cleft.col-lg-3 {
-width: 25%;
-}
+
 .column_width1_noimg{
 width: 100%;
 }
@@ -10048,9 +10019,7 @@ width: 51.5%;
 .ban_col.col-lg-3 {
 width: 26.5%;
 }
-.fix_cleft.col-lg-3 {
-width: 22%;
-}
+
 #content.col-sm-9, .sm_bann.col-sm-9, #cont.col-md-9{
 width: 78%;
 }

@@ -1318,8 +1318,19 @@ list-style-type: none;
 .model_h1 {
 	margin-bottom: 10px;
 }
+/* .col-sm-9.fixcat6 { */
+/* margin-left: 30px; */
+/* } */
+.ocf-footer {
+margin: 0!important;
+ }
 }
 @media (max-width: 767px) {
+.fixcat2 {
+	margin-right: -3px!important;
+	margin-left: -3px!important;
+}
+
 .content_attribute {
 	padding: 20px!important;
 	min-width: 500px;

@@ -58,7 +58,7 @@
 
 
 <div class="product-list-component__wrapper" >
-<div class="container fixcat3" >
+<div class="container" >
 <div class="row">
 
 <div id="cont">
@@ -68,19 +68,19 @@
 
 
 <div class="clearfix">	</div>
-<div class="rowgd">
+<div class="col-xs-12 col-sm-12">
 
 
 
-<div class="product-list-component__top">
+<div class="product-list-component__top row">
 
-<div class="title__wrapper">
+<div class="title__wrapper col-xs-12 col-sm-6">
             <h1 class="title">{{ heading_title }}</h1>
         </div>
 
 
 
-<div class="page-sort-component">
+<div class="page-sort-component col-xs-12 col-sm-6">
 
       <div class="sort2">
          {% if (deluxe_count_cat != 1) %}
@@ -140,7 +140,7 @@
 {% if (column_left and column_right) %}
 {% set class = 'col-sm-6' %}
 {% elseif (column_left or column_right) %}
-{% set class = 'col-sm-9 fixcat6' %}
+{% set class = 'col-sm-9' %}
 {% else %}
 {% set class = 'col-sm-12' %}
 {% endif %}
