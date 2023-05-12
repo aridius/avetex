@@ -1337,6 +1337,20 @@ margin: 0!important;
     justify-content: space-between;
     gap: 20px;
 	}
+	
+	
+	.product-thumb_v2 {
+	text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+	}
+	
+	
+	
+	
+	
 .fixcat2 {
 	margin-right: -3px!important;
 	margin-left: -3px!important;

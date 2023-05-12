@@ -2,6 +2,13 @@
 
 
 
+.ocf-noUi-handle {
+	
+	background-color: #333!important;
+}
+
+
+
 
 .percent_line {
     background-color: #000000!important;
@@ -464,13 +471,16 @@ display: none!important;
     font-size: 1.2rem;
     font-weight: 600;
     border-radius: 4px;
-    padding: 0.8rem;
+    padding: 0.6rem;
     background-color: #00699a;
     flex: 1 1 auto;
     text-align: center;
 }
 
-
+.product-thumb_v2.dfgdf {
+	
+	    justify-content: center!important;
+}
 
 
 
@@ -9112,8 +9122,17 @@ width: 292%;
 }
 @media (min-width: 768px) and (max-width: 991px) {
 	
-	
-	
+	.fixcat2 {
+    margin-right: -3px!important;
+    margin-left: -3px!important;
+}
+.product-thumb_v2 {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}	
 	
 	.swipe_col2.flex_height_row .product-layout {
 flex: 0 0 30%;
@@ -9799,7 +9818,7 @@ position: relative;
 /* Bootstrap 1600px */
 @media (min-width: 1200px) and (max-width: 1599px) {
 		.additionalc button {
-    padding: 8px 50px!important;
+    padding: 8px 40px!important;
 }
 
 .mob_phone, .mob_compare, .mob_wish {
@@ -10028,12 +10047,12 @@ width: 51.5%;
 width: 26.5%;
 }
 
-#content.col-sm-9, .sm_bann.col-sm-9, #cont.col-md-9{
-width: 78%;
-}
-#column-left.col-sm-3, #column-right.col-sm-3 {
-width: 20%;
-}
+/* #content.col-sm-9, .sm_bann.col-sm-9, #cont.col-md-9{ */
+/* width: 78%; */
+/* } */
+/* #column-left.col-sm-3, #column-right.col-sm-3 { */
+/* width: 20%; */
+/* } */
 .column_width1_noimg{
 width: 100%;
 }
