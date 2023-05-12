@@ -1326,6 +1326,17 @@ margin: 0!important;
  }
 }
 @media (max-width: 767px) {
+.catwall_cat {
+	padding-left: 5px;
+    padding-right: 5px;
+}
+.product-thumb_v2 {
+	text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+	}
 .fixcat2 {
 	margin-right: -3px!important;
 	margin-left: -3px!important;
