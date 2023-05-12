@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_title']       = 'Flat Rate';
-$_['text_description'] = 'Post office Nova Poshta';
+$_['text_title']       = '';
+$_['text_description'] = 'Canada (Contact for quote) ';

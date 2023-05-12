@@ -1,4 +1,5 @@
 <?php
 // Text
-$_['text_title']       = 'Flat Rate';
-$_['text_description'] = "By courier Nova Poshta";
+$_['text_title']       = '';
+$_['text_description'] = "San Francisco & Bay Area";  
+

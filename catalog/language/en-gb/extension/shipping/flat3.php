@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_title']       = 'Flat Rate';
-$_['text_description'] = 'At the Ukrposhta branch';
+$_['text_title']       = '';
+$_['text_description'] = 'Nationwide (48 States)';
